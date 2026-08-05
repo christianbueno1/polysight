@@ -37,3 +37,6 @@ polysight-predict --checkpoint /ruta/best.pt --image /ruta/imagen.jpg
 
 Consulta [la guía de CEDIA](docs/cluster.md) para el entorno remoto y
 [la ficha del dataset](docs/datasets/hyper-kvasir.md) para su ubicación y hash.
+
+MLflow usa SQLite y artefactos portables: se sincronizan `mlflow.db` y `artifacts/`,
+sin reescribir URI ni copiar logs del servidor.

@@ -12,8 +12,8 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - [x] Reautenticar `gh` y crear el repositorio privado de GitHub
 - [x] Publicar `main` y `dev`; configurar `dev` como branch de trabajo
 - [x] Configurar acceso GitHub desde CEDIA y clonar el repositorio
-- [ ] Ejecutar bootstrap y diagnóstico en nodos Slurm
-- [ ] Preparar el dataset remoto y verificar los manifests
+- [x] Ejecutar bootstrap y diagnóstico en nodos Slurm
+- [x] Preparar el dataset remoto y verificar los manifests
 - [ ] Ejecutar el smoke test de una época
 - [ ] Ejecutar baseline y weighted de `main16` con tres semillas
 - [ ] Elegir estrategia mediante macro-F1 de validation
@@ -28,3 +28,6 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - Repositorio privado: `christianbueno1/polysight`.
 - CEDIA usa su clave dedicada mediante OpenSSH; `gh` no es necesario en el cluster.
 - El clon vive en `~/projects/polysight` y los datos originales en `~/datasets`.
+- Jobs completados: bootstrap `20735`, diagnóstico GPU `20736` y datos `20737`.
+- El módulo `pytorch/2.2` expone realmente torch 2.10.0+cu128 y torchvision 0.25.0+cu128.
+- MLflow usa SQLite + `mlflow-artifacts:/`; no se reescriben rutas después de sincronizar.

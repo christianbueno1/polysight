@@ -23,5 +23,5 @@ training:
   amp: true
 tracking:
   experiment_name: polysight-full23
-  tracking_uri: file:${POLYSIGHT_MLFLOW_DIR}
+  tracking_uri: ${POLYSIGHT_TRACKING_URI}
   output_dir: ${POLYSIGHT_RUNS_DIR}

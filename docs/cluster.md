@@ -122,11 +122,13 @@ scripts/cluster/submit.sh slurm/train.sbatch \
   CONFIG_PATH=configs/main16-weighted.yaml RUN_SEED=42
 ```
 
-Al finalizar, los runs se copian y sus URI se vuelven portables para MLflow local:
+Al finalizar, se copian exclusivamente `mlflow.db` y `artifacts/`; los URI persistidos
+usan `mlflow-artifacts:/` y no requieren reescritura:
 
 ```bash
 scripts/cluster/sync-results.sh
-.venv/bin/mlflow ui --backend-store-uri artifacts/cedia/mlruns
+cd artifacts/cedia/mlflow
+uvx mlflow ui --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --port 5000
 ```
 
 Los archivos `slurm/*.sbatch` abortan fuera de Slurm y `slurm/common.sh` rechaza un

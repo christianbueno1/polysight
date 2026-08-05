@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REMOTE_STORAGE="${1:-/home/christian.bueno__espol.edu.ec/projects/polysight-storage}"
-LOCAL_STORAGE="${2:-artifacts/cedia}"
+REMOTE_MLFLOW="${1:-/home/christian.bueno__espol.edu.ec/projects/polysight-storage/mlflow}"
+LOCAL_MLFLOW="${2:-artifacts/cedia/mlflow}"
 
-mkdir -p "${LOCAL_STORAGE}/mlruns" "${LOCAL_STORAGE}/runs"
+mkdir -p "${LOCAL_MLFLOW}/artifacts"
 rsync --archive --partial --info=progress2 \
-  "cedia:${REMOTE_STORAGE}/mlruns/" "${LOCAL_STORAGE}/mlruns/"
+  --exclude='*.log' \
+  "cedia:${REMOTE_MLFLOW}/mlflow.db" "${LOCAL_MLFLOW}/mlflow.db"
 rsync --archive --partial --info=progress2 \
-  "cedia:${REMOTE_STORAGE}/runs/" "${LOCAL_STORAGE}/runs/"
+  --exclude='*.log' \
+  "cedia:${REMOTE_MLFLOW}/artifacts/" "${LOCAL_MLFLOW}/artifacts/"
 
-.venv/bin/python scripts/rebase-mlflow.py \
-  --mlruns-dir "${LOCAL_STORAGE}/mlruns" \
-  --remote-root "${REMOTE_STORAGE}"
-
-echo "Abrir con: mlflow ui --backend-store-uri ${LOCAL_STORAGE}/mlruns"
+echo "Abrir desde ${LOCAL_MLFLOW} con:"
+echo "uvx mlflow ui --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --port 5000"

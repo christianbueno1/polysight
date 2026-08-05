@@ -44,7 +44,7 @@ class TrainingConfig:
 @dataclass
 class TrackingConfig:
     experiment_name: str = "polysight"
-    tracking_uri: str = "file:./artifacts/mlruns"
+    tracking_uri: str = "http://127.0.0.1:5000"
     output_dir: str = "artifacts/runs"
 
 

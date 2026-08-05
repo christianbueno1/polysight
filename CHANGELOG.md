@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-05 01:32 -0500 — Fase 5: validación CEDIA y MLflow portable
+
+**Hecho:**
+- Completados bootstrap CPU `20735` y diagnóstico A100 `20736`.
+- Verificados torch 2.10.0+cu128, torchvision 0.25.0+cu128, cuDNN 9.1 y CUDA funcional.
+- Preparados `main16` y `full23` mediante el job `20737` con hashes reproducibles.
+- Reemplazado el FileStore inicial por SQLite y artefactos con URI `mlflow-artifacts:/`.
+
+**Decisiones:**
+- Solo se sincronizan `mlflow.db` y `artifacts/`; los `.log` quedan fuera.
+- Un servidor MLflow efímero corre dentro de cada job y nunca en `login1`.
+- Los experimentos se enviarán secuencialmente para evitar escritores SQLite concurrentes.
+
+**Pendiente / carry-over:**
+- Publicar esta corrección, actualizar CEDIA y repetir el smoke test portable.
+- Verificar localmente el `mlflow.db` sincronizado antes de los entrenamientos finales.
+
+---
+
 ## 2026-08-05 00:44 -0500 — Fase 5: publicación y acceso CEDIA
 
 **Hecho:**

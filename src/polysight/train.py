@@ -7,6 +7,7 @@ import json
 import random
 from collections import Counter
 from pathlib import Path
+from typing import Any
 
 import mlflow
 import numpy as np
@@ -87,7 +88,7 @@ def train_epoch(
     loader: torch.utils.data.DataLoader,
     criterion: nn.Module,
     optimizer: torch.optim.Optimizer,
-    scaler: torch.cuda.amp.GradScaler,
+    scaler: Any,
     device: torch.device,
     use_amp: bool,
 ) -> float:
@@ -127,7 +128,7 @@ def save_checkpoint(
     model: nn.Module,
     optimizer: torch.optim.Optimizer,
     scheduler: torch.optim.lr_scheduler.CosineAnnealingLR,
-    scaler: torch.cuda.amp.GradScaler,
+    scaler: Any,
     epoch: int,
     stage: str,
     best_macro_f1: float,
@@ -153,6 +154,12 @@ def save_checkpoint(
         },
         path,
     )
+
+
+def build_grad_scaler(use_amp: bool) -> Any:
+    if hasattr(torch, "amp") and hasattr(torch.amp, "GradScaler"):
+        return torch.amp.GradScaler("cuda", enabled=use_amp)
+    return torch.cuda.amp.GradScaler(enabled=use_amp)
 
 
 def run_training(config_path: Path, resume: Path | None = None, seed: int | None = None) -> Path:
@@ -182,7 +189,7 @@ def run_training(config_path: Path, resume: Path | None = None, seed: int | None
         config.training.loss, loaders["train"].dataset, len(classes), device
     )
     use_amp = config.training.amp and device.type == "cuda"
-    scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+    scaler = build_grad_scaler(use_amp)
     checkpoint_data = (
         torch.load(resume, map_location=device, weights_only=False) if resume else None
     )

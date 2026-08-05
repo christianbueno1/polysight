@@ -9,14 +9,14 @@ deterministas para los perfiles `main16` y `full23` sin versionar imágenes.
 
 ### Tareas
 
-- [ ] Implementar validación de tamaño, SHA-256, estructura y conteos
-- [ ] Implementar extracción segura e idempotente
-- [ ] Implementar perfiles `main16` y `full23`
-- [ ] Generar splits 70/15/15 por clase con hashes y semilla fija
-- [ ] Mantener duplicados exactos en un mismo split
-- [ ] Generar reporte de posibles duplicados perceptuales
-- [ ] Crear pruebas unitarias del pipeline de datos
-- [ ] Actualizar la documentación del dataset
+- [x] Implementar validación de tamaño, SHA-256, estructura y conteos
+- [x] Implementar extracción segura e idempotente
+- [x] Implementar perfiles `main16` y `full23`
+- [x] Generar splits 70/15/15 por clase con hashes y semilla fija
+- [x] Mantener duplicados exactos en un mismo split
+- [x] Generar reporte de posibles duplicados perceptuales
+- [x] Crear pruebas unitarias del pipeline de datos
+- [x] Actualizar la documentación del dataset
 
 ---
 

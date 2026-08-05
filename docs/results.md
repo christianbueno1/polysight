@@ -126,3 +126,35 @@ Para futuras rondas, `save_evaluation_artifacts` debería guardar además la mat
 como CSV y una segunda visualización normalizada por fila. No se repite la evaluación
 test actual para reconstruirlas: las conclusiones presentes usan exclusivamente los
 artefactos producidos en la evaluación única ya cerrada.
+
+## Rendimiento y consumo computacional
+
+Los nueve entrenamientos se ejecutaron sobre una A100 SXM4 de 40 GB, con 8 CPU y 32 GiB
+de RAM solicitados por job.
+
+| Perfil/estrategia | Runs | Épocas promedio | Tiempo promedio | Tiempo total | CPU promedio | MaxRSS promedio | MaxRSS máximo |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| main16 baseline | 3 | 31.0 | 14:58 | 44:53 | 5.843 | 4235.9 MiB | 4249.9 MiB |
+| main16 weighted | 3 | 24.7 | 11:52 | 35:37 | 5.907 | 4237.4 MiB | 4283.1 MiB |
+| full23 baseline | 3 | 27.3 | 13:34 | 40:41 | 5.870 | 4228.4 MiB | 4242.5 MiB |
+
+En conjunto se consumieron 2:01:11 de tiempo de asignación A100 y aproximadamente
+11.86 CPU-h efectivas. El promedio ponderado fue 5.87 de las 8 CPU asignadas (~73 %).
+La memoria máxima del step de entrenamiento se mantuvo alrededor de 4.13 GiB, muy por
+debajo de los 32 GiB reservados.
+
+Weighted terminó antes principalmente porque early stopping produjo 23, 20 y 31 épocas,
+frente a 32, 32 y 29 para main16 baseline. Full23 ejecutó 28, 31 y 23 épocas. Estas
+cantidades provienen de los steps `val_macro_f1` registrados en MLflow.
+
+Solo existen tres muestras puntuales de memoria GPU: 7378, 5370 y 7048 MiB. No son
+máximos y no permiten estimar utilización promedio, potencia ni eficiencia de la A100.
+Slurm tampoco publicó TRES de memoria o utilización GPU. Por tanto, no se afirma que la
+reserva de 40 GB pueda reducirse basándose únicamente en estas muestras.
+
+Las evaluaciones finales duraron 39 segundos para main16 y 25 segundos para full23. No
+se incluyen en las 2:01:11 de entrenamiento.
+
+En estabilidad predictiva, main16 baseline y full23 baseline tuvieron desviaciones de
+macro-F1 de 0.002987 y 0.002836. Main16 weighted fue más variable (0.010611), además de
+obtener menor macro-F1 medio.

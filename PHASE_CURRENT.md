@@ -14,7 +14,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 
 - [x] Comparar métricas agregadas de main16 y full23
 - [x] Analizar métricas por clase y matrices de confusión finales
-- [ ] Documentar rendimiento, estabilidad y consumo computacional
+- [x] Documentar rendimiento, estabilidad y consumo computacional
 - [ ] Documentar conclusiones, limitaciones y amenazas a la validez
 - [ ] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
 - [ ] Actualizar la documentación principal con resultados reproducibles
@@ -36,3 +36,5 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   validation (tres semillas) de la evaluación test única de cada perfil.
 - El análisis por clase confirma que seis clases escasas de full23 obtuvieron F1 cero;
   las matrices actuales son heatmaps de conteos absolutos, no matrices normalizadas.
+- Los nueve entrenamientos sumaron 2:01:11 de A100 y ~11.86 CPU-h; consumo y estabilidad
+  están documentados en `docs/results.md` con las limitaciones de muestreo GPU.

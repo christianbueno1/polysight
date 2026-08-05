@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-08-05 18:15 -0500 — Fase 6: consumo y estabilidad
+
+**Hecho:**
+- Agregados tiempo A100, CPU efectiva, MaxRSS y épocas ejecutadas para nueve runs.
+- Documentadas 2:01:11 de asignación A100, ~11.86 CPU-h y ~4.13 GiB de MaxRSS.
+- Relacionadas las diferencias de duración con las épocas registradas en MLflow.
+
+**Decisiones:**
+- Las tres lecturas de memoria GPU se mantienen como muestras puntuales, no máximos.
+- No se recomienda reducir recursos GPU sin telemetría de utilización y pico de memoria.
+- Estabilidad se describe mediante desviación entre tres semillas, sin inferencia de
+  significancia estadística.
+
+**Pendiente / carry-over:**
+- Documentar conclusiones, limitaciones y amenazas a la validez.
+
+---
+
 ## 2026-08-05 18:14 -0500 — Fase 6: análisis por clase y matrices
 
 **Hecho:**

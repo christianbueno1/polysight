@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-08-05 11:24 -0500 — Fase 5: reintento observable de main16
+
+**Hecho:**
+- Publicado y desplegado en CEDIA el commit `87ac069`.
+- Enviado el baseline `main16` con semilla 42 como job `20755`.
+- Confirmado que MLflow respondió HTTP 200 en el intento 8 y que el entrenamiento inició.
+
+**Decisiones:**
+- No se encadenan aún los otros cinco runs; primero se confirma la estabilidad del
+  entrenamiento reintentado.
+
+**Pendiente / carry-over:**
+- Esperar la terminación del job `20755` y revisar su macro-F1 de validation.
+- Si termina correctamente, enviar secuencialmente los otros cinco runs de `main16`.
+
+---
+
 ## 2026-08-05 11:19 -0500 — Fase 5: diagnóstico del health check de MLflow
 
 **Hecho:**

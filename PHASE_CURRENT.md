@@ -34,6 +34,8 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - El módulo `pytorch/2.2` expone realmente torch 2.10.0+cu128 y torchvision 0.25.0+cu128.
 - MLflow usa SQLite + `mlflow-artifacts:/`; no se reescriben rutas después de sincronizar.
 - La copia local de `mlflow.db` y `artifacts/` fue validada y la UI inició correctamente.
-- No hay jobs activos. El siguiente paso es enviar secuencialmente los seis runs de `main16`.
+- El reintento baseline `main16`, semilla 42, corre como job `20755`; los otros cinco
+  runs se enviarán solo después de confirmar su ejecución estable.
 - El health check de MLflow ignora proxies y conserva el error de cada intento; si el
   servidor termina o agota el plazo, adjunta el final de su log al output de Slurm.
+- En `20755`, MLflow respondió HTTP 200 en el intento 8 y el entrenamiento comenzó.

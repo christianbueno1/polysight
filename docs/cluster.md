@@ -134,3 +134,6 @@ uvx mlflow ui --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./
 Los archivos `slurm/*.sbatch` abortan fuera de Slurm y `slurm/common.sh` rechaza un
 hostname `login*`. El nodo de acceso se limita a Git, archivos, `sbatch`, `squeue` y
 consultas administrativas.
+
+## Git
+- La version de git instalada es `1.8.3.1`.

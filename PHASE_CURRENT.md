@@ -15,6 +15,7 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - [x] Ejecutar bootstrap y diagnóstico en nodos Slurm
 - [x] Preparar el dataset remoto y verificar los manifests
 - [x] Ejecutar el smoke test de una época
+- [x] Hacer observable y robusto el health check local de MLflow
 - [ ] Ejecutar baseline y weighted de `main16` con tres semillas
 - [ ] Elegir estrategia mediante macro-F1 de validation
 - [ ] Ejecutar `full23` con la estrategia ganadora y tres semillas
@@ -34,3 +35,5 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - MLflow usa SQLite + `mlflow-artifacts:/`; no se reescriben rutas después de sincronizar.
 - La copia local de `mlflow.db` y `artifacts/` fue validada y la UI inició correctamente.
 - No hay jobs activos. El siguiente paso es enviar secuencialmente los seis runs de `main16`.
+- El health check de MLflow ignora proxies y conserva el error de cada intento; si el
+  servidor termina o agota el plazo, adjunta el final de su log al output de Slurm.

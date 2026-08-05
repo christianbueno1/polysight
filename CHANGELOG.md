@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-08-05 11:19 -0500 — Fase 5: diagnóstico del health check de MLflow
+
+**Hecho:**
+- Diagnosticado el job `20748`: Gunicorn inició, pero el health check local agotó
+  sus 30 intentos antes de comenzar el entrenamiento.
+- Modificado el health check para omitir proxies al consultar `127.0.0.1`, conservar
+  el error de cada intento y comprobar que el proceso de MLflow siga vivo.
+- Añadido el final del log de MLflow al output de Slurm cuando el arranque falla.
+
+**Decisiones:**
+- La verificación local no heredará proxies del entorno del cluster.
+- Los errores de disponibilidad dejan de silenciarse para que una recurrencia tenga
+  una causa observable en el propio log del job.
+
+**Pendiente / carry-over:**
+- Publicar el ajuste, actualizar CEDIA y reintentar el primer baseline de `main16`.
+- Encadenar los cinco runs restantes solo después de validar el nuevo arranque.
+
+---
+
 ## 2026-08-05 02:21 -0500 — Fase 5: cierre de sesión antes de experimentos
 
 **Hecho:**

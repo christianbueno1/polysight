@@ -158,3 +158,72 @@ se incluyen en las 2:01:11 de entrenamiento.
 En estabilidad predictiva, main16 baseline y full23 baseline tuvieron desviaciones de
 macro-F1 de 0.002987 y 0.002836. Main16 weighted fue más variable (0.010611), además de
 obtener menor macro-F1 medio.
+
+## Conclusiones
+
+1. EfficientNet-B0 con transferencia de aprendizaje ofrece un baseline sólido para
+   main16: macro-F1 test 0.852100, accuracy 0.919160 y resultados estables entre tres
+   semillas.
+2. Ponderar la entropía cruzada no mejoró el criterio principal agregado. Aumentó
+   balanced accuracy media, pero redujo macro-F1 medio y mostró mayor variación.
+3. Full23 no resuelve adecuadamente las 23 clases. Su accuracy cercana a 0.90 coexiste
+   con macro-F1 0.612138 y seis clases sin aciertos en test.
+4. La escasez extrema y la proximidad visual/semántica entre categorías son el principal
+   límite observado. Agregar clases con 6–53 imágenes totales no basta para obtener un
+   clasificador equilibrado mediante el protocolo actual.
+5. Main16 puede considerarse un resultado experimental reproducible dentro de este
+   dataset y split. No constituye validación clínica ni evidencia suficiente para uso
+   diagnóstico.
+
+## Limitaciones y amenazas a la validez
+
+### Validez interna
+
+- HyperKvasir no aporta identificadores suficientes de paciente o procedimiento. El
+  split no puede garantizar independencia clínica entre train, validation y test.
+- Los duplicados exactos permanecen en un único split, pero los posibles duplicados
+  perceptuales detectados mediante dHash solo se reportaron; no fueron adjudicados
+  manualmente ni agrupados automáticamente.
+- Las semillas controlan Python, NumPy y PyTorch, pero `torch.backends.cudnn.benchmark`
+  está habilitado. No se garantiza repetibilidad bit a bit de kernels CUDA.
+- Los checkpoints se eligieron correctamente sin mirar test, pero solo se exploraron
+  dos pérdidas sobre una arquitectura y un conjunto fijo de hiperparámetros.
+
+### Validez estadística
+
+- Tres semillas permiten describir variación, no demostrar significancia estadística.
+- Existe una sola partición 70/15/15. No se realizó validación cruzada ni evaluación en
+  múltiples cohortes.
+- Varias clases full23 tienen soporte test entre 1 y 8. Sus métricas son extremadamente
+  discretas e inestables; un solo acierto cambia sustancialmente recall y F1.
+- La evaluación test única evita ajuste posterior, pero no proporciona intervalos de
+  confianza ni estima variación entre posibles tests.
+
+### Validez de constructo y medición
+
+- Las etiquetas se tratan como clases nominales independientes, aunque grados de
+  colitis y esophagitis tienen relación ordinal y fronteras visuales cercanas.
+- Accuracy y weighted-F1 están dominadas por clases frecuentes; no deben presentarse
+  aisladamente como evidencia de desempeño multiclase equilibrado.
+- No se evaluaron calibración, sensibilidad/especificidad por umbral, incertidumbre,
+  rechazo de casos fuera de distribución ni desempeño por dispositivo o centro.
+- Las matrices guardadas son imágenes de conteos absolutos. Falta una tabla de conteos
+  y una versión normalizada que facilite auditoría exacta de errores.
+
+### Validez externa y clínica
+
+- Todo el análisis usa HyperKvasir; no existe validación externa en otro hospital,
+  equipo endoscópico, población o protocolo de captura.
+- El preentrenamiento ImageNet introduce conocimiento útil, pero no elimina el cambio
+  de dominio entre imágenes naturales y endoscopia.
+- Los datos son frames etiquetados. El estudio no evalúa dependencia temporal en video,
+  múltiples hallazgos por frame ni integración en un flujo clínico.
+- Top-3 alto no equivale a utilidad clínica: un sistema real necesita criterios de
+  seguridad, calibración, revisión humana y evaluación prospectiva.
+
+## Alcance de las afirmaciones
+
+Los resultados permiten afirmar que el pipeline reproduce una comparación controlada
+de EfficientNet-B0 sobre dos perfiles de HyperKvasir y que main16 es más robusto bajo
+este protocolo. No permiten afirmar generalización clínica, superioridad frente a otras
+arquitecturas, desempeño por paciente ni capacidad diagnóstica autónoma.

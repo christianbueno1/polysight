@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-05 18:23 -0500 — Fase 6: conclusiones y amenazas a la validez
+
+**Hecho:**
+- Documentadas conclusiones de main16, weighted y full23 sin modificar modelos.
+- Registradas amenazas internas, estadísticas, de constructo, medición y validez externa.
+- Delimitadas explícitamente las afirmaciones permitidas por el experimento.
+
+**Decisiones:**
+- Main16 se describe como baseline reproducible en HyperKvasir, no como modelo validado
+  clínicamente.
+- Full23 se considera insuficiente para clasificación equilibrada de 23 clases bajo el
+  protocolo actual, pese a su accuracy global.
+- No se realizan nuevos ajustes derivados de resultados test.
+
+**Pendiente / carry-over:**
+- Verificar trazabilidad completa de configuraciones, commits, manifests y artefactos.
+
+---
+
 ## 2026-08-05 18:15 -0500 — Fase 6: consumo y estabilidad
 
 **Hecho:**

@@ -15,7 +15,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - [x] Comparar métricas agregadas de main16 y full23
 - [x] Analizar métricas por clase y matrices de confusión finales
 - [x] Documentar rendimiento, estabilidad y consumo computacional
-- [ ] Documentar conclusiones, limitaciones y amenazas a la validez
+- [x] Documentar conclusiones, limitaciones y amenazas a la validez
 - [ ] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
 - [ ] Actualizar la documentación principal con resultados reproducibles
 - [ ] Ejecutar validación final de pruebas, lint y estructura de artefactos
@@ -38,3 +38,5 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   las matrices actuales son heatmaps de conteos absolutos, no matrices normalizadas.
 - Los nueve entrenamientos sumaron 2:01:11 de A100 y ~11.86 CPU-h; consumo y estabilidad
   están documentados en `docs/results.md` con las limitaciones de muestreo GPU.
+- Las conclusiones limitan explícitamente el alcance al dataset/split y documentan
+  amenazas internas, estadísticas, de medición, externas y clínicas.

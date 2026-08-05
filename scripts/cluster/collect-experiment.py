@@ -42,20 +42,25 @@ SUMMARY_FIELDS = (
 )
 
 
-def parse_duration(value: str) -> int:
+def parse_duration(value: str) -> int | float:
     """Convierte [[DD-]HH:]MM:SS a segundos."""
     days = 0
     if "-" in value:
         day_text, value = value.split("-", 1)
         days = int(day_text)
-    parts = [int(part) for part in value.split(":")]
+    raw_parts = value.split(":")
+    parts = [int(part) for part in raw_parts[:-1]]
+    seconds = float(raw_parts[-1])
     if len(parts) == 3:
-        hours, minutes, seconds = parts
-    elif len(parts) == 2:
-        hours, (minutes, seconds) = 0, parts
+        raise ValueError(f"Duración Slurm inválida: {value}")
+    if len(parts) == 2:
+        hours, minutes = parts
+    elif len(parts) == 1:
+        hours, minutes = 0, parts[0]
     else:
         raise ValueError(f"Duración Slurm inválida: {value}")
-    return days * 86400 + hours * 3600 + minutes * 60 + seconds
+    total = days * 86400 + hours * 3600 + minutes * 60 + seconds
+    return int(total) if total.is_integer() else total
 
 
 def parse_memory_mib(value: str) -> float | None:
@@ -125,7 +130,7 @@ def regenerate_summary(runs_dir: Path, summary_path: Path) -> None:
     for path in sorted(runs_dir.glob("*.yaml"), key=lambda item: int(item.stem)):
         rows.append(summary_row(yaml.safe_load(path.read_text(encoding="utf-8"))))
     with summary_path.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=SUMMARY_FIELDS)
+        writer = csv.DictWriter(stream, fieldnames=SUMMARY_FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

@@ -11,6 +11,7 @@ SPEC.loader.exec_module(MODULE)
 def test_parse_duration() -> None:
     assert MODULE.parse_duration("00:16:40") == 1000
     assert MODULE.parse_duration("1-01:02:03") == 90123
+    assert MODULE.parse_duration("57:30.093") == 3450.093
 
 
 def test_parse_memory_mib() -> None:

@@ -11,6 +11,7 @@
 
 set -euo pipefail
 source "${SLURM_SUBMIT_DIR}/slurm/common.sh"
+start_mlflow_server
 
 nvidia-smi
 srun polysight-train --config configs/smoke-main16.yaml --seed 42

@@ -1,29 +1,34 @@
 # PHASE_CURRENT
 
-## Fase 5 — Ejecución experimental main16 y full23
+## Fase 6 — Análisis final, documentación de resultados y release
 
-**Objetivo:** Publicar el código trazable, validar el entorno CEDIA y ejecutar los
-experimentos acordados sin utilizar el nodo de login para cómputo.
+**Objetivo:** Analizar los resultados cerrados sin volver a consultar test para ajustar
+modelos, documentar conclusiones y limitaciones, y preparar un release reproducible.
+
+**Contexto:** Ver `experiments/`, `artifacts/cedia/final-evaluation/`, `NOTES.md` y
+`docs/cluster.md`.
 
 ---
 
 ### Tareas
 
-- [ ] Reautenticar `gh` y crear el repositorio privado de GitHub
-- [ ] Publicar `main` y `dev`; configurar `dev` como branch de trabajo
-- [ ] Configurar acceso GitHub desde CEDIA y clonar el repositorio
-- [ ] Ejecutar bootstrap y diagnóstico en nodos Slurm
-- [ ] Preparar el dataset remoto y verificar los manifests
-- [ ] Ejecutar el smoke test de una época
-- [ ] Ejecutar baseline y weighted de `main16` con tres semillas
-- [ ] Elegir estrategia mediante macro-F1 de validation
-- [ ] Ejecutar `full23` con la estrategia ganadora y tres semillas
-- [ ] Evaluar una vez los modelos finales sobre test
-- [ ] Sincronizar runs y comprobar MLflow local
+- [ ] Comparar métricas agregadas de main16 y full23
+- [ ] Analizar métricas por clase y matrices de confusión finales
+- [ ] Documentar rendimiento, estabilidad y consumo computacional
+- [ ] Documentar conclusiones, limitaciones y amenazas a la validez
+- [ ] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
+- [ ] Actualizar la documentación principal con resultados reproducibles
+- [ ] Ejecutar validación final de pruebas, lint y estructura de artefactos
+- [ ] Preparar y etiquetar el release estable
 
 ---
 
 ### Notas y decisiones
 
-- La fase está bloqueada hasta renovar la autenticación de GitHub.
-- No se sustituirá Git por una copia ad hoc para evitar perder trazabilidad experimental.
+- Test quedó cerrado después de una única evaluación por perfil; no se ajustarán modelos
+  ni hiperparámetros usando esos resultados.
+- Modelos finales: main16 baseline semilla 42 y full23 baseline semilla 2026.
+- Resultados consolidados en `experiments/summary.csv` y
+  `experiments/final-evaluation.yaml`.
+- Matrices y métricas por clase finales están sincronizadas bajo
+  `artifacts/cedia/final-evaluation/` y permanecen fuera de Git.

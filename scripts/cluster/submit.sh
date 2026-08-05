@@ -4,7 +4,7 @@ set -euo pipefail
 : "${1:?Uso: $0 slurm/job.sbatch [VARIABLE=valor ...]}"
 JOB_PATH="$1"
 shift
-REMOTE_DIR="${POLYSIGHT_REMOTE_DIR:-/home/christian.bueno__espol.edu.ec/polysight}"
+REMOTE_DIR="${POLYSIGHT_REMOTE_DIR:-/home/christian.bueno__espol.edu.ec/projects/polysight}"
 
 EXPORTS="ALL"
 for assignment in "$@"; do

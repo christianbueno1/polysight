@@ -95,7 +95,7 @@ Enroot está disponible para ejecutar contenedores.
 ## Flujo operativo PolySight
 
 El código se versiona en el repositorio privado y se clona en
-`/home/christian.bueno__espol.edu.ec/polysight`. Dataset y resultados no pasan por Git:
+`/home/christian.bueno__espol.edu.ec/projects/polysight`. Dataset y resultados no pasan por Git:
 se transfieren con `rsync` usando siempre el alias `cedia` de `~/.ssh/config`.
 
 Orden de puesta en marcha:
@@ -112,7 +112,7 @@ Consultar el estado y los logs desde el nodo de acceso no ejecuta cómputo:
 
 ```bash
 ssh cedia 'squeue -u "$USER"'
-ssh cedia 'cd /home/christian.bueno__espol.edu.ec/polysight && tail -n 100 slurm-polysight-diagnose-JOB.out'
+ssh cedia 'cd /home/christian.bueno__espol.edu.ec/projects/polysight && tail -n 100 slurm-polysight-diagnose-JOB.out'
 ```
 
 Un entrenamiento completo se envía con configuración y semilla explícitas:
@@ -122,13 +122,18 @@ scripts/cluster/submit.sh slurm/train.sbatch \
   CONFIG_PATH=configs/main16-weighted.yaml RUN_SEED=42
 ```
 
-Al finalizar, los runs se copian y sus URI se vuelven portables para MLflow local:
+Al finalizar, se copian exclusivamente `mlflow.db` y `artifacts/`; los URI persistidos
+usan `mlflow-artifacts:/` y no requieren reescritura:
 
 ```bash
 scripts/cluster/sync-results.sh
-.venv/bin/mlflow ui --backend-store-uri artifacts/cedia/mlruns
+cd artifacts/cedia/mlflow
+uvx mlflow ui --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --port 5000
 ```
 
 Los archivos `slurm/*.sbatch` abortan fuera de Slurm y `slurm/common.sh` rechaza un
 hostname `login*`. El nodo de acceso se limita a Git, archivos, `sbatch`, `squeue` y
 consultas administrativas.
+
+## Git
+- La version de git instalada es `1.8.3.1`.

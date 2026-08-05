@@ -11,6 +11,7 @@
 
 set -euo pipefail
 source "${SLURM_SUBMIT_DIR}/slurm/common.sh"
+start_mlflow_server
 
 : "${CONFIG_PATH:?Debe exportar CONFIG_PATH, por ejemplo configs/main16-weighted.yaml}"
 RUN_SEED="${RUN_SEED:-42}"

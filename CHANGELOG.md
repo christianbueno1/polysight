@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-08-05 14:46 -0500 — Fase 5: inicio de full23 baseline
+
+**Hecho:**
+- Creada y validada `configs/full23-baseline.yaml` con pérdida `cross_entropy`.
+- Verificados manifiesto full23 de 10662 muestras, hash `baed4894…`, SQLite `ok` y
+  ausencia de jobs previos.
+- Enviados `20765`, `20766` y `20767` para semillas 42, 123 y 2026.
+- Confirmado el arranque de `20765`: MLflow HTTP 200, primer checkpoint del run
+  `832f77a45bd94319ad0c0f29555e059b` y muestra GPU de 7048 MiB.
+
+**Decisiones:**
+- Los tres runs usan baseline, estrategia elegida mediante el promedio de tres semillas
+  de `main16`.
+- `scontrol` confirmó `afterok:20765` y `afterok:20766`; la razón QOS mostrada
+  inicialmente por `squeue` no reemplazó las dependencias.
+- CEDIA permanece en `0067f2d` hasta cerrar la cadena para ejecutar un commit idéntico.
+
+**Pendiente / carry-over:**
+- Supervisar la cadena y consolidar métricas y consumo de los tres runs full23.
+
+---
+
 ## 2026-08-05 14:11 -0500 — Fase 5: cierre experimental de main16
 
 **Hecho:**

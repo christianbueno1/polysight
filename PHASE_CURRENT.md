@@ -19,7 +19,7 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - [x] Consolidar por run métricas, procedencia y consumo computacional
 - [x] Ejecutar baseline y weighted de `main16` con tres semillas
 - [x] Elegir estrategia mediante macro-F1 de validation
-- [ ] Ejecutar `full23` con la estrategia ganadora y tres semillas
+- [~] Ejecutar `full23` con la estrategia ganadora y tres semillas
 - [ ] Evaluar una vez los modelos finales sobre test
 - [x] Sincronizar MLflow portable y comprobar la UI local
 
@@ -49,3 +49,7 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
   consolidadas junto con `20755` en `experiments/`.
 - Baseline gana para `full23`: macro-F1 medio 0.856086 (desviación 0.002987), frente a
   weighted 0.849512 (desviación 0.010611), calculado sobre semillas 42, 123 y 2026.
+- Cadena `full23-baseline`: semilla 42 `20765`, semilla 123 `20766` y semilla 2026
+  `20767`, con dependencias `afterok` verificadas mediante `scontrol`.
+- El job `20765` inició sobre A100, creó su primer checkpoint y mostró 7048 MiB de
+  memoria GPU en una muestra puntual; los tres ejecutan el commit `0067f2d`.

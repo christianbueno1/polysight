@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-08-05 16:47 -0500 — Fase 6: comparación agregada de resultados
+
+**Hecho:**
+- Calculadas medias y desviaciones de cinco métricas sobre tres semillas para main16
+  baseline, main16 weighted y full23 baseline.
+- Documentados por separado validation y la única evaluación final sobre test.
+- Cuantificadas las brechas validation–test y accuracy–macro-F1.
+
+**Decisiones:**
+- No se atribuye significancia estadística con solo tres semillas; se reporta variación
+  descriptiva.
+- Accuracy main16 y full23 no se interpreta como comparación directa porque los espacios
+  de etiquetas son distintos.
+- La brecha de full23 se investigará mediante métricas por clase y matriz de confusión,
+  sin modificar modelos a partir de test.
+
+**Pendiente / carry-over:**
+- Analizar métricas por clase y matrices de confusión finales.
+
+---
+
 ## 2026-08-05 16:27 -0500 — Fase 5: sincronización y cierre
 
 **Hecho:**

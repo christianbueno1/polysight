@@ -12,7 +12,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 
 ### Tareas
 
-- [ ] Comparar métricas agregadas de main16 y full23
+- [x] Comparar métricas agregadas de main16 y full23
 - [ ] Analizar métricas por clase y matrices de confusión finales
 - [ ] Documentar rendimiento, estabilidad y consumo computacional
 - [ ] Documentar conclusiones, limitaciones y amenazas a la validez
@@ -32,3 +32,5 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   `experiments/final-evaluation.yaml`.
 - Matrices y métricas por clase finales están sincronizadas bajo
   `artifacts/cedia/final-evaluation/` y permanecen fuera de Git.
+- La comparación agregada está documentada en `docs/results.md`; separa promedios de
+  validation (tres semillas) de la evaluación test única de cada perfil.

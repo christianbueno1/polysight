@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-08-05 18:14 -0500 — Fase 6: análisis por clase y matrices
+
+**Hecho:**
+- Analizadas métricas por clase y matrices finales de main16 y full23.
+- Identificadas seis clases full23 con F1 cero y soportes entre 1 y 8 ejemplos.
+- Documentadas las clases débiles y fuertes de main16 y los grupos de confusión visibles.
+
+**Decisiones:**
+- Las métricas por clase son la fuente cuantitativa; el heatmap solo permite lectura
+  cualitativa de errores fuera de la diagonal.
+- No se repite test para reconstruir conteos. Para futuras rondas se recomienda guardar
+  matriz cruda CSV y visualización normalizada por fila desde la primera evaluación.
+
+**Pendiente / carry-over:**
+- Documentar rendimiento, estabilidad y consumo computacional.
+
+---
+
 ## 2026-08-05 16:47 -0500 — Fase 6: comparación agregada de resultados
 
 **Hecho:**

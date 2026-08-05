@@ -62,3 +62,67 @@ Con solo tres semillas se puede describir variación observada, pero no afirmar
 significancia estadística ni construir una estimación robusta de incertidumbre. Tampoco
 deben compararse las accuracies de main16 y full23 como si fueran exactamente la misma
 tarea: sus espacios de etiquetas contienen 16 y 23 clases, respectivamente.
+
+## Métricas por clase y matrices de confusión
+
+Las matrices finales representan conteos absolutos: filas son clases reales y columnas
+son predicciones. No están normalizadas. Por ello las celdas de clases con soporte 1–8
+son casi invisibles frente a clases con soporte cercano a 170; recall y F1 por clase son
+la fuente cuantitativa adecuada para interpretarlas.
+
+### Main16
+
+Las clases con menor F1 en test fueron:
+
+| Clase | Soporte | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|
+| ulcerative-colitis-grade-1 | 30 | 0.650000 | 0.433333 | 0.520000 |
+| ulcerative-colitis-grade-3 | 20 | 0.590909 | 0.650000 | 0.619048 |
+| esophagitis-a | 60 | 0.655738 | 0.666667 | 0.661157 |
+| impacted-stool | 20 | 0.857143 | 0.600000 | 0.705882 |
+| ulcerative-colitis-grade-2 | 66 | 0.704225 | 0.757576 | 0.729927 |
+| esophagitis-b-d | 39 | 0.931034 | 0.692308 | 0.794118 |
+
+La diagonal equivale a 13/30 aciertos para colitis grado 1, 13/20 para grado 3,
+40/60 para esophagitis-a, 12/20 para impacted-stool, 50/66 para colitis grado 2 y
+27/39 para esophagitis-b-d.
+
+Visualmente, las confusiones más marcadas aparecen dentro del continuo de grados de
+colitis, entre esophagitis-a y z-line/esophagitis-b-d, y entre las dos clases de pólipos
+teñidos. Esta lectura es cualitativa porque el pipeline guardó el heatmap, pero no una
+tabla con los conteos fuera de la diagonal.
+
+Las clases más sólidas fueron retroflex-stomach (F1 1.000000), bbps-0-1 (0.989691),
+pylorus (0.983498), cecum (0.977049) y bbps-2-3 (0.968661).
+
+### Full23
+
+Seis de las siete clases escasas añadidas a full23 obtuvieron precision, recall y F1
+iguales a cero:
+
+| Clase | Soporte test | F1 |
+|---|---:|---:|
+| barretts | 6 | 0.000000 |
+| barretts-short-segment | 8 | 0.000000 |
+| hemorrhoids | 1 | 0.000000 |
+| ileum | 1 | 0.000000 |
+| ulcerative-colitis-grade-1-2 | 2 | 0.000000 |
+| ulcerative-colitis-grade-2-3 | 4 | 0.000000 |
+
+La séptima, ulcerative-colitis-grade-0-1, alcanzó F1 0.600000 con soporte 5. Entre las
+clases compartidas con main16, colitis grado 1 volvió a ser la más débil (F1 0.415094,
+recall 0.366667). El heatmap muestra que las confusiones se concentran en los grados
+adyacentes de colitis y en la región esofágica, mientras las clases frecuentes conservan
+una diagonal dominante.
+
+Estos resultados explican la coexistencia de accuracy 0.900501 y macro-F1 0.612138:
+las clases frecuentes tienen buen desempeño, pero cada clase sin aciertos pesa lo mismo
+en macro-F1. No es evidencia de que el modelo full23 resuelva adecuadamente las 23
+clases.
+
+### Limitación del artefacto
+
+Para futuras rondas, `save_evaluation_artifacts` debería guardar además la matriz cruda
+como CSV y una segunda visualización normalizada por fila. No se repite la evaluación
+test actual para reconstruirlas: las conclusiones presentes usan exclusivamente los
+artefactos producidos en la evaluación única ya cerrada.

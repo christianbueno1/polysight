@@ -13,7 +13,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 ### Tareas
 
 - [x] Comparar métricas agregadas de main16 y full23
-- [ ] Analizar métricas por clase y matrices de confusión finales
+- [x] Analizar métricas por clase y matrices de confusión finales
 - [ ] Documentar rendimiento, estabilidad y consumo computacional
 - [ ] Documentar conclusiones, limitaciones y amenazas a la validez
 - [ ] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
@@ -34,3 +34,5 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   `artifacts/cedia/final-evaluation/` y permanecen fuera de Git.
 - La comparación agregada está documentada en `docs/results.md`; separa promedios de
   validation (tres semillas) de la evaluación test única de cada perfil.
+- El análisis por clase confirma que seis clases escasas de full23 obtuvieron F1 cero;
+  las matrices actuales son heatmaps de conteos absolutos, no matrices normalizadas.

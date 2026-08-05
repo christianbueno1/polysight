@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-08-05 16:04 -0500 — Fase 5: cierre experimental de full23
+
+**Hecho:**
+- Confirmado `20767` como `COMPLETED` con exit code `0:0` y duración 11:50.
+- Consolidado el tercer run full23, con macro-F1 de validation 0.632172.
+- Verificadas las tres semillas full23: macro-F1 medio 0.629718 y desviación estándar
+  0.002836; accuracy media 0.898623 y balanced accuracy media 0.632804.
+
+**Decisiones:**
+- El run full23 candidato a evaluación final es la semilla 2026, run MLflow
+  `29029e09b7034dac8013b07c0897c6b4`, por el mejor macro-F1 de validation.
+- Test permanece sin consultar hasta ejecutar una única evaluación de los modelos
+  finales seleccionados mediante validation.
+
+**Pendiente / carry-over:**
+- Confirmar y ejecutar una vez sobre test el mejor baseline main16 (semilla 42) y el
+  mejor baseline full23 (semilla 2026).
+- Sincronizar la SQLite y artefactos MLflow después de las evaluaciones finales.
+
+---
+
 ## 2026-08-05 15:16 -0500 — Fase 5: avance de full23 baseline
 
 **Hecho:**

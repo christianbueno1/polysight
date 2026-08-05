@@ -17,8 +17,8 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - [x] Ejecutar el smoke test de una época
 - [x] Hacer observable y robusto el health check local de MLflow
 - [x] Consolidar por run métricas, procedencia y consumo computacional
-- [~] Ejecutar baseline y weighted de `main16` con tres semillas
-- [ ] Elegir estrategia mediante macro-F1 de validation
+- [x] Ejecutar baseline y weighted de `main16` con tres semillas
+- [x] Elegir estrategia mediante macro-F1 de validation
 - [ ] Ejecutar `full23` con la estrategia ganadora y tres semillas
 - [ ] Evaluar una vez los modelos finales sobre test
 - [x] Sincronizar MLflow portable y comprobar la UI local
@@ -45,3 +45,7 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
   `20761`, weighted 123 `20762` y weighted 2026 `20763`, enlazados mediante `afterok`.
 - El job `20759` inició correctamente sobre A100, creó su primer checkpoint y mostró
   5370 MiB de memoria GPU en una muestra puntual.
+- Los jobs `20759`–`20763` terminaron `COMPLETED` con exit code `0:0`; sus fichas están
+  consolidadas junto con `20755` en `experiments/`.
+- Baseline gana para `full23`: macro-F1 medio 0.856086 (desviación 0.002987), frente a
+  weighted 0.849512 (desviación 0.010611), calculado sobre semillas 42, 123 y 2026.

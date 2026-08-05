@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-08-05 14:11 -0500 — Fase 5: cierre experimental de main16
+
+**Hecho:**
+- Confirmados `20759`–`20763` como `COMPLETED` con exit code `0:0`.
+- Consolidadas las cinco fichas restantes; `experiments/summary.csv` contiene los seis
+  runs de `main16` con métricas, procedencia y consumo computacional.
+- Corregido el recolector para aceptar `TotalCPU` de Slurm con segundos fraccionarios.
+
+**Decisiones:**
+- Baseline es la estrategia ganadora por macro-F1 medio de validation: 0.856086 con
+  desviación estándar 0.002987, frente a weighted 0.849512 con desviación 0.010611.
+- El mejor run individual weighted (semilla 2026, 0.861258) no reemplaza el criterio
+  predefinido por estrategia y tres semillas; baseline también mostró menor variación.
+
+**Pendiente / carry-over:**
+- Ejecutar `full23` baseline con semillas 42, 123 y 2026.
+- Evaluar una sola vez sobre test los modelos finales después de cerrar `full23`.
+
+---
+
 ## 2026-08-05 12:26 -0500 — Fase 5: cadena main16 restante
 
 **Hecho:**

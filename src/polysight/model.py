@@ -24,7 +24,13 @@ def build_model(
         weights = EfficientNet_B0_Weights.DEFAULT if pretrained else None
         model = efficientnet_b0(weights=weights)
     in_features = model.classifier[1].in_features
-    model.classifier = nn.Sequential(nn.Dropout(p=dropout), nn.Linear(in_features, num_classes))
+    # Las capas convolucionales están dentro de model.features, 
+    # implementadas por torchvision.models.efficientnet_b0. 
+    # PolySight únicamente reemplaza la cabeza clasificadora:
+    model.classifier = nn.Sequential(
+        nn.Dropout(p=dropout), 
+        nn.Linear(in_features, num_classes)
+    )
     return model
 
 

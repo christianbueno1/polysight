@@ -1,27 +1,27 @@
 # PHASE_CURRENT
 
-## Fase 2 — Preparación reproducible de HyperKvasir y splits
+## Fase 3 — Pipeline PyTorch de entrenamiento y evaluación
 
-**Objetivo:** Validar el archivo oficial, extraerlo de forma segura y generar manifests
-deterministas para los perfiles `main16` y `full23` sin versionar imágenes.
+**Objetivo:** Implementar EfficientNet-B0, carga de datos, entrenamiento en dos etapas,
+evaluación, predicción y registro MLflow sin ejecutar entrenamiento local.
 
 ---
 
 ### Tareas
 
-- [ ] Implementar validación de tamaño, SHA-256, estructura y conteos
-- [ ] Implementar extracción segura e idempotente
-- [ ] Implementar perfiles `main16` y `full23`
-- [ ] Generar splits 70/15/15 por clase con hashes y semilla fija
-- [ ] Mantener duplicados exactos en un mismo split
-- [ ] Generar reporte de posibles duplicados perceptuales
-- [ ] Crear pruebas unitarias del pipeline de datos
-- [ ] Actualizar la documentación del dataset
+- [ ] Definir configuración tipada y archivos YAML experimentales
+- [ ] Implementar Dataset, transforms y DataLoaders
+- [ ] Implementar EfficientNet-B0 con cabeza configurable
+- [ ] Implementar cross-entropy normal y ponderada
+- [ ] Implementar entrenamiento AMP, early stopping, scheduler y reanudación
+- [ ] Implementar evaluación y artefactos por clase
+- [ ] Implementar predicción top-1/top-3
+- [ ] Integrar MLflow y metadatos reproducibles
+- [ ] Crear pruebas sin ciclos de optimización locales
 
 ---
 
 ### Notas y decisiones
 
-- El perfil principal aplica el umbral reproducible de 100 imágenes por clase.
-- `full23` reserva al menos un ejemplo de cada clase para validation y test.
-- La ausencia de identificadores de paciente/procedimiento se documenta como limitación.
+- El entrenamiento real y el smoke test de una época se ejecutarán mediante Slurm.
+- Localmente solo se validan interfaces, tensores y cálculos deterministas.

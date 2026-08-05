@@ -1,0 +1,53 @@
+schema_version: 1
+evaluated_at: '2026-08-05T16:23:00-05:00'
+selection_rule: Mejor macro-F1 de validation dentro de la estrategia seleccionada.
+test_policy: Una única evaluación sobre test por perfil después de seleccionar el modelo.
+models:
+  - profile: main16
+    strategy: baseline
+    seed: 42
+    training_job_id: 20755
+    mlflow_run_id: cb29daac69dd4c9aa8a31ca621d08613
+    validation_macro_f1: 0.8583948872106766
+    evaluation_job_id: 20769
+    evaluation_state: COMPLETED
+    exit_code: '0:0'
+    elapsed: '00:00:39'
+    checkpoint: /home/christian.bueno__espol.edu.ec/projects/polysight-storage/runs/main16-baseline/cb29daac69dd4c9aa8a31ca621d08613/best.pt
+    output_dir: /home/christian.bueno__espol.edu.ec/projects/polysight-storage/runs/final-evaluation/main16-baseline-seed42
+    test_metrics:
+      accuracy: 0.9191597708465945
+      balanced_accuracy: 0.8424126259590246
+      macro_f1: 0.8521002634453307
+      top_3_accuracy: 0.9968173138128581
+      weighted_f1: 0.9175001570600437
+    artifacts:
+      - metrics.json
+      - per-class-metrics.csv
+      - confusion-matrix.png
+  - profile: full23
+    strategy: baseline
+    seed: 2026
+    training_job_id: 20767
+    mlflow_run_id: 29029e09b7034dac8013b07c0897c6b4
+    validation_macro_f1: 0.6321722368275554
+    evaluation_job_id: 20770
+    evaluation_state: COMPLETED
+    exit_code: '0:0'
+    elapsed: '00:00:25'
+    checkpoint: /home/christian.bueno__espol.edu.ec/projects/polysight-storage/runs/full23-baseline/29029e09b7034dac8013b07c0897c6b4/best.pt
+    output_dir: /home/christian.bueno__espol.edu.ec/projects/polysight-storage/runs/final-evaluation/full23-baseline-seed2026
+    test_metrics:
+      accuracy: 0.9005006257822278
+      balanced_accuracy: 0.6150321711599335
+      macro_f1: 0.6121377118735469
+      top_3_accuracy: 0.9843554443053817
+      weighted_f1: 0.8943884995113613
+    artifacts:
+      - metrics.json
+      - per-class-metrics.csv
+      - confusion-matrix.png
+sources:
+  metrics: <output_dir>/metrics.json
+  resource_accounting: sacct -j 20769,20770
+  code_commit: fe8d0be95f473817c02df456640797a76ef2a210

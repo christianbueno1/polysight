@@ -2,6 +2,47 @@
 
 ---
 
+## 2026-08-05 16:27 -0500 — Fase 5: sincronización y cierre
+
+**Hecho:**
+- Sincronizados 10 runs y 441 MB de artefactos MLflow; SQLite pasó `quick_check` y se
+  verificaron 14 URI portables.
+- Copiados localmente los artefactos finales de test para main16 y full23, incluidas
+  matrices de confusión y métricas por clase.
+- Marcada la Fase 5 como completada y preparado el tablero de la Fase 6.
+
+**Decisiones:**
+- El análisis de matrices se difiere a la Fase 6 para separar ejecución experimental de
+  interpretación de resultados.
+- Los artefactos binarios permanecen fuera de Git; sus métricas y procedencia sí quedan
+  consolidadas en archivos versionados.
+
+**Pendiente / carry-over:**
+- Analizar resultados y matrices, documentar limitaciones y preparar el release.
+
+---
+
+## 2026-08-05 16:23 -0500 — Fase 5: evaluación final sobre test
+
+**Hecho:**
+- Evaluado una sola vez el modelo main16 baseline semilla 42 mediante `20769`; obtuvo
+  macro-F1 test 0.852100 y accuracy 0.919160.
+- Evaluado una sola vez el modelo full23 baseline semilla 2026 mediante `20770`; obtuvo
+  macro-F1 test 0.612138 y accuracy 0.900501.
+- Verificados para ambos perfiles `metrics.json`, métricas por clase y matriz de
+  confusión; consolidada la selección y resultados en `final-evaluation.yaml`.
+
+**Decisiones:**
+- Los checkpoints se eligieron exclusivamente por macro-F1 de validation antes de
+  consultar test; no se harán nuevos ajustes basados en estas métricas test.
+- Los directorios de salida son distintos por perfil para impedir sobrescrituras.
+
+**Pendiente / carry-over:**
+- Sincronizar MLflow y los artefactos finales, analizar resultados y matrices de
+  confusión en la Fase 6.
+
+---
+
 ## 2026-08-05 16:04 -0500 — Fase 5: cierre experimental de full23
 
 **Hecho:**

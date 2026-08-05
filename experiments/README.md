@@ -7,6 +7,7 @@ Los modelos, logs completos y artefactos de MLflow permanecen fuera de Git.
 
 - `runs/<slurm_job_id>.yaml`: ficha inmutable de un job de entrenamiento.
 - `summary.csv`: índice regenerable para comparar runs.
+- `final-evaluation.yaml`: selección final y única evaluación sobre test por perfil.
 
 Las fichas separan tres conceptos:
 

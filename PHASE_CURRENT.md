@@ -9,15 +9,15 @@ en nodos de cómputo, junto con sincronización reproducible por Git y rsync.
 
 ### Tareas
 
-- [ ] Implementar bootstrap del entorno remoto reutilizando módulos
-- [ ] Crear job diagnóstico de GPU y dependencias
-- [ ] Crear job CPU de preparación del dataset
-- [ ] Crear job GPU de smoke test
-- [ ] Crear job GPU parametrizable de entrenamiento
-- [ ] Crear job de evaluación de test
-- [ ] Crear scripts de envío y sincronización de datos/resultados
-- [ ] Hacer portables los URI de artefactos MLflow sincronizados
-- [ ] Documentar la operación sin ejecutar cargas en `login1`
+- [x] Implementar bootstrap del entorno remoto reutilizando módulos
+- [x] Crear job diagnóstico de GPU y dependencias
+- [x] Crear job CPU de preparación del dataset
+- [x] Crear job GPU de smoke test
+- [x] Crear job GPU parametrizable de entrenamiento
+- [x] Crear job de evaluación de test
+- [x] Crear scripts de envío y sincronización de datos/resultados
+- [x] Hacer portables los URI de artefactos MLflow sincronizados
+- [x] Documentar la operación sin ejecutar cargas en `login1`
 
 ---
 

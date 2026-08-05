@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-08-04 22:38 -0500 — Fase 3: pipeline PyTorch
+
+**Hecho:**
+- Implementados configuración YAML, Dataset, transforms y DataLoaders.
+- Implementado EfficientNet-B0 preentrenado con cabeza para 16 o 23 clases.
+- Implementado entrenamiento congelado/fine-tuning con AMP, checkpoints y reanudación.
+- Implementadas evaluación, predicción top-3, matrices de confusión y MLflow.
+- Creado `uv.lock`; pasan 5 pruebas locales y Ruff sin errores.
+
+**Decisiones:**
+- `run_training` rechaza CPU para impedir entrenamiento local accidental.
+- Los pesos de clase se calculan solo desde training y se normalizan a media 1.
+- Test no se consulta durante training; requiere el comando explícito de evaluación.
+
+**Pendiente / carry-over:**
+- Validar torch, torchvision, CUDA, cuDNN y las pruebas omitidas en un nodo GPU de CEDIA.
+- Crear jobs Slurm y sincronización Git/rsync/MLflow.
+
+---
+
 ## 2026-08-04 21:27 -0500 — Fase 2: preparación de HyperKvasir
 
 **Hecho:**

@@ -9,15 +9,15 @@ evaluación, predicción y registro MLflow sin ejecutar entrenamiento local.
 
 ### Tareas
 
-- [ ] Definir configuración tipada y archivos YAML experimentales
-- [ ] Implementar Dataset, transforms y DataLoaders
-- [ ] Implementar EfficientNet-B0 con cabeza configurable
-- [ ] Implementar cross-entropy normal y ponderada
-- [ ] Implementar entrenamiento AMP, early stopping, scheduler y reanudación
-- [ ] Implementar evaluación y artefactos por clase
-- [ ] Implementar predicción top-1/top-3
-- [ ] Integrar MLflow y metadatos reproducibles
-- [ ] Crear pruebas sin ciclos de optimización locales
+- [x] Definir configuración tipada y archivos YAML experimentales
+- [x] Implementar Dataset, transforms y DataLoaders
+- [x] Implementar EfficientNet-B0 con cabeza configurable
+- [x] Implementar cross-entropy normal y ponderada
+- [x] Implementar entrenamiento AMP, early stopping, scheduler y reanudación
+- [x] Implementar evaluación y artefactos por clase
+- [x] Implementar predicción top-1/top-3
+- [x] Integrar MLflow y metadatos reproducibles
+- [x] Crear pruebas sin ciclos de optimización locales
 
 ---
 
@@ -25,3 +25,4 @@ evaluación, predicción y registro MLflow sin ejecutar entrenamiento local.
 
 - El entrenamiento real y el smoke test de una época se ejecutarán mediante Slurm.
 - Localmente solo se validan interfaces, tensores y cálculos deterministas.
+- Las pruebas que importan PyTorch se omiten localmente y se ejecutarán en el diagnóstico CEDIA.

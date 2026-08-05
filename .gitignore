@@ -18,12 +18,12 @@ build/
 !.env.example
 
 # Datos y artefactos ML
-data/
-datasets/
-artifacts/
-mlruns/
-outputs/
-checkpoints/
+/data/
+/datasets/
+/artifacts/
+/mlruns/
+/outputs/
+/checkpoints/
 *.pt
 *.pth
 *.ckpt
@@ -32,7 +32,7 @@ checkpoints/
 *.tar.gz
 
 # Slurm y logs
-logs/
+/logs/
 slurm-*.out
 slurm-*.err
 

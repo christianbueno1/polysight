@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-08-05 12:26 -0500 — Fase 5: cadena main16 restante
+
+**Hecho:**
+- Verificado el preflight remoto: commit `bcafbdc`, árbol limpio, cero jobs activos,
+  configuraciones y manifest disponibles.
+- Enviados cinco jobs secuenciales: `20759`, `20760`, `20761`, `20762` y `20763`.
+- Confirmado el arranque de `20759`: MLflow HTTP 200, proceso GPU con 5370 MiB y
+  primer checkpoint del run `d3745b59a0ad42fe8e23878e54af60ec`.
+
+**Decisiones:**
+- Cada sucesor usa `afterok`; un fallo detiene la cadena antes de escribir de nuevo en
+  SQLite.
+- CEDIA permanece en `bcafbdc` durante toda la cadena para mantener idéntico el commit
+  ejecutado; las actualizaciones documentales se desplegarán al terminar.
+
+**Pendiente / carry-over:**
+- Supervisar cada transición, revisar logs y recolectar las cinco fichas experimentales.
+
+---
+
 ## 2026-08-05 12:12 -0500 — Fase 5: publicación del registro experimental
 
 **Hecho:**

@@ -17,7 +17,7 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - [x] Ejecutar el smoke test de una época
 - [x] Hacer observable y robusto el health check local de MLflow
 - [x] Consolidar por run métricas, procedencia y consumo computacional
-- [ ] Ejecutar baseline y weighted de `main16` con tres semillas
+- [~] Ejecutar baseline y weighted de `main16` con tres semillas
 - [ ] Elegir estrategia mediante macro-F1 de validation
 - [ ] Ejecutar `full23` con la estrategia ganadora y tres semillas
 - [ ] Evaluar una vez los modelos finales sobre test
@@ -41,3 +41,7 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
   servidor termina o agota el plazo, adjunta el final de su log al output de Slurm.
 - Los registros versionados viven en `experiments/runs/`; `summary.csv` permite comparar
   runs y el recolector conserva fuentes, recursos solicitados y consumo observado.
+- Cadena `main16` restante: baseline 123 `20759`, baseline 2026 `20760`, weighted 42
+  `20761`, weighted 123 `20762` y weighted 2026 `20763`, enlazados mediante `afterok`.
+- El job `20759` inició correctamente sobre A100, creó su primer checkpoint y mostró
+  5370 MiB de memoria GPU en una muestra puntual.

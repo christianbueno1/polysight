@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-08-05 02:21 -0500 — Fase 5: cierre de sesión antes de experimentos
+
+**Hecho:**
+- Completado el smoke portable `20739` sobre una A100 en 1:31.
+- Confirmadas en SQLite las URI `mlflow-artifacts:/` del experimento y del run.
+- Sincronizados `mlflow.db` y 16,7 MB de artefactos; la UI local inició correctamente.
+- Reforzado `sync-results.sh` con bloqueo, copia atómica, `quick_check` y validación de URI.
+- Verificado que no quedaron jobs activos tras interrumpir el envío experimental.
+
+**Decisiones:**
+- No se usa ni se necesita `rebase-mlflow.py`.
+- Los seis runs `main16` se enviarán mañana de forma secuencial con dependencias `afterok`.
+- El smoke portable ejecutó el commit `cba8c7d`; CEDIA quedó actualizado después a `18ac15e`.
+
+**Pendiente / carry-over:**
+- Ejecutar baseline y weighted de `main16` con semillas 42, 123 y 2026.
+- Elegir la estrategia por macro-F1 de validation antes de lanzar `full23`.
+
+---
+
 ## 2026-08-05 01:32 -0500 — Fase 5: validación CEDIA y MLflow portable
 
 **Hecho:**

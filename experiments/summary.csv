@@ -1,0 +1,2 @@
+slurm_job_id,mlflow_run_id,name,profile,strategy,seed,git_commit,state,exit_code,elapsed_seconds,average_cpu_cores,max_rss_mib,gpu_model,gpu_memory_sample_mib,accuracy,balanced_accuracy,macro_f1,top_3_accuracy,weighted_f1
+20755,cb29daac69dd4c9aa8a31ca621d08613,main16-baseline,main16,baseline,42,87ac0694dc8e53f6d295b902ce4465af8dfd2aff,COMPLETED,0:0,1000,5.347,4235.039,a100-sxm4-40gb,7378,0.9159770846594526,0.8590389720513687,0.8583948872106766,0.9910884786760026,0.9142967276266037

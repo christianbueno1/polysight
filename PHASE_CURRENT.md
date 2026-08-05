@@ -16,6 +16,7 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - [x] Preparar el dataset remoto y verificar los manifests
 - [x] Ejecutar el smoke test de una época
 - [x] Hacer observable y robusto el health check local de MLflow
+- [x] Consolidar por run métricas, procedencia y consumo computacional
 - [ ] Ejecutar baseline y weighted de `main16` con tres semillas
 - [ ] Elegir estrategia mediante macro-F1 de validation
 - [ ] Ejecutar `full23` con la estrategia ganadora y tres semillas
@@ -34,8 +35,9 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 - El módulo `pytorch/2.2` expone realmente torch 2.10.0+cu128 y torchvision 0.25.0+cu128.
 - MLflow usa SQLite + `mlflow-artifacts:/`; no se reescriben rutas después de sincronizar.
 - La copia local de `mlflow.db` y `artifacts/` fue validada y la UI inició correctamente.
-- El reintento baseline `main16`, semilla 42, corre como job `20755`; los otros cinco
-  runs se enviarán solo después de confirmar su ejecución estable.
+- El baseline `main16`, semilla 42, terminó correctamente como job `20755` en 16:40,
+  con macro-F1 de validation 0.858395.
 - El health check de MLflow ignora proxies y conserva el error de cada intento; si el
   servidor termina o agota el plazo, adjunta el final de su log al output de Slurm.
-- En `20755`, MLflow respondió HTTP 200 en el intento 8 y el entrenamiento comenzó.
+- Los registros versionados viven en `experiments/runs/`; `summary.csv` permite comparar
+  runs y el recolector conserva fuentes, recursos solicitados y consumo observado.

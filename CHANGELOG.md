@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-08-05 12:04 -0500 — Fase 5: registro reproducible de experimentos
+
+**Hecho:**
+- Confirmado el job `20755` como `COMPLETED` con exit code `0:0` y duración 16:40.
+- Registrado el run MLflow `cb29daac69dd4c9aa8a31ca621d08613`, cuyo macro-F1 de
+  validation fue 0.858395.
+- Creado un YAML versionado por run y un CSV consolidado con procedencia, asignación,
+  consumo observado y métricas.
+- Implementado y probado un recolector que consulta `sacct`, el log de Slurm y
+  `validation/metrics.json` mediante SSH.
+
+**Decisiones:**
+- MLflow continúa como fuente de métricas y artefactos; los registros bajo
+  `experiments/` son el índice auditable y versionado.
+- Los 7378 MiB de GPU se documentan como muestra puntual, no como consumo máximo.
+- CPU promedio se deriva de `TotalCPU / elapsed`; RAM máxima se toma del step de
+  entrenamiento y se mantiene separada del proceso batch que hospeda MLflow.
+
+**Pendiente / carry-over:**
+- Publicar el recolector y usarlo al finalizar los otros cinco runs de `main16`.
+- Automatizar una medición máxima de GPU si CEDIA no expone ese TRES en Slurm.
+
+---
+
 ## 2026-08-05 11:24 -0500 — Fase 5: reintento observable de main16
 
 **Hecho:**

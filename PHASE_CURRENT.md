@@ -1,26 +1,27 @@
 # PHASE_CURRENT
 
-## Fase 1 — Estructura, gobierno y entorno local del proyecto
+## Fase 2 — Preparación reproducible de HyperKvasir y splits
 
-**Objetivo:** Establecer la estructura instalable, las convenciones y la documentación
-necesarias para desarrollar el pipeline sin incluir datos ni ejecutar entrenamiento local.
+**Objetivo:** Validar el archivo oficial, extraerlo de forma segura y generar manifests
+deterministas para los perfiles `main16` y `full23` sin versionar imágenes.
 
 ---
 
 ### Tareas
 
-- [x] Inicializar `dev` y crear el branch `chore/estructura-proyecto`
-- [x] Crear `BACKLOG.md` antes de los demás archivos de orquestación
-- [x] Crear `PHASE_CURRENT.md` y `CHANGELOG.md`
-- [x] Reemplazar el `.gitignore` genérico por reglas específicas del proyecto
-- [x] Crear el paquete instalable y declarar dependencias sin reinstalar PyTorch
-- [x] Documentar arquitectura, flujo local/cluster y comandos previstos
+- [ ] Implementar validación de tamaño, SHA-256, estructura y conteos
+- [ ] Implementar extracción segura e idempotente
+- [ ] Implementar perfiles `main16` y `full23`
+- [ ] Generar splits 70/15/15 por clase con hashes y semilla fija
+- [ ] Mantener duplicados exactos en un mismo split
+- [ ] Generar reporte de posibles duplicados perceptuales
+- [ ] Crear pruebas unitarias del pipeline de datos
+- [ ] Actualizar la documentación del dataset
 
 ---
 
 ### Notas y decisiones
 
-- La rama `dev` contiene el commit raíz porque `main` queda reservada para releases.
-- PyTorch no se declara como dependencia de `pip`; CEDIA proporcionará `pytorch/2.2`.
-- Los nombres de código y configuración se escriben en inglés; la documentación, en español.
-- Dataset, checkpoints, runs MLflow, logs y credenciales se excluyen de Git.
+- El perfil principal aplica el umbral reproducible de 100 imágenes por clase.
+- `full23` reserva al menos un ejemplo de cada clase para validation y test.
+- La ausencia de identificadores de paciente/procedimiento se documenta como limitación.

@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-05 00:44 -0500 — Fase 5: publicación y acceso CEDIA
+
+**Hecho:**
+- Creado el repositorio privado `christianbueno1/polysight`.
+- Publicadas las ramas `main` y `dev` por SSH.
+- Validado el acceso Git de CEDIA y clonado `dev` en `~/projects/polysight`.
+- Ajustadas todas las rutas remotas para separar código, datos y artefactos.
+
+**Decisiones:**
+- CEDIA usa Git 1.8.3 y una clave OpenSSH dedicada; no requiere GitHub CLI.
+- El código vive en `~/projects/polysight`, el ZIP en `~/datasets` y los resultados
+  en `~/projects/polysight-storage`.
+
+**Pendiente / carry-over:**
+- Publicar este ajuste de rutas y actualizar el clon remoto.
+- Ejecutar bootstrap y diagnóstico mediante Slurm.
+
+---
+
 ## 2026-08-04 22:44 -0500 — Fase 4: CEDIA, Slurm y sincronización
 
 **Hecho:**

@@ -95,7 +95,7 @@ Enroot está disponible para ejecutar contenedores.
 ## Flujo operativo PolySight
 
 El código se versiona en el repositorio privado y se clona en
-`/home/christian.bueno__espol.edu.ec/polysight`. Dataset y resultados no pasan por Git:
+`/home/christian.bueno__espol.edu.ec/projects/polysight`. Dataset y resultados no pasan por Git:
 se transfieren con `rsync` usando siempre el alias `cedia` de `~/.ssh/config`.
 
 Orden de puesta en marcha:
@@ -112,7 +112,7 @@ Consultar el estado y los logs desde el nodo de acceso no ejecuta cómputo:
 
 ```bash
 ssh cedia 'squeue -u "$USER"'
-ssh cedia 'cd /home/christian.bueno__espol.edu.ec/polysight && tail -n 100 slurm-polysight-diagnose-JOB.out'
+ssh cedia 'cd /home/christian.bueno__espol.edu.ec/projects/polysight && tail -n 100 slurm-polysight-diagnose-JOB.out'
 ```
 
 Un entrenamiento completo se envía con configuración y semilla explícitas:

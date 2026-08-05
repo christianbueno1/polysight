@@ -18,7 +18,7 @@ module load pytorch/2.2
 module load cuda/12.4
 
 POLYSIGHT_CLUSTER_ROOT="${POLYSIGHT_CLUSTER_ROOT:-${SLURM_SUBMIT_DIR}}"
-POLYSIGHT_STORAGE_ROOT="${POLYSIGHT_STORAGE_ROOT:-/home/christian.bueno__espol.edu.ec/polysight-storage}"
+POLYSIGHT_STORAGE_ROOT="${POLYSIGHT_STORAGE_ROOT:-/home/christian.bueno__espol.edu.ec/projects/polysight-storage}"
 POLYSIGHT_DATA_ARCHIVE="${POLYSIGHT_DATA_ARCHIVE:-/home/christian.bueno__espol.edu.ec/datasets/hyper-kvasir-labeled-images.zip}"
 POLYSIGHT_DATA_DIR="${POLYSIGHT_DATA_DIR:-${POLYSIGHT_STORAGE_ROOT}/datasets/hyper-kvasir/labeled-images}"
 POLYSIGHT_MANIFEST_DIR="${POLYSIGHT_MANIFEST_DIR:-${POLYSIGHT_STORAGE_ROOT}/manifests}"

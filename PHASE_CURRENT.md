@@ -9,9 +9,9 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 
 ### Tareas
 
-- [ ] Reautenticar `gh` y crear el repositorio privado de GitHub
-- [ ] Publicar `main` y `dev`; configurar `dev` como branch de trabajo
-- [ ] Configurar acceso GitHub desde CEDIA y clonar el repositorio
+- [x] Reautenticar `gh` y crear el repositorio privado de GitHub
+- [x] Publicar `main` y `dev`; configurar `dev` como branch de trabajo
+- [x] Configurar acceso GitHub desde CEDIA y clonar el repositorio
 - [ ] Ejecutar bootstrap y diagnóstico en nodos Slurm
 - [ ] Preparar el dataset remoto y verificar los manifests
 - [ ] Ejecutar el smoke test de una época
@@ -25,5 +25,6 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
 
 ### Notas y decisiones
 
-- La fase está bloqueada hasta renovar la autenticación de GitHub.
-- No se sustituirá Git por una copia ad hoc para evitar perder trazabilidad experimental.
+- Repositorio privado: `christianbueno1/polysight`.
+- CEDIA usa su clave dedicada mediante OpenSSH; `gh` no es necesario en el cluster.
+- El clon vive en `~/projects/polysight` y los datos originales en `~/datasets`.

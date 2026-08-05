@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REMOTE_STORAGE="${1:-/home/christian.bueno__espol.edu.ec/polysight-storage}"
+REMOTE_STORAGE="${1:-/home/christian.bueno__espol.edu.ec/projects/polysight-storage}"
 LOCAL_STORAGE="${2:-artifacts/cedia}"
 
 mkdir -p "${LOCAL_STORAGE}/mlruns" "${LOCAL_STORAGE}/runs"

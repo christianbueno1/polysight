@@ -1,27 +1,29 @@
 # PHASE_CURRENT
 
-## Fase 4 — Integración con CEDIA, Slurm y sincronización MLflow
+## Fase 5 — Ejecución experimental main16 y full23
 
-**Objetivo:** Proporcionar jobs seguros para diagnóstico, preparación y entrenamiento
-en nodos de cómputo, junto con sincronización reproducible por Git y rsync.
+**Objetivo:** Publicar el código trazable, validar el entorno CEDIA y ejecutar los
+experimentos acordados sin utilizar el nodo de login para cómputo.
 
 ---
 
 ### Tareas
 
-- [x] Implementar bootstrap del entorno remoto reutilizando módulos
-- [x] Crear job diagnóstico de GPU y dependencias
-- [x] Crear job CPU de preparación del dataset
-- [x] Crear job GPU de smoke test
-- [x] Crear job GPU parametrizable de entrenamiento
-- [x] Crear job de evaluación de test
-- [x] Crear scripts de envío y sincronización de datos/resultados
-- [x] Hacer portables los URI de artefactos MLflow sincronizados
-- [x] Documentar la operación sin ejecutar cargas en `login1`
+- [ ] Reautenticar `gh` y crear el repositorio privado de GitHub
+- [ ] Publicar `main` y `dev`; configurar `dev` como branch de trabajo
+- [ ] Configurar acceso GitHub desde CEDIA y clonar el repositorio
+- [ ] Ejecutar bootstrap y diagnóstico en nodos Slurm
+- [ ] Preparar el dataset remoto y verificar los manifests
+- [ ] Ejecutar el smoke test de una época
+- [ ] Ejecutar baseline y weighted de `main16` con tres semillas
+- [ ] Elegir estrategia mediante macro-F1 de validation
+- [ ] Ejecutar `full23` con la estrategia ganadora y tres semillas
+- [ ] Evaluar una vez los modelos finales sobre test
+- [ ] Sincronizar runs y comprobar MLflow local
 
 ---
 
 ### Notas y decisiones
 
-- Todos los accesos usan `ssh cedia`, que respeta `~/.ssh/config`.
-- El perfil inicial solicita una A100 de 40 GB en `gpu-dev`; no usa multi-GPU.
+- La fase está bloqueada hasta renovar la autenticación de GitHub.
+- No se sustituirá Git por una copia ad hoc para evitar perder trazabilidad experimental.

@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-08-05 12:12 -0500 — Fase 5: publicación del registro experimental
+
+**Hecho:**
+- Publicados en GitHub los commits del registro reproducible de experimentos.
+- Actualizado mediante fast-forward el clon de CEDIA hasta `6a22652`, con árbol limpio.
+
+**Decisiones:**
+- El recolector queda disponible en CEDIA antes de iniciar los cinco runs restantes,
+  para registrar cada resultado con el mismo esquema.
+
+**Pendiente / carry-over:**
+- Ejecutar secuencialmente baseline semillas 123 y 2026, seguido de weighted semillas
+  42, 123 y 2026 para completar `main16`.
+
+---
+
 ## 2026-08-05 12:04 -0500 — Fase 5: registro reproducible de experimentos
 
 **Hecho:**

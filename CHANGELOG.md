@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-04 22:44 -0500 — Fase 4: CEDIA, Slurm y sincronización
+
+**Hecho:**
+- Creados jobs Slurm para bootstrap, diagnóstico, datos, smoke, training y test.
+- Creados scripts locales Git/SSH/rsync que usan exclusivamente el alias `cedia`.
+- Implementada la sincronización y reescritura portable de URI de MLflow.
+- Documentado el flujo operativo y validada la sintaxis de todos los scripts.
+
+**Decisiones:**
+- Los jobs abortan sin `SLURM_JOB_ID` o si el hostname comienza con `login`.
+- El recurso inicial es una A100 de 40 GB, 8 CPU y 32 GB en `gpu-dev`.
+- El entorno remoto reutiliza `pytorch/2.2` y `cuda/12.4`; no instala otro PyTorch.
+
+**Pendiente / carry-over:**
+- La autenticación local de `gh` está vencida; falta crear/publicar el repositorio privado.
+- Después de publicar `dev`, clonar en CEDIA y ejecutar diagnóstico, datos y smoke test.
+
+---
+
 ## 2026-08-04 22:38 -0500 — Fase 3: pipeline PyTorch
 
 **Hecho:**

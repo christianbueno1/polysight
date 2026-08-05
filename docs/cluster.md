@@ -92,3 +92,43 @@ Enroot está disponible para ejecutar contenedores.
 - Aplicaciones publicadas: Jupyter, RStudio, escritorio remoto con GPU y QGIS.
 - Soporte: `noc@cedia.org.ec`
 
+## Flujo operativo PolySight
+
+El código se versiona en el repositorio privado y se clona en
+`/home/christian.bueno__espol.edu.ec/polysight`. Dataset y resultados no pasan por Git:
+se transfieren con `rsync` usando siempre el alias `cedia` de `~/.ssh/config`.
+
+Orden de puesta en marcha:
+
+```bash
+scripts/cluster/clone.sh git@github.com:USUARIO/polysight.git
+scripts/cluster/submit.sh slurm/bootstrap.sbatch
+scripts/cluster/submit.sh slurm/diagnose.sbatch
+scripts/cluster/submit.sh slurm/prepare-data.sbatch
+scripts/cluster/submit.sh slurm/smoke.sbatch
+```
+
+Consultar el estado y los logs desde el nodo de acceso no ejecuta cómputo:
+
+```bash
+ssh cedia 'squeue -u "$USER"'
+ssh cedia 'cd /home/christian.bueno__espol.edu.ec/polysight && tail -n 100 slurm-polysight-diagnose-JOB.out'
+```
+
+Un entrenamiento completo se envía con configuración y semilla explícitas:
+
+```bash
+scripts/cluster/submit.sh slurm/train.sbatch \
+  CONFIG_PATH=configs/main16-weighted.yaml RUN_SEED=42
+```
+
+Al finalizar, los runs se copian y sus URI se vuelven portables para MLflow local:
+
+```bash
+scripts/cluster/sync-results.sh
+.venv/bin/mlflow ui --backend-store-uri artifacts/cedia/mlruns
+```
+
+Los archivos `slurm/*.sbatch` abortan fuera de Slurm y `slurm/common.sh` rechaza un
+hostname `login*`. El nodo de acceso se limita a Git, archivos, `sbatch`, `squeue` y
+consultas administrativas.

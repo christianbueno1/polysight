@@ -1,0 +1,62 @@
+schema_version: 1
+collected_at: '2026-08-05T15:16:10-05:00'
+identity:
+  slurm_job_id: 20766
+  mlflow_run_id: 6958c5c4f27848bfa99d959c22bafdf0
+  name: full23-baseline
+  profile: full23
+  strategy: baseline
+  seed: 123
+provenance:
+  git_commit: 0067f2d1c68a588a83e61ee976d93faf2c3c4f3e
+  config_path: configs/full23-baseline.yaml
+  remote_run_dir: /home/christian.bueno__espol.edu.ec/projects/polysight-storage/runs/full23-baseline/6958c5c4f27848bfa99d959c22bafdf0
+  metrics_path: /home/christian.bueno__espol.edu.ec/projects/polysight-storage/runs/full23-baseline/6958c5c4f27848bfa99d959c22bafdf0/validation/metrics.json
+slurm:
+  requested_resources:
+    partition: gpu-dev
+    node: compute-0-1
+    nodes: 1
+    cpus: 8
+    memory_mib: 32768.0
+    gpus: 1
+    gpu_model: a100-sxm4-40gb
+    alloc_tres_raw: billing=8,cpu=8,gres/gpu:a100-sxm4-40gb=1,gres/gpu=1,mem=32G,node=1
+  observed_consumption:
+    state: COMPLETED
+    exit_code: 0:0
+    elapsed: 00:15:04
+    elapsed_seconds: 904
+    total_cpu: 01:30:05
+    total_cpu_seconds: 5405
+    average_cpu_cores: 5.979
+    training_step_max_rss_mib: 4236.805
+    batch_step_max_rss_mib: 855.109
+validation_metrics:
+  accuracy: 0.9005006257822278
+  balanced_accuracy: 0.6277496764546033
+  macro_f1: 0.6266129997014066
+  top_3_accuracy: 0.9780976220275344
+  weighted_f1: 0.8974943878821251
+sources:
+  slurm_accounting:
+    command: sacct -j 20766 --format=JobID,JobName,Partition,NodeList,AllocCPUS,ReqMem,AllocTRES,Elapsed,TotalCPU,AveRSS,MaxRSS,State,ExitCode
+      -P
+    captured_output: 'JobID|JobName|Partition|NodeList|AllocCPUS|ReqMem|AllocTRES|Elapsed|TotalCPU|AveRSS|MaxRSS|State|ExitCode
+
+      20766|polysight-train|gpu-dev|compute-0-1|8|32G|billing=8,cpu=8,gres/gpu:a100-sxm4-40gb=1,gres/gpu=1,mem=32G,node=1|00:15:04|01:30:05|||COMPLETED|0:0
+
+      20766.batch|batch||compute-0-1|8||cpu=8,gres/gpu:a100-sxm4-40gb=1,gres/gpu=1,mem=32G,node=1|00:15:04|00:19.943|875632K|875632K|COMPLETED|0:0
+
+      20766.extern|extern||compute-0-1|8||billing=8,cpu=8,gres/gpu:a100-sxm4-40gb=1,gres/gpu=1,mem=32G,node=1|00:15:04|00:00.001|0|0|COMPLETED|0:0
+
+      20766.0|polysight-train||compute-0-1|8||cpu=8,gres/gpu:a100-sxm4-40gb=1,gres/gpu=1,mem=32G,node=1|00:14:48|01:29:45|4338488K|4338488K|COMPLETED|0:0
+
+      '
+  validation_metrics:
+    remote_file: /home/christian.bueno__espol.edu.ec/projects/polysight-storage/runs/full23-baseline/6958c5c4f27848bfa99d959c22bafdf0/validation/metrics.json
+  git_commit:
+    remote_log: ~/projects/polysight/slurm-polysight-train-20766.out
+limitations:
+- Slurm no reportó un máximo de memoria GPU para este job.
+- MaxRSS se registra por step y no representa la suma simultánea de procesos.

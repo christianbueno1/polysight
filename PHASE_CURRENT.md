@@ -53,3 +53,5 @@ experimentos acordados sin utilizar el nodo de login para cómputo.
   `20767`, con dependencias `afterok` verificadas mediante `scontrol`.
 - El job `20765` inició sobre A100, creó su primer checkpoint y mostró 7048 MiB de
   memoria GPU en una muestra puntual; los tres ejecutan el commit `0067f2d`.
+- `20765` y `20766` terminaron correctamente y fueron consolidados; sus macro-F1 de
+  validation son 0.630368 y 0.626613. `20767` continúa en ejecución.

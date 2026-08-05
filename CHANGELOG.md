@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-05 15:16 -0500 — Fase 5: avance de full23 baseline
+
+**Hecho:**
+- Confirmados `20765` y `20766` como `COMPLETED` con exit code `0:0`.
+- Consolidados ambos runs con macro-F1 0.630368 para semilla 42 y 0.626613 para
+  semilla 123.
+- Confirmada la transición automática de `20767` a ejecución después de finalizar
+  completamente el epílogo de `20766`.
+
+**Decisiones:**
+- No se sincroniza la SQLite local mientras `20767` permanece activo.
+- La menor macro-F1 respecto de `main16` se analizará después de completar las tres
+  semillas; full23 incluye siete clases de baja frecuencia.
+
+**Pendiente / carry-over:**
+- Esperar `20767`, consolidarlo y cerrar el resumen full23.
+
+---
+
 ## 2026-08-05 14:46 -0500 — Fase 5: inicio de full23 baseline
 
 **Hecho:**

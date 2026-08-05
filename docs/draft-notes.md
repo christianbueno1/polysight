@@ -82,3 +82,75 @@ ssh -F /home/chris/.ssh/config cedia 'bash -s' << 'EOF'
   done
 EOF
 ###
+
+```
+
+## Matriz de confusion, MLflow
+```bash
+# Sí. Nuestro pipeline guarda la matriz de confusión como artefacto PNG dentro de cada run de MLflow.
+# Para verla:
+# 1. Sincroniza los resultados recientes:
+
+cd ~/projects/polysight
+scripts/cluster/sync-results.sh
+
+# 2. Inicia MLflow:
+cd artifacts/cedia/mlflow
+
+uvx mlflow ui \
+--backend-store-uri sqlite:///mlflow.db \
+--default-artifact-root ./artifacts \
+--port 5000
+
+# 3. Abre http://127.0.0.1:5000.
+# 4. Entra al experimento polysight-main16.
+# 5. Selecciona un run y navega a:
+# Artifacts → validation → confusion-matrix.png
+
+# En esa misma carpeta encontrarás:
+# - metrics.json
+# - per-class-metrics.csv
+# - confusion-matrix.png
+
+# MLflow permite visualizar la imagen individual de cada run. Sin embargo, la interfaz no compara automáticamente varias matrices de confusión lado a lado; habría que abrir
+# cada run o crear posteriormente un reporte comparativo.
+#
+# La matriz generada por PolySight está normalizada por clase verdadera: cada fila muestra cómo se distribuyen las predicciones de una clase real. La diagonal representa
+# aciertos; valores fuera de la diagonal muestran qué clases se están confundiendo.
+```
+
+## Capas Convolucionales y cabeza clasificadora
+El proyecto no implementa manualmente las convoluciones. Utiliza EfficientNet-B0 de torchvision.
+
+El punto de entrada está en src/polysight/model.py:12:
+
+model = efficientnet_b0(weights=weights)
+
+Las capas convolucionales están dentro de model.features, implementadas por torchvision.models.efficientnet_b0. PolySight únicamente reemplaza la cabeza clasificadora:
+
+```bash
+model.classifier = nn.Sequential(
+    nn.Dropout(p=dropout),
+    nn.Linear(in_features, num_classes),
+)
+```
+Por tanto:
+
+- model.features: convoluciones y bloques MBConv de EfficientNet-B0.
+- model.avgpool: agrupación global.
+- model.classifier: capa personalizada para 16 o 23 clases.
+- freeze_backbone() congela o libera las convoluciones durante las dos etapas de entrenamiento.
+
+El código fuente detallado de las convoluciones pertenece al paquete instalado:
+
+torchvision/models/efficientnet.py
+
+Puedes imprimir toda la arquitectura en un entorno con PyTorch mediante:
+
+```python
+from polysight.model import build_model
+
+model = build_model(16, pretrained=False)
+print(model.features)
+```
+En PolySight no aparece ningún nn.Conv2d porque esas capas son creadas internamente por efficientnet_b0().

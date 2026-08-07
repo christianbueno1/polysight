@@ -267,3 +267,27 @@ La comparación científicamente justa sería añadir una fase futura:
 No conviene incorporarla ahora a la cadena activa: primero debemos cerrar y evaluar los experimentos actuales. Luego puede añadirse al backlog como una comparación de
 arquitectura propia frente a transferencia de aprendizaje.
 
+## Lanzar MLflow localmente
+```bash
+# con ruta absolutas
+# Desde la raíz del proyecto, usa:
+
+uvx mlflow ui \
+--backend-store-uri sqlite:////home/chris/projects/polysight/artifacts/cedia/mlflow/mlflow.db \
+--default-artifact-root /home/chris/projects/polysight/artifacts/cedia/mlflow/artifacts \
+--host 127.0.0.1 \
+--port 5000
+
+# O con rutas relativas:
+cd ~/projects/polysight/artifacts/cedia/mlflow
+
+uvx mlflow ui \
+--backend-store-uri sqlite:///mlflow.db \
+--default-artifact-root ./artifacts \
+--host 127.0.0.1 \
+--port 5000
+
+# Ambos comandos son equivalentes. En la URI absoluta de SQLite se usan cuatro barras:
+# sqlite:////home/...
+
+```

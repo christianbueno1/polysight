@@ -290,4 +290,22 @@ uvx mlflow ui \
 # Ambos comandos son equivalentes. En la URI absoluta de SQLite se usan cuatro barras:
 # sqlite:////home/...
 
+# ruta relativa de SQLite: sqlite:///mlflow.db
+# ejecutar el servidor con el proxy de artefactos habilitado:
+cd ~/projects/polysight/artifacts/cedia/mlflow
+#
+uvx mlflow server \
+--backend-store-uri sqlite:///mlflow.db \
+--serve-artifacts \
+--artifacts-destination ./artifacts \
+--host 127.0.0.1 \
+--port 5000
+
+# ruta absoluta
+uvx mlflow server \
+--backend-store-uri sqlite:////home/chris/projects/polysight/artifacts/cedia/mlflow/mlflow.db \
+--serve-artifacts \
+--artifacts-destination /home/chris/projects/polysight/artifacts/cedia/mlflow/artifacts \
+--host 127.0.0.1 \
+--port 5000
 ```

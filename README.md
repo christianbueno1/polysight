@@ -28,6 +28,7 @@ python -m pip install -e '.[dev]'
 pytest
 
 # usando uv project & package manager
+# los modulos del cluster usan version python 3.11
 uv sync --extra dev
 uv run pytest
 ```
@@ -78,6 +79,15 @@ export POLYSIGHT_STORAGE_ROOT="$HOME/projects/polysight-storage"
 export POLYSIGHT_DATA_ARCHIVE="$HOME/datasets/hyper-kvasir-labeled-images.zip"
 cd "$POLYSIGHT_CLUSTER_ROOT"
 
+# Fase Bootstrap: 
+# Prepara el entorno de ejecución en el cluster antes de que corra cualquier otra cosa.
+# Es, literalmente, el equivalente cluster de lo que haces en local con uv sync — solo que aquí hay una capa extra de "conectar" el entorno virtual con el software que ya vive en los módulos de CEDIA, en vez de instalar todo desde PyPI.
+# es idempotente, no importa si ya se ejecutó antes
+sbatch --export=ALL slurm/bootstrap.sbatch
+
+# si alguna vez necesitas forzar un venv limpio
+# eliminar .venv-cluster y volver a ejecutar bootstrap
+rm -rf .venv-cluster
 sbatch --export=ALL slurm/bootstrap.sbatch
 ```
 
@@ -86,8 +96,26 @@ se ejecutan mediante Slurm; el nodo de acceso se usa solamente para Git, transfe
 de archivos y comandos administrativos como `sbatch`, `squeue` y `sacct`.
 
 ```bash
+# Diagnose:
+# diagnose confirma que el entorno GPU del cluster funciona de punta a punta antes de gastar tiempo/cómputo real: 
+# verifica que la GPU A100 asignada es visible y utilizable por PyTorch (CUDA, cuDNN, conteo de devices), 
+# y corre un test rápido del código de modelo/métricas para asegurar que la lógica central del 
+# pipeline (arquitectura, pesos de clase, cálculo de macro-F1) está sana — todo antes de tocar 
+# datos reales o lanzar los seis entrenamientos.
 sbatch --export=ALL slurm/diagnose.sbatch
+
+# Prepare data:
+# prepare-data toma el ZIP crudo de HyperKvasir, lo descomprime y organiza en el almacenamiento 
+# del cluster, y genera los manifiestos de train/val/test (splits estratificados) tanto para el 
+# perfil main16 como para full23 — dejando el dataset listo para que smoke y train puedan 
+# consumirlo directamente.
 sbatch --export=ALL slurm/prepare-data.sbatch
+
+# Smoke:
+# smoke corre un entrenamiento mínimo y rápido (smoke-main16.yaml, una sola semilla) contra los 
+# datos ya preparados, con el servidor MLflow levantado, para confirmar que todo el pipeline de 
+# entrenamiento —desde la carga de datos hasta el logging de métricas— funciona correctamente 
+# antes de lanzar los seis entrenamientos completos y costosos.
 sbatch --export=ALL slurm/smoke.sbatch
 ```
 
@@ -107,6 +135,13 @@ jobs deben encadenarse con dependencias `afterok` para evitar escrituras concurr
 en `mlflow.db`. Cada asignación captura automáticamente el ID que imprime `sbatch`:
 
 ```bash
+# Train:
+# train es el job genérico y reutilizable que ejecuta un entrenamiento completo de 
+# EfficientNet-B0 (cabeza + fine-tuning) para un config y semilla dados, recibidos por variables 
+# de entorno (CONFIG_PATH, RUN_SEED); es el mismo script el que corre las 
+# 6 combinaciones (baseline/weighted × 3 semillas) encadenadas con afterok, y su única diferencia 
+# real entre baseline y weighted es el tipo de loss usada.
+
 JOB_BASELINE_42=$(sbatch --parsable --export=ALL,CONFIG_PATH=configs/main16-baseline.yaml,RUN_SEED=42 slurm/train.sbatch)
 JOB_BASELINE_123=$(sbatch --parsable --dependency="afterok:${JOB_BASELINE_42}" --export=ALL,CONFIG_PATH=configs/main16-baseline.yaml,RUN_SEED=123 slurm/train.sbatch)
 JOB_BASELINE_2026=$(sbatch --parsable --dependency="afterok:${JOB_BASELINE_123}" --export=ALL,CONFIG_PATH=configs/main16-baseline.yaml,RUN_SEED=2026 slurm/train.sbatch)
@@ -122,6 +157,13 @@ el checkpoint con mayor macro-F1 de validation. Solo entonces se evalúa ese che
 una vez sobre `test`, sin ajustar el modelo a partir del resultado:
 
 ```bash
+# Evaluate:
+# evaluate es el paso final: toma un config y un checkpoint 
+# específicos (el modelo ganador, ya elegido por macro-F1 en validation), y corre una única evaluación 
+# sobre el split de test —nunca visto durante entrenamiento ni selección de modelo—, guardando los 
+# resultados en un directorio dedicado, sin tocar MLflow ni permitir ajustes posteriores basados 
+# en ese resultado.
+
 sbatch --export=ALL,CONFIG_PATH=configs/main16-baseline.yaml,CHECKPOINT_PATH=/ruta/al/best.pt,EVALUATION_DIR="$POLYSIGHT_STORAGE_ROOT/runs/final-evaluation/main16" slurm/evaluate.sbatch
 ```
 

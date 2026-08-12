@@ -8,6 +8,44 @@ sbatch slurm/diagnose.sbatch
 sbatch slurm/prepare-data.sbatch
 sbatch slurm/smoke.sbatch
 
+# Bootstrap:
+# Bootstrap: prepara el entorno de ejecución en el cluster — carga los módulos de PyTorch/CUDA, 
+# valida que la versión de Python sea la 3.11 esperada, crea el venv (.venv-cluster) heredando 
+# esos paquetes del sistema, e instala el proyecto ahí dentro. Es el paso base del que dependen
+# todos los demás jobs.
+
+# Diagnose:
+# diagnose confirma que el entorno GPU del cluster funciona de punta a punta antes de gastar tiempo/cómputo real: 
+# verifica que la GPU A100 asignada es visible y utilizable por PyTorch (CUDA, cuDNN, conteo de devices), 
+# y corre un test rápido del código de modelo/métricas para asegurar que la lógica central del 
+# pipeline (arquitectura, pesos de clase, cálculo de macro-F1) está sana — todo antes de tocar 
+# datos reales o lanzar los seis entrenamientos.
+
+# Prepare data:
+# prepare-data toma el ZIP crudo de HyperKvasir, lo descomprime y organiza en el almacenamiento 
+# del cluster, y genera los manifiestos de train/val/test (splits estratificados) tanto para el 
+# perfil main16 como para full23 — dejando el dataset listo para que smoke y train puedan 
+# consumirlo directamente.
+
+# Smoke:
+# smoke corre un entrenamiento mínimo y rápido (smoke-main16.yaml, una sola semilla) contra los 
+# datos ya preparados, con el servidor MLflow levantado, para confirmar que todo el pipeline de 
+# entrenamiento —desde la carga de datos hasta el logging de métricas— funciona correctamente 
+# antes de lanzar los seis entrenamientos completos y costosos.
+
+# Train:
+# train es el job genérico y reutilizable que ejecuta un entrenamiento completo de 
+# EfficientNet-B0 (cabeza + fine-tuning) para un config y semilla dados, recibidos por variables 
+# de entorno (CONFIG_PATH, RUN_SEED); es el mismo script el que corre las 
+# 6 combinaciones (baseline/weighted × 3 semillas) encadenadas con afterok, y su única diferencia 
+# real entre baseline y weighted es el tipo de loss usada.
+
+# Evaluate:
+# evaluate es el paso final: toma un config y un checkpoint 
+# específicos (el modelo ganador, ya elegido por macro-F1 en validation), y corre una única evaluación 
+# sobre el split de test —nunca visto durante entrenamiento ni selección de modelo—, guardando los 
+# resultados en un directorio dedicado, sin tocar MLflow ni permitir ajustes posteriores basados 
+# en ese resultado.
 ```
 
 ## Sincronizar desde CEDIA a local
@@ -179,7 +217,7 @@ En aprendizaje por refuerzo habría un agente, un entorno, acciones y recompensa
 conocida. Por tanto, la descripción correcta es:
 
 > Clasificación multiclase mediante aprendizaje supervisado y transferencia de aprendizaje con EfficientNet-B0.
-    
+
 ## Y si quisiera crear mi propia arquitectura CNN?
 • Sí, puedes crear una CNN propia. En PolySight implicaría reemplazar o complementar EfficientNet-B0 en src/polysight/model.py:12.
 

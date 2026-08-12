@@ -179,7 +179,7 @@ En aprendizaje por refuerzo habría un agente, un entorno, acciones y recompensa
 conocida. Por tanto, la descripción correcta es:
 
 > Clasificación multiclase mediante aprendizaje supervisado y transferencia de aprendizaje con EfficientNet-B0.
-
+    
 ## Y si quisiera crear mi propia arquitectura CNN?
 • Sí, puedes crear una CNN propia. En PolySight implicaría reemplazar o complementar EfficientNet-B0 en src/polysight/model.py:12.
 

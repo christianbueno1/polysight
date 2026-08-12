@@ -1,68 +1,36 @@
 # PHASE_CURRENT
 
-## Fase 6 — Análisis final, documentación de resultados y release
+## Fase 7 — Legibilidad de matrices de confusión normalizadas
 
-**Objetivo:** Analizar los resultados cerrados sin volver a consultar test para ajustar
-modelos, documentar conclusiones y limitaciones, y preparar un release reproducible.
+**Objetivo:** Mejorar la legibilidad de los heatmaps normalizados sin ejecutar de nuevo
+entrenamiento o test y sin modificar los artefactos auditados del release `v0.1.0`.
 
-**Contexto:** Ver `experiments/`, `artifacts/cedia/final-evaluation/`, `NOTES.md` y
-`docs/cluster.md`.
+**Contexto:** Ver `src/polysight/metrics.py`, `tests/test_metrics_artifacts.py`,
+`artifacts/cedia/final-evaluation-derived/` y `docs/testing-summary.md`.
 
 ---
 
 ### Tareas
 
-- [x] Comparar métricas agregadas de main16 y full23
-- [x] Analizar métricas por clase y matrices de confusión finales
-- [x] Documentar rendimiento, estabilidad y consumo computacional
-- [x] Documentar conclusiones, limitaciones y amenazas a la validez
-- [x] Extender los artefactos de evaluación con matriz cruda CSV y matriz normalizada
-  por fila, incluidas pruebas automatizadas
-- [x] Regenerar en CEDIA los artefactos de test con los checkpoints finales congelados,
-  verificar que las métricas coincidan y sincronizar las matrices crudas y normalizadas
-  sin reemplazar la evaluación oficial original
-- [x] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
-- [x] Actualizar la documentación principal con resultados reproducibles
-- [x] Ejecutar validación final de pruebas, lint y estructura de artefactos
-- [x] Preparar y etiquetar el release estable
+- [x] Ajustar tamaño, anotaciones, contraste y separación visual del heatmap normalizado
+- [x] Crear un comando reproducible para renderizar desde `confusion-matrix.csv`
+- [x] Agregar pruebas de formato, umbral y validación del CSV
+- [x] Generar e inspeccionar versiones legibles de `main16` y `full23`
+- [x] Actualizar documentación y validar pruebas, lint y trazabilidad
 
 ---
 
 ### Notas y decisiones
 
-- Test quedó cerrado para selección y ajuste después de una única evaluación por
-  perfil. La regeneración autorizada usa los mismos checkpoints y manifests solo para
-  producir artefactos faltantes; no permite ajustar modelos ni hiperparámetros.
-- Modelos finales: main16 baseline semilla 42 y full23 baseline semilla 2026.
-- Resultados consolidados en `experiments/summary.csv` y
-  `experiments/final-evaluation.yaml`.
-- Matrices y métricas por clase finales están sincronizadas bajo
-  `artifacts/cedia/final-evaluation/` y permanecen fuera de Git.
-- La comparación agregada está documentada en `docs/results.md`; separa promedios de
-  validation (tres semillas) de la evaluación test única de cada perfil.
-- El análisis por clase confirma que seis clases escasas de full23 obtuvieron F1 cero;
-  los artefactos derivados incluyen conteos crudos y matrices normalizadas por fila.
-- Los nueve entrenamientos sumaron 2:01:11 de A100 y ~11.86 CPU-h; consumo y estabilidad
-  están documentados en `docs/results.md` con las limitaciones de muestreo GPU.
-- Las conclusiones limitan explícitamente el alcance al dataset/split y documentan
-  amenazas internas, estadísticas, de medición, externas y clínicas.
-- El README explica al equipo cómo clonar el repositorio en CEDIA y reproducir el
-  protocolo `main16`: preparación, smoke, seis entrenamientos secuenciales, selección
-  por validation y una única evaluación final sobre test.
-- Las evaluaciones futuras guardarán la matriz cruda en CSV y un heatmap normalizado
-  por clase real. La regeneración final se almacena separada y debe reproducir
-  exactamente las métricas oficiales antes de aceptarse.
-- Los jobs derivados `22953` y `22954` reprodujeron byte por byte las métricas
-  agregadas y por clase. Sus salidas se sincronizaron bajo
-  `artifacts/cedia/final-evaluation-derived/` sin modificar los artefactos oficiales.
-- La auditoría reproducible `scripts/audit-traceability.py` verifica nueve runs, tres
-  configuraciones, manifests constantes por perfil, catorce URI portables, checkpoints
-  finales y diez artefactos derivados; el resultado está documentado en
-  `docs/traceability.md`.
-- El README presenta los resultados finales, delimita su alcance y enlaza el reporte,
-  el resumen didáctico, el protocolo de entrenamiento y la auditoría reproducible.
-- La validación final local construyó wheel y sdist y verificó auditoría, Bash, YAML,
-  enlaces, pruebas y Ruff. El job CEDIA `22956` ejecutó la suite con PyTorch/CUDA:
-  14 pruebas pasaron sin skips y Ruff quedó limpio.
-- La versión estable preparada es `v0.1.0`, coherente con `pyproject.toml` y
-  `src/polysight/__init__.py`; todas las tareas de la Fase 6 quedaron completadas.
+- Las matrices nuevas se derivan de los CSV de conteos ya verificados; no cargan
+  checkpoints, datasets ni PyTorch.
+- Los PNG auditados conservan sus nombres y hashes. Las versiones históricas mejoradas
+  usarán el sufijo `confusion-matrix-normalized-readable.png`.
+- La diagonal se anota siempre, incluidos valores 0%; errores fuera de la diagonal por
+  debajo de 2% conservan el color pero omiten texto para reducir ruido.
+- Los porcentajes usan formato compacto y el color de fuente se elige explícitamente
+  según la intensidad de cada celda.
+- Las versiones legibles se sincronizaron con CEDIA y sus hashes SHA-256 coinciden con
+  las copias locales.
+- El job CEDIA `22957` validó el commit `19a5d5e` con una A100: 23 pruebas pasaron y
+  Ruff no reportó errores.

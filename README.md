@@ -1,0 +1,215 @@
+# PolySight
+
+Pipeline reproducible para clasificar hallazgos gastrointestinales de HyperKvasir
+con transfer learning sobre EfficientNet-B0 y PyTorch.
+
+## Alcance
+
+- `main16`: experimento principal con las 16 clases que tienen al menos 100 imágenes.
+- `full23`: experimento exploratorio con las 23 clases originales.
+- Desarrollo y análisis local, sin entrenamiento.
+- Entrenamiento en nodos GPU de CEDIA mediante Slurm.
+- Seguimiento con MLflow en el cluster y sincronización para consulta local.
+
+SUN-SEG no forma parte de este proyecto de clasificación.
+
+## Resultados finales
+
+Los checkpoints se eligieron exclusivamente por macro-F1 de validation. Test no se
+utilizó para seleccionar estrategia, semilla o hiperparámetros.
+
+| Perfil | Modelo seleccionado | Accuracy test | Balanced accuracy | Macro-F1 | Top-3 accuracy |
+|---|---|---:|---:|---:|---:|
+| `main16` | baseline, semilla 42 | 0.919160 | 0.842413 | **0.852100** | 0.996817 |
+| `full23` | baseline, semilla 2026 | 0.900501 | 0.615032 | **0.612138** | 0.984355 |
+
+`main16` fue el resultado más equilibrado. En `full23`, la diferencia entre accuracy
+y macro-F1 revela bajo desempeño en clases minoritarias; seis clases escasas obtuvieron
+F1 cero. Estos resultados corresponden a HyperKvasir y al split documentado, y no
+constituyen validación clínica.
+
+Los resultados oficiales de test permanecen asociados a los jobs `20769` y `20770`.
+Los jobs posteriores `22953` y `22954` usaron los mismos checkpoints y manifests para
+generar conteos crudos y matrices normalizadas faltantes. Sus métricas coincidieron
+exactamente y no reemplazaron la evaluación oficial.
+
+Documentación del resultado:
+
+- [Resultados y limitaciones](docs/results.md).
+- [Explicación didáctica del testing](docs/testing-summary.md).
+- [Semillas, pesos iniciales y épocas](docs/training-protocol.md).
+- [Auditoría de trazabilidad](docs/traceability.md).
+- [Ejecución en CEDIA](docs/cluster.md).
+
+## Inicio rápido
+
+```bash
+# despues de clonar el repositorio
+cd ~/polysight
+
+# Crear entorno virtual y activar
+
+# usando venv + pip
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
+pytest
+
+# usando uv project & package manager
+# los modulos del cluster usan version python 3.11
+uv sync --extra dev
+uv run pytest
+```
+
+PyTorch debe instalarse por separado en local si se quieren ejecutar las pruebas que
+lo requieren. En CEDIA se carga mediante `module load pytorch/2.2 cuda/12.4`.
+
+Los comandos del pipeline son:
+
+```bash
+polysight-prepare --archive /ruta/hyper-kvasir-labeled-images.zip --output-dir data/hyper-kvasir
+polysight-split --data-dir data/hyper-kvasir --output-dir manifests --profile main16
+polysight-train --config configs/main16-baseline.yaml
+polysight-evaluate --config configs/main16-baseline.yaml --checkpoint /ruta/best.pt --split test
+polysight-predict --checkpoint /ruta/best.pt --image /ruta/imagen.jpg
+```
+
+Consulta [la guía de CEDIA](docs/cluster.md) para el entorno remoto y
+[la ficha del dataset](docs/datasets/hyper-kvasir.md) para su ubicación y hash.
+
+## Reproducir `main16` en CEDIA
+
+Cada integrante debe clonar el repositorio en su propia cuenta de CEDIA. Desde el nodo
+de acceso, reemplazar la URL y las rutas según corresponda:
+
+```bash
+ssh USUARIO@hpc.cedia.edu.ec
+mkdir -p "$HOME/projects"
+git clone git@github.com:ORGANIZACION/polysight.git "$HOME/projects/polysight"
+cd "$HOME/projects/polysight"
+git checkout dev
+```
+
+Para una reproducción exacta se debe registrar el commit ejecutado con
+`git rev-parse HEAD` y mantenerlo sin cambios durante los seis entrenamientos. El
+dataset `hyper-kvasir-labeled-images.zip` no está versionado en Git; debe copiarse al
+clúster y comprobarse contra el hash documentado en
+[la ficha de HyperKvasir](docs/datasets/hyper-kvasir.md).
+El dataset lo puedes copiar en el cluster a este directorio: `$HOME/datasets/hyper-kvasir-labeled-images.zip`. El pipeline de preparación y splits genera los manifiestos de entrenamiento, validación y test en
+`manifests/main16` y `manifests/full23`.
+
+Las rutas predeterminadas de los jobs corresponden a la cuenta original. En otra
+cuenta se exportan rutas propias al enviar cada job:
+
+```bash
+export POLYSIGHT_CLUSTER_ROOT="$HOME/projects/polysight"
+export POLYSIGHT_STORAGE_ROOT="$HOME/projects/polysight-storage"
+export POLYSIGHT_DATA_ARCHIVE="$HOME/datasets/hyper-kvasir-labeled-images.zip"
+cd "$POLYSIGHT_CLUSTER_ROOT"
+
+# Fase Bootstrap: 
+# Prepara el entorno de ejecución en el cluster antes de que corra cualquier otra cosa.
+# Es, literalmente, el equivalente cluster de lo que haces en local con uv sync — solo que aquí hay una capa extra de "conectar" el entorno virtual con el software que ya vive en los módulos de CEDIA, en vez de instalar todo desde PyPI.
+# es idempotente, no importa si ya se ejecutó antes
+sbatch --export=ALL slurm/bootstrap.sbatch
+
+# si alguna vez necesitas forzar un venv limpio
+# eliminar .venv-cluster y volver a ejecutar bootstrap
+rm -rf .venv-cluster
+sbatch --export=ALL slurm/bootstrap.sbatch
+```
+
+Después de que termine `bootstrap`, validar el entorno y preparar el dataset. Los jobs
+se ejecutan mediante Slurm; el nodo de acceso se usa solamente para Git, transferencia
+de archivos y comandos administrativos como `sbatch`, `squeue` y `sacct`.
+
+```bash
+# Diagnose:
+# diagnose confirma que el entorno GPU del cluster funciona de punta a punta antes de gastar tiempo/cómputo real: 
+# verifica que la GPU A100 asignada es visible y utilizable por PyTorch (CUDA, cuDNN, conteo de devices), 
+# y corre un test rápido del código de modelo/métricas para asegurar que la lógica central del 
+# pipeline (arquitectura, pesos de clase, cálculo de macro-F1) está sana — todo antes de tocar 
+# datos reales o lanzar los seis entrenamientos.
+sbatch --export=ALL slurm/diagnose.sbatch
+
+# Prepare data:
+# prepare-data toma el ZIP crudo de HyperKvasir, lo descomprime y organiza en el almacenamiento 
+# del cluster, y genera los manifiestos de train/val/test (splits estratificados) tanto para el 
+# perfil main16 como para full23 — dejando el dataset listo para que smoke y train puedan 
+# consumirlo directamente.
+sbatch --export=ALL slurm/prepare-data.sbatch
+
+# Smoke:
+# smoke corre un entrenamiento mínimo y rápido (smoke-main16.yaml, una sola semilla) contra los 
+# datos ya preparados, con el servidor MLflow levantado, para confirmar que todo el pipeline de 
+# entrenamiento —desde la carga de datos hasta el logging de métricas— funciona correctamente 
+# antes de lanzar los seis entrenamientos completos y costosos.
+sbatch --export=ALL slurm/smoke.sbatch
+```
+
+Revisar que cada job termine con estado `COMPLETED` y código `0:0` antes de continuar:
+
+```bash
+squeue -u "$USER"
+sacct -j JOB_ID --format=JobID,State,ExitCode,Elapsed,TotalCPU,MaxRSS
+tail -n 100 slurm-polysight-NOMBRE-JOB_ID.out
+```
+
+### Protocolo experimental de `main16`
+
+El experimento compara `configs/main16-baseline.yaml` y
+`configs/main16-weighted.yaml` con las mismas semillas: `42`, `123` y `2026`. Los seis
+jobs deben encadenarse con dependencias `afterok` para evitar escrituras concurrentes
+en `mlflow.db`. Cada asignación captura automáticamente el ID que imprime `sbatch`:
+
+```bash
+# Train:
+# train es el job genérico y reutilizable que ejecuta un entrenamiento completo de 
+# EfficientNet-B0 (cabeza + fine-tuning) para un config y semilla dados, recibidos por variables 
+# de entorno (CONFIG_PATH, RUN_SEED); es el mismo script el que corre las 
+# 6 combinaciones (baseline/weighted × 3 semillas) encadenadas con afterok, y su única diferencia 
+# real entre baseline y weighted es el tipo de loss usada.
+
+JOB_BASELINE_42=$(sbatch --parsable --export=ALL,CONFIG_PATH=configs/main16-baseline.yaml,RUN_SEED=42 slurm/train.sbatch)
+JOB_BASELINE_123=$(sbatch --parsable --dependency="afterok:${JOB_BASELINE_42}" --export=ALL,CONFIG_PATH=configs/main16-baseline.yaml,RUN_SEED=123 slurm/train.sbatch)
+JOB_BASELINE_2026=$(sbatch --parsable --dependency="afterok:${JOB_BASELINE_123}" --export=ALL,CONFIG_PATH=configs/main16-baseline.yaml,RUN_SEED=2026 slurm/train.sbatch)
+JOB_WEIGHTED_42=$(sbatch --parsable --dependency="afterok:${JOB_BASELINE_2026}" --export=ALL,CONFIG_PATH=configs/main16-weighted.yaml,RUN_SEED=42 slurm/train.sbatch)
+JOB_WEIGHTED_123=$(sbatch --parsable --dependency="afterok:${JOB_WEIGHTED_42}" --export=ALL,CONFIG_PATH=configs/main16-weighted.yaml,RUN_SEED=123 slurm/train.sbatch)
+JOB_WEIGHTED_2026=$(sbatch --parsable --dependency="afterok:${JOB_WEIGHTED_123}" --export=ALL,CONFIG_PATH=configs/main16-weighted.yaml,RUN_SEED=2026 slurm/train.sbatch)
+printf '%s\n' "$JOB_BASELINE_42" "$JOB_BASELINE_123" "$JOB_BASELINE_2026" "$JOB_WEIGHTED_42" "$JOB_WEIGHTED_123" "$JOB_WEIGHTED_2026"
+```
+
+La estrategia se elige por el mayor **macro-F1 promedio de validation** entre sus tres
+semillas; no por el mejor run individual. Dentro de la estrategia ganadora se escoge
+el checkpoint con mayor macro-F1 de validation. Solo entonces se evalúa ese checkpoint
+una vez sobre `test`, sin ajustar el modelo a partir del resultado:
+
+```bash
+# Evaluate:
+# evaluate es el paso final: toma un config y un checkpoint 
+# específicos (el modelo ganador, ya elegido por macro-F1 en validation), y corre una única evaluación 
+# sobre el split de test —nunca visto durante entrenamiento ni selección de modelo—, guardando los 
+# resultados en un directorio dedicado, sin tocar MLflow ni permitir ajustes posteriores basados 
+# en ese resultado.
+
+sbatch --export=ALL,CONFIG_PATH=configs/main16-baseline.yaml,CHECKPOINT_PATH=/ruta/al/best.pt,EVALUATION_DIR="$POLYSIGHT_STORAGE_ROOT/runs/final-evaluation/main16" slurm/evaluate.sbatch
+```
+
+Los parámetros, métricas esperadas y procedencia de la ejecución original están en
+`experiments/summary.csv`, `experiments/final-evaluation.yaml` y
+[los resultados documentados](docs/results.md).
+
+Los conteos crudos y heatmaps normalizados de los modelos finales se regeneraron con
+los mismos checkpoints y manifests en jobs separados. Las métricas coincidieron
+exactamente y los artefactos originales no fueron reemplazados; la procedencia y los
+hashes están en `experiments/final-evaluation.yaml`.
+
+Después de sincronizar MLflow y las evaluaciones finales, la cadena de procedencia se
+puede volver a comprobar con:
+
+```bash
+uv run python scripts/audit-traceability.py
+```
+
+MLflow usa SQLite y artefactos portables: se sincronizan `mlflow.db` y `artifacts/`,
+sin reescribir URI ni copiar logs del servidor.

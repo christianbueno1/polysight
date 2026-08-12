@@ -1,0 +1,27 @@
+name: main16-baseline
+profile: main16
+data:
+  data_dir: ${POLYSIGHT_DATA_DIR}
+  manifest: ${POLYSIGHT_MANIFEST_DIR}/main16/manifest.csv
+  image_size: 224
+  batch_size: 128
+  num_workers: 8
+model:
+  architecture: efficientnet_b0
+  pretrained: true
+  weights_path: ${POLYSIGHT_WEIGHTS_PATH}
+  dropout: 0.2
+training:
+  seed: 42
+  head_epochs: 3
+  finetune_epochs: 30
+  head_learning_rate: 0.001
+  backbone_learning_rate: 0.0001
+  weight_decay: 0.0001
+  patience: 7
+  loss: cross_entropy
+  amp: true
+tracking:
+  experiment_name: polysight-main16
+  tracking_uri: ${POLYSIGHT_TRACKING_URI}
+  output_dir: ${POLYSIGHT_RUNS_DIR}

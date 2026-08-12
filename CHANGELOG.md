@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-08-12 16:35 -0500 — Fase 6: auditoría de trazabilidad completa
+
+**Hecho:**
+- Verificados nueve runs contra fichas YAML, summary, SQLite de MLflow, configuraciones
+  archivadas, métricas de validation, checkpoints y commits.
+- Contrastados en CEDIA accounting, commits de evaluación y hashes reales de manifests
+  y checkpoints finales.
+- Creado `scripts/audit-traceability.py` y documentada la cadena de procedencia en
+  `docs/traceability.md`.
+
+**Decisiones:**
+- Los artefactos binarios permanecen fuera de Git; su identidad se conserva mediante
+  SHA-256 y registros versionados.
+- La semilla efectiva se toma de los parámetros MLflow y fichas de job, no solamente del
+  valor base contenido en la configuración archivada.
+
+**Pendiente / carry-over:**
+- Completar la documentación principal con el resumen reproducible del release.
+
+---
+
 ## 2026-08-12 16:21 -0500 — Fase 6: matrices finales crudas y normalizadas
 
 **Hecho:**

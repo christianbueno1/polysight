@@ -21,7 +21,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - [x] Regenerar en CEDIA los artefactos de test con los checkpoints finales congelados,
   verificar que las métricas coincidan y sincronizar las matrices crudas y normalizadas
   sin reemplazar la evaluación oficial original
-- [ ] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
+- [x] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
 - [ ] Actualizar la documentación principal con resultados reproducibles
 - [ ] Ejecutar validación final de pruebas, lint y estructura de artefactos
 - [ ] Preparar y etiquetar el release estable
@@ -55,3 +55,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - Los jobs derivados `22953` y `22954` reprodujeron byte por byte las métricas
   agregadas y por clase. Sus salidas se sincronizaron bajo
   `artifacts/cedia/final-evaluation-derived/` sin modificar los artefactos oficiales.
+- La auditoría reproducible `scripts/audit-traceability.py` verifica nueve runs, tres
+  configuraciones, manifests constantes por perfil, catorce URI portables, checkpoints
+  finales y diez artefactos derivados; el resultado está documentado en
+  `docs/traceability.md`.

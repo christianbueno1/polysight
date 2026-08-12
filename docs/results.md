@@ -16,6 +16,7 @@ Fuentes versionadas:
 - `experiments/summary.csv`: runs de entrenamiento y validation.
 - `experiments/final-evaluation.yaml`: selección y evaluación final sobre test.
 - `experiments/runs/*.yaml`: procedencia y consumo de cada job.
+- `docs/traceability.md`: auditoría de configuraciones, commits, manifests y artefactos.
 
 ## Validation: comparación de estrategias y perfiles
 

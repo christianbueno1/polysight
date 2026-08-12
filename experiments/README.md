@@ -11,9 +11,9 @@ Los modelos, logs completos y artefactos de MLflow permanecen fuera de Git.
 
 Las evaluaciones nuevas generan `metrics.json`, `per-class-metrics.csv`, la matriz de
 conteos en `confusion-matrix.csv`, su heatmap absoluto y
-`confusion-matrix-normalized.png`, normalizada por clase real. Las evaluaciones finales
-históricas de `main16` y `full23` se cerraron antes de incorporar los dos últimos
-artefactos y no se repiten para reconstruirlos.
+`confusion-matrix-normalized.png`, normalizada por clase real. Los jobs derivados
+`22953` y `22954` generaron esos artefactos para los modelos finales con inputs
+congelados y métricas idénticas, sin reemplazar las evaluaciones oficiales.
 
 Las fichas separan tres conceptos:
 

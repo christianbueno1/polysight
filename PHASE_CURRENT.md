@@ -18,7 +18,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - [x] Documentar conclusiones, limitaciones y amenazas a la validez
 - [x] Extender los artefactos de evaluación con matriz cruda CSV y matriz normalizada
   por fila, incluidas pruebas automatizadas
-- [~] Regenerar en CEDIA los artefactos de test con los checkpoints finales congelados,
+- [x] Regenerar en CEDIA los artefactos de test con los checkpoints finales congelados,
   verificar que las métricas coincidan y sincronizar las matrices crudas y normalizadas
   sin reemplazar la evaluación oficial original
 - [ ] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
@@ -41,7 +41,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - La comparación agregada está documentada en `docs/results.md`; separa promedios de
   validation (tres semillas) de la evaluación test única de cada perfil.
 - El análisis por clase confirma que seis clases escasas de full23 obtuvieron F1 cero;
-  las matrices actuales son heatmaps de conteos absolutos, no matrices normalizadas.
+  los artefactos derivados incluyen conteos crudos y matrices normalizadas por fila.
 - Los nueve entrenamientos sumaron 2:01:11 de A100 y ~11.86 CPU-h; consumo y estabilidad
   están documentados en `docs/results.md` con las limitaciones de muestreo GPU.
 - Las conclusiones limitan explícitamente el alcance al dataset/split y documentan
@@ -52,3 +52,6 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - Las evaluaciones futuras guardarán la matriz cruda en CSV y un heatmap normalizado
   por clase real. La regeneración final se almacena separada y debe reproducir
   exactamente las métricas oficiales antes de aceptarse.
+- Los jobs derivados `22953` y `22954` reprodujeron byte por byte las métricas
+  agregadas y por clase. Sus salidas se sincronizaron bajo
+  `artifacts/cedia/final-evaluation-derived/` sin modificar los artefactos oficiales.

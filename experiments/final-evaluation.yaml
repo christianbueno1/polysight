@@ -51,3 +51,42 @@ sources:
   metrics: <output_dir>/metrics.json
   resource_accounting: sacct -j 20769,20770
   code_commit: fe8d0be95f473817c02df456640797a76ef2a210
+artifact_regeneration:
+  regenerated_at: '2026-08-12T16:16:55-05:00'
+  purpose: Generar la matriz cruda y el heatmap normalizado faltantes.
+  policy: Mismos checkpoints, manifests y split test; sin selección ni ajuste posterior.
+  code_commit: 8ee600d4990cd292cef5f693defdfb75d0b99fb5
+  verification:
+    metrics_json: Idéntico byte por byte a la evaluación oficial.
+    per_class_metrics_csv: Idéntico byte por byte a la evaluación oficial.
+    raw_matrix: Cada fila suma el support y la diagonal reproduce el recall por clase.
+    original_artifacts: No modificados; conservan timestamps del 2026-08-05.
+  models:
+    - profile: main16
+      evaluation_job_id: 22953
+      evaluation_state: COMPLETED
+      exit_code: '0:0'
+      elapsed: '00:00:48'
+      manifest_sha256: 8f59d5c5f1d188ad75d1b28c6ab9b56e3b3c68bcf8f7dd0940422dc8df27f463
+      checkpoint_sha256: 74aae659c028fc58a368f5a3f61a4c7875d1608a2cade0ade6da1ca5ebdb609c
+      output_dir: /home/christian.bueno__espol.edu.ec/projects/polysight-storage/runs/final-evaluation-derived/main16-baseline-seed42
+      artifacts:
+        metrics.json: db5b1718cc4d557f7da4495e96bd6c1dc7264952205d79131aef564e47207547
+        per-class-metrics.csv: 5d8872b47d76a93601fc9e7bf9dfa09303f6768e72e22441dd85ed1955e1e79d
+        confusion-matrix.csv: 7ada666a5ea40d6d1643f2df9cf6b08641968c6164318efae03101f121cb53fc
+        confusion-matrix.png: 9688cbfeca3341f4310c099779ea9c3660d017cdcc9293e88cd1a31c8cfe6a2b
+        confusion-matrix-normalized.png: 8ffd4254aadef5978a736968928cb0e6cb9ece8c1637834bcc878ecb1a8d2a36
+    - profile: full23
+      evaluation_job_id: 22954
+      evaluation_state: COMPLETED
+      exit_code: '0:0'
+      elapsed: '00:00:25'
+      manifest_sha256: baed4894f723c8be6446b05a02447534274c11d95aaa2d1fabef37a52cf402fd
+      checkpoint_sha256: 4e5d588e2c1b556437a59c513d37e34ed108e4bced7f197bce704e22d77d5a67
+      output_dir: /home/christian.bueno__espol.edu.ec/projects/polysight-storage/runs/final-evaluation-derived/full23-baseline-seed2026
+      artifacts:
+        metrics.json: c033b4942850a63a48bfbc3b926f85aab41233d45c8c6771af486fbc9812a1a5
+        per-class-metrics.csv: 8f30059bfc93239cf0154070827b8afb8eba8dcd158cac5cab6d694e1b73d25f
+        confusion-matrix.csv: 311f1c570c3bbe305c0ac392a879e8a9616c4b04fb797adf33cd9346a08eb9b7
+        confusion-matrix.png: 538233a8a2502e0204c67284b876930a1614a3ce821f6297c806a09502160ee2
+        confusion-matrix-normalized.png: c01b2f42eafa8fa699c977f8e4a68cbd3144c75267f2d506b2540c641401d31a

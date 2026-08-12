@@ -171,5 +171,10 @@ Los parámetros, métricas esperadas y procedencia de la ejecución original est
 `experiments/summary.csv`, `experiments/final-evaluation.yaml` y
 [los resultados documentados](docs/results.md).
 
+Los conteos crudos y heatmaps normalizados de los modelos finales se regeneraron con
+los mismos checkpoints y manifests en jobs separados. Las métricas coincidieron
+exactamente y los artefactos originales no fueron reemplazados; la procedencia y los
+hashes están en `experiments/final-evaluation.yaml`.
+
 MLflow usa SQLite y artefactos portables: se sincronizan `mlflow.db` y `artifacts/`,
 sin reescribir URI ni copiar logs del servidor.

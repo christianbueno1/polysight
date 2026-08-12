@@ -125,11 +125,14 @@ intensidad de una celda combina dos factores: el número de ejemplos de la clase
 proporción de aciertos. No es suficiente comparar solamente la oscuridad de las
 celdas entre filas con soportes diferentes.
 
-El pipeline producirá en evaluaciones futuras una matriz adicional normalizada por
-fila, donde cada celda se interpreta como porcentaje. No se genera retroactivamente
-para este test cerrado porque no se conservaron sus conteos completos. Para los
-valores actuales, la fuente cuantitativa es
-[`per-class-metrics.csv`](../artifacts/cedia/final-evaluation/main16-baseline-seed42/per-class-metrics.csv).
+Una inferencia posterior con el mismo checkpoint y manifest produjo una matriz
+normalizada por fila, donde cada celda se interpreta como porcentaje. Las métricas
+recalculadas coincidieron byte por byte con las oficiales y los resultados originales
+no fueron reemplazados.
+
+- [Matriz normalizada](../artifacts/cedia/final-evaluation-derived/main16-baseline-seed42/confusion-matrix-normalized.png)
+- [Conteos crudos](../artifacts/cedia/final-evaluation-derived/main16-baseline-seed42/confusion-matrix.csv)
+- [Métricas por clase](../artifacts/cedia/final-evaluation-derived/main16-baseline-seed42/per-class-metrics.csv)
 
 ## Interpretación de `full23`
 
@@ -141,6 +144,10 @@ que varias clases escasas tienen un rendimiento bajo.
 Seis clases escasas obtuvieron F1 igual a cero. En consecuencia, `full23` todavía
 no proporciona una clasificación equilibrada de sus 23 clases, aunque su accuracy
 global sea alta.
+
+- [Matriz normalizada](../artifacts/cedia/final-evaluation-derived/full23-baseline-seed2026/confusion-matrix-normalized.png)
+- [Conteos crudos](../artifacts/cedia/final-evaluation-derived/full23-baseline-seed2026/confusion-matrix.csv)
+- [Métricas por clase](../artifacts/cedia/final-evaluation-derived/full23-baseline-seed2026/per-class-metrics.csv)
 
 ## Conclusión
 

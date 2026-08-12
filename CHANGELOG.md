@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-08-12 16:21 -0500 — Fase 6: matrices finales crudas y normalizadas
+
+**Hecho:**
+- Ejecutados en CEDIA los jobs `22953` (`main16`) y `22954` (`full23`) con los
+  checkpoints y manifests finales congelados.
+- Verificada la coincidencia byte por byte de métricas agregadas y por clase respecto
+  de los artefactos oficiales.
+- Sincronizados los conteos crudos y heatmaps normalizados bajo
+  `artifacts/cedia/final-evaluation-derived/` y registrada su procedencia y hashes.
+
+**Decisiones:**
+- La regeneración se almacena separada y no reemplaza los jobs oficiales `20769` y
+  `20770` ni habilita ajustes de modelos o hiperparámetros.
+- Los artefactos derivados se aceptan porque cada fila del CSV suma su support, la
+  diagonal reproduce el recall y las métricas son idénticas a las originales.
+
+**Pendiente / carry-over:**
+- Continuar con la verificación completa de trazabilidad del release.
+
+---
+
 ## 2026-08-12 16:00 -0500 — Fase 6: documentación del protocolo de entrenamiento
 
 **Hecho:**

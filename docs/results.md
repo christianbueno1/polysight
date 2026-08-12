@@ -3,8 +3,10 @@
 ## Alcance y protocolo
 
 Los resultados de `validation` resumen tres semillas (42, 123 y 2026) y se expresan
-como media ± desviación estándar muestral. Los resultados de `test` pertenecen a una
-única evaluación del checkpoint elegido previamente por macro-F1 de validation.
+como media ± desviación estándar muestral. Los resultados oficiales de `test`
+pertenecen a una única evaluación del checkpoint elegido previamente por macro-F1 de
+validation. Una inferencia posterior con los mismos inputs regeneró exclusivamente los
+artefactos de matriz faltantes y reprodujo exactamente las métricas oficiales.
 
 Test no se utilizó para elegir estrategia, semilla ni hiperparámetros. Sus resultados
 no deben emplearse para realizar nuevos ajustes en esta ronda experimental.
@@ -65,10 +67,10 @@ tarea: sus espacios de etiquetas contienen 16 y 23 clases, respectivamente.
 
 ## Métricas por clase y matrices de confusión
 
-Las matrices finales representan conteos absolutos: filas son clases reales y columnas
-son predicciones. No están normalizadas. Por ello las celdas de clases con soporte 1–8
-son casi invisibles frente a clases con soporte cercano a 170; recall y F1 por clase son
-la fuente cuantitativa adecuada para interpretarlas.
+Las matrices oficiales representan conteos absolutos: filas son clases reales y
+columnas son predicciones. Los artefactos derivados añaden la tabla exacta de conteos y
+una visualización normalizada por fila. Esta última permite comparar clases con soportes
+distintos porque cada fila suma 100%.
 
 ### Main16
 
@@ -89,8 +91,8 @@ La diagonal equivale a 13/30 aciertos para colitis grado 1, 13/20 para grado 3,
 
 Visualmente, las confusiones más marcadas aparecen dentro del continuo de grados de
 colitis, entre esophagitis-a y z-line/esophagitis-b-d, y entre las dos clases de pólipos
-teñidos. Esta lectura es cualitativa porque el pipeline guardó el heatmap, pero no una
-tabla con los conteos fuera de la diagonal.
+teñidos. La tabla derivada permite auditar los conteos fuera de la diagonal sin inferirlos
+desde el color del heatmap.
 
 Las clases más sólidas fueron retroflex-stomach (F1 1.000000), bbps-0-1 (0.989691),
 pylorus (0.983498), cecum (0.977049) y bbps-2-3 (0.968661).
@@ -120,12 +122,13 @@ las clases frecuentes tienen buen desempeño, pero cada clase sin aciertos pesa 
 en macro-F1. No es evidencia de que el modelo full23 resuelva adecuadamente las 23
 clases.
 
-### Limitación del artefacto
+### Regeneración de artefactos
 
-El pipeline ahora guarda la matriz cruda como CSV y una segunda visualización
-normalizada por fila para evaluaciones futuras. No se repite la evaluación test actual
-para reconstruirlas: las conclusiones presentes usan exclusivamente los artefactos
-producidos en la evaluación única ya cerrada.
+Los jobs `22953` y `22954` ejecutaron inferencia con los checkpoints y manifests
+congelados, sin entrenamiento ni selección posterior. `metrics.json` y
+`per-class-metrics.csv` resultaron idénticos byte por byte a los oficiales. Las salidas
+se guardaron en `final-evaluation-derived/`, sin sobrescribir la evaluación original, y
+su procedencia y hashes están registrados en `experiments/final-evaluation.yaml`.
 
 ## Rendimiento y consumo computacional
 
@@ -207,9 +210,9 @@ obtener menor macro-F1 medio.
   aisladamente como evidencia de desempeño multiclase equilibrado.
 - No se evaluaron calibración, sensibilidad/especificidad por umbral, incertidumbre,
   rechazo de casos fuera de distribución ni desempeño por dispositivo o centro.
-- Las matrices de la evaluación final cerrada son imágenes de conteos absolutos. El
-  pipeline corregido producirá también una tabla de conteos y una versión normalizada,
-  pero esos artefactos no existen retroactivamente para los resultados analizados.
+- La tabla de conteos y la versión normalizada proceden de una inferencia posterior con
+  inputs congelados; no formaron parte del job oficial original. La coincidencia exacta
+  de métricas respalda su uso descriptivo, no nuevos ajustes experimentales.
 
 ### Validez externa y clínica
 

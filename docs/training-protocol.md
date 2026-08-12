@@ -13,16 +13,15 @@ Conviene distinguir tres operaciones:
 
 1. **Entrenamiento:** produce los checkpoints y no debe repetirse para el release
    actual.
-2. **Evaluación final sobre test:** ya se ejecutó una sola vez por perfil y permanece
-   cerrada para evitar ajustes posteriores basados en test.
+2. **Evaluación final sobre test:** sus resultados oficiales se obtuvieron una sola vez
+   por perfil y permanecen cerrados para selección o ajustes posteriores.
 3. **Pruebas del código:** pueden y deben ejecutarse en un entorno con PyTorch; no
    entrenan modelos ni consultan el dataset experimental.
 
-Las matrices normalizadas se producirán en evaluaciones futuras. Para crearlas
-retroactivamente sería necesario volver a ejecutar inferencia sobre test con los
-checkpoints congelados. No haría falta reentrenar, pero sí se rompería la política
-documentada de una única consulta a test. Los PNG históricos tampoco contienen
-información suficiente para reconstruir con exactitud todos los conteos.
+Se autorizó una inferencia posterior con los mismos checkpoints y manifests congelados
+para generar los conteos y matrices normalizadas faltantes. No hubo reentrenamiento ni
+selección posterior; las métricas coincidieron exactamente y las salidas se conservaron
+separadas de la evaluación oficial.
 
 ## Semillas de entrenamiento
 

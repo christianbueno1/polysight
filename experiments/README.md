@@ -9,6 +9,12 @@ Los modelos, logs completos y artefactos de MLflow permanecen fuera de Git.
 - `summary.csv`: índice regenerable para comparar runs.
 - `final-evaluation.yaml`: selección final y única evaluación sobre test por perfil.
 
+Las evaluaciones nuevas generan `metrics.json`, `per-class-metrics.csv`, la matriz de
+conteos en `confusion-matrix.csv`, su heatmap absoluto y
+`confusion-matrix-normalized.png`, normalizada por clase real. Las evaluaciones finales
+históricas de `main16` y `full23` se cerraron antes de incorporar los dos últimos
+artefactos y no se repiten para reconstruirlos.
+
 Las fichas separan tres conceptos:
 
 1. `requested_resources`: recursos reservados por Slurm.

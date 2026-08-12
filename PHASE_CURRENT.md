@@ -16,6 +16,8 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - [x] Analizar métricas por clase y matrices de confusión finales
 - [x] Documentar rendimiento, estabilidad y consumo computacional
 - [x] Documentar conclusiones, limitaciones y amenazas a la validez
+- [x] Extender los artefactos de evaluación con matriz cruda CSV y matriz normalizada
+  por fila, incluidas pruebas automatizadas
 - [ ] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
 - [ ] Actualizar la documentación principal con resultados reproducibles
 - [ ] Ejecutar validación final de pruebas, lint y estructura de artefactos
@@ -43,3 +45,6 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - El README explica al equipo cómo clonar el repositorio en CEDIA y reproducir el
   protocolo `main16`: preparación, smoke, seis entrenamientos secuenciales, selección
   por validation y una única evaluación final sobre test.
+- Las evaluaciones futuras guardarán la matriz cruda en CSV y un heatmap normalizado
+  por clase real; los artefactos finales históricos no se regeneran para mantener test
+  cerrado.

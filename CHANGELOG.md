@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-08-12 13:23 -0500 — Fase 6: matrices de confusión auditables
+
+**Hecho:**
+- Extendido `save_evaluation_artifacts` para guardar conteos en
+  `confusion-matrix.csv` y un heatmap normalizado por clase real.
+- Añadidas pruebas de normalización, filas sin soporte, contenido del CSV y archivos
+  generados.
+- Actualizada la documentación para distinguir el formato nuevo de los artefactos
+  finales históricos.
+
+**Decisiones:**
+- La visualización normalizada usa escala fija de 0% a 100% y omite anotaciones en
+  celdas con valor cero.
+- No se repiten las evaluaciones finales de test ni se reconstruyen matrices desde los
+  PNG; la mejora aplica a validation y evaluaciones futuras.
+
+**Pendiente / carry-over:**
+- Verificar trazabilidad de configuraciones, commits, manifests y artefactos.
+
+---
+
 ## 2026-08-12 12:54 -0500 — Fase 6: resumen didáctico de testing
 
 **Hecho:**

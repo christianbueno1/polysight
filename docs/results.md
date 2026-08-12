@@ -122,10 +122,10 @@ clases.
 
 ### Limitación del artefacto
 
-Para futuras rondas, `save_evaluation_artifacts` debería guardar además la matriz cruda
-como CSV y una segunda visualización normalizada por fila. No se repite la evaluación
-test actual para reconstruirlas: las conclusiones presentes usan exclusivamente los
-artefactos producidos en la evaluación única ya cerrada.
+El pipeline ahora guarda la matriz cruda como CSV y una segunda visualización
+normalizada por fila para evaluaciones futuras. No se repite la evaluación test actual
+para reconstruirlas: las conclusiones presentes usan exclusivamente los artefactos
+producidos en la evaluación única ya cerrada.
 
 ## Rendimiento y consumo computacional
 
@@ -207,8 +207,9 @@ obtener menor macro-F1 medio.
   aisladamente como evidencia de desempeño multiclase equilibrado.
 - No se evaluaron calibración, sensibilidad/especificidad por umbral, incertidumbre,
   rechazo de casos fuera de distribución ni desempeño por dispositivo o centro.
-- Las matrices guardadas son imágenes de conteos absolutos. Falta una tabla de conteos
-  y una versión normalizada que facilite auditoría exacta de errores.
+- Las matrices de la evaluación final cerrada son imágenes de conteos absolutos. El
+  pipeline corregido producirá también una tabla de conteos y una versión normalizada,
+  pero esos artefactos no existen retroactivamente para los resultados analizados.
 
 ### Validez externa y clínica
 

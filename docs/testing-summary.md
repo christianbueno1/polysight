@@ -125,9 +125,10 @@ intensidad de una celda combina dos factores: el número de ejemplos de la clase
 proporción de aciertos. No es suficiente comparar solamente la oscuridad de las
 celdas entre filas con soportes diferentes.
 
-Una matriz adicional normalizada por fila permitiría interpretar cada celda como
-porcentaje y facilitaría la comparación visual entre clases. Para los valores
-actuales, la fuente cuantitativa es
+El pipeline producirá en evaluaciones futuras una matriz adicional normalizada por
+fila, donde cada celda se interpreta como porcentaje. No se genera retroactivamente
+para este test cerrado porque no se conservaron sus conteos completos. Para los
+valores actuales, la fuente cuantitativa es
 [`per-class-metrics.csv`](../artifacts/cedia/final-evaluation/main16-baseline-seed42/per-class-metrics.csv).
 
 ## Interpretación de `full23`

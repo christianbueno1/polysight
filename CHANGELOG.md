@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-08-11 17:48 -0500 — Fase 6: guía de reproducción de main16 en CEDIA
+
+**Hecho:**
+- Documentado en el README el clonado del repositorio dentro de una cuenta de CEDIA.
+- Añadidos los pasos de bootstrap, diagnóstico, preparación de datos y smoke test.
+- Documentados los seis entrenamientos de main16 y su encadenamiento con `afterok`.
+- Registrado el criterio de selección por macro-F1 promedio de validation y la política
+  de una única evaluación final sobre test.
+
+**Decisiones:**
+- Cada integrante usa rutas bajo su propia cuenta mediante variables de entorno, sin
+  depender de las rutas predeterminadas de la ejecución original.
+- Los entrenamientos se ejecutan secuencialmente para evitar escrituras concurrentes
+  sobre la base SQLite de MLflow.
+- El commit se mantiene fijo durante los seis runs para conservar trazabilidad.
+
+**Pendiente / carry-over:**
+- Completar la documentación principal con el resumen final de resultados y verificar
+  toda la trazabilidad del release.
+
+---
+
 ## 2026-08-05 18:23 -0500 — Fase 6: conclusiones y amenazas a la validez
 
 **Hecho:**

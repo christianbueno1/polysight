@@ -40,3 +40,6 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   están documentados en `docs/results.md` con las limitaciones de muestreo GPU.
 - Las conclusiones limitan explícitamente el alcance al dataset/split y documentan
   amenazas internas, estadísticas, de medición, externas y clínicas.
+- El README explica al equipo cómo clonar el repositorio en CEDIA y reproducir el
+  protocolo `main16`: preparación, smoke, seis entrenamientos secuenciales, selección
+  por validation y una única evaluación final sobre test.

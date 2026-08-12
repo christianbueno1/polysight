@@ -2,6 +2,31 @@
 
 ---
 
+## 2026-08-12 17:12 -0500 — Fase 7: matrices normalizadas legibles
+
+**Hecho:**
+- Mejorado el renderizado normalizado con celdas cuadradas, rejilla, porcentajes
+  compactos y contraste explícito por celda.
+- Creado `polysight-render-matrix` para regenerar la visualización desde el CSV de
+  conteos, sin cargar el dataset, los checkpoints ni PyTorch.
+- Generadas, inspeccionadas y sincronizadas con CEDIA las versiones legibles de
+  `main16` y `full23`; sus hashes remotos coinciden con las copias locales.
+- Validado el commit `19a5d5e` en CEDIA mediante el job `22957`: 23 pruebas pasaron
+  con una A100 disponible y Ruff no reportó errores.
+
+**Decisiones:**
+- La diagonal se anota siempre, incluso en 0%; fuera de ella se oculta el texto menor
+  al 2% para evitar ruido, sin eliminar el color ni los conteos del CSV.
+- Las nuevas imágenes usan el sufijo `-readable` y son derivados de presentación; no
+  reemplazan ni cambian los hashes de los artefactos auditados de `v0.1.0`.
+- El entorno local se usa directamente desde `.venv`; `/tmp/polysight-uv-cache` es
+  solo la caché temporal de `uv`, no un entorno virtual adicional.
+
+**Pendiente / carry-over:**
+- Ninguno.
+
+---
+
 ## 2026-08-12 16:43 -0500 — Fase 6: cierre y preparación de v0.1.0
 
 **Hecho:**

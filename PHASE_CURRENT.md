@@ -16,7 +16,7 @@ entrenamiento o test y sin modificar los artefactos auditados del release `v0.1.
 - [x] Crear un comando reproducible para renderizar desde `confusion-matrix.csv`
 - [x] Agregar pruebas de formato, umbral y validación del CSV
 - [x] Generar e inspeccionar versiones legibles de `main16` y `full23`
-- [~] Actualizar documentación y validar pruebas, lint y trazabilidad
+- [x] Actualizar documentación y validar pruebas, lint y trazabilidad
 
 ---
 
@@ -32,3 +32,5 @@ entrenamiento o test y sin modificar los artefactos auditados del release `v0.1.
   según la intensidad de cada celda.
 - Las versiones legibles se sincronizaron con CEDIA y sus hashes SHA-256 coinciden con
   las copias locales.
+- El job CEDIA `22957` validó el commit `19a5d5e` con una A100: 23 pruebas pasaron y
+  Ruff no reportó errores.

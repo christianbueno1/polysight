@@ -8,4 +8,4 @@
 - [x] Fase 4 — Integración con CEDIA, Slurm y sincronización MLflow
 - [x] Fase 5 — Ejecución experimental main16 y full23
 - [x] Fase 6 — Análisis final, documentación de resultados y release
-- [~] Fase 7 — Legibilidad de matrices de confusión normalizadas
+- [x] Fase 7 — Legibilidad de matrices de confusión normalizadas

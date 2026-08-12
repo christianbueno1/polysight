@@ -24,7 +24,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - [x] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
 - [x] Actualizar la documentación principal con resultados reproducibles
 - [x] Ejecutar validación final de pruebas, lint y estructura de artefactos
-- [ ] Preparar y etiquetar el release estable
+- [x] Preparar y etiquetar el release estable
 
 ---
 
@@ -64,3 +64,5 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - La validación final local construyó wheel y sdist y verificó auditoría, Bash, YAML,
   enlaces, pruebas y Ruff. El job CEDIA `22956` ejecutó la suite con PyTorch/CUDA:
   14 pruebas pasaron sin skips y Ruff quedó limpio.
+- La versión estable preparada es `v0.1.0`, coherente con `pyproject.toml` y
+  `src/polysight/__init__.py`; todas las tareas de la Fase 6 quedaron completadas.

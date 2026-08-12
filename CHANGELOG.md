@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-08-12 16:43 -0500 — Fase 6: cierre y preparación de v0.1.0
+
+**Hecho:**
+- Completadas todas las tareas de análisis, documentación, trazabilidad y validación.
+- Marcada la Fase 6 como completada y preparado el release estable `v0.1.0`.
+- Confirmada la versión `0.1.0` en el paquete y la disponibilidad del tag.
+
+**Decisiones:**
+- El release se integra primero en `dev` y después en `main`, reservada para versiones
+  estables conforme al flujo Git del proyecto.
+- No se abre una fase nueva: el backlog vigente queda completamente cerrado.
+
+**Pendiente / carry-over:**
+- Ninguno para `v0.1.0`.
+
+---
+
 ## 2026-08-12 16:42 -0500 — Fase 6: validación final del release
 
 **Hecho:**

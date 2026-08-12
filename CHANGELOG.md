@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-12 16:00 -0500 — Fase 6: documentación del protocolo de entrenamiento
+
+**Hecho:**
+- Creado `docs/training-protocol.md` con la explicación de las semillas, pesos
+  iniciales, entrenamiento en dos etapas, early stopping y épocas ejecutadas.
+- Aclarado que la mejora de matrices no requiere repetir entrenamientos ni reabrir
+  test.
+
+**Decisiones:**
+- Los valores de semilla se presentan como estados pseudoaleatorios arbitrarios, no
+  como números con una ventaja científica intrínseca.
+- Los límites de épocas y paciencia se documentan como heurísticas fijas porque no se
+  realizó una búsqueda sistemática que demostrara su optimalidad.
+
+**Pendiente / carry-over:**
+- Completar la trazabilidad, validación final y preparación del release.
+
+---
+
 ## 2026-08-12 13:23 -0500 — Fase 6: matrices de confusión auditables
 
 **Hecho:**

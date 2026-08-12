@@ -18,6 +18,9 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 - [x] Documentar conclusiones, limitaciones y amenazas a la validez
 - [x] Extender los artefactos de evaluación con matriz cruda CSV y matriz normalizada
   por fila, incluidas pruebas automatizadas
+- [~] Regenerar en CEDIA los artefactos de test con los checkpoints finales congelados,
+  verificar que las métricas coincidan y sincronizar las matrices crudas y normalizadas
+  sin reemplazar la evaluación oficial original
 - [ ] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
 - [ ] Actualizar la documentación principal con resultados reproducibles
 - [ ] Ejecutar validación final de pruebas, lint y estructura de artefactos
@@ -27,8 +30,9 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
 
 ### Notas y decisiones
 
-- Test quedó cerrado después de una única evaluación por perfil; no se ajustarán modelos
-  ni hiperparámetros usando esos resultados.
+- Test quedó cerrado para selección y ajuste después de una única evaluación por
+  perfil. La regeneración autorizada usa los mismos checkpoints y manifests solo para
+  producir artefactos faltantes; no permite ajustar modelos ni hiperparámetros.
 - Modelos finales: main16 baseline semilla 42 y full23 baseline semilla 2026.
 - Resultados consolidados en `experiments/summary.csv` y
   `experiments/final-evaluation.yaml`.
@@ -46,5 +50,5 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   protocolo `main16`: preparación, smoke, seis entrenamientos secuenciales, selección
   por validation y una única evaluación final sobre test.
 - Las evaluaciones futuras guardarán la matriz cruda en CSV y un heatmap normalizado
-  por clase real; los artefactos finales históricos no se regeneran para mantener test
-  cerrado.
+  por clase real. La regeneración final se almacena separada y debe reproducir
+  exactamente las métricas oficiales antes de aceptarse.

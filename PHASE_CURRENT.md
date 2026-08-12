@@ -23,7 +23,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   sin reemplazar la evaluación oficial original
 - [x] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
 - [x] Actualizar la documentación principal con resultados reproducibles
-- [~] Ejecutar validación final de pruebas, lint y estructura de artefactos
+- [x] Ejecutar validación final de pruebas, lint y estructura de artefactos
 - [ ] Preparar y etiquetar el release estable
 
 ---
@@ -61,3 +61,6 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   `docs/traceability.md`.
 - El README presenta los resultados finales, delimita su alcance y enlaza el reporte,
   el resumen didáctico, el protocolo de entrenamiento y la auditoría reproducible.
+- La validación final local construyó wheel y sdist y verificó auditoría, Bash, YAML,
+  enlaces, pruebas y Ruff. El job CEDIA `22956` ejecutó la suite con PyTorch/CUDA:
+  14 pruebas pasaron sin skips y Ruff quedó limpio.

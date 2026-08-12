@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-08-12 16:42 -0500 — Fase 6: validación final del release
+
+**Hecho:**
+- Construidos localmente wheel y sdist de `polysight 0.1.0`.
+- Verificados auditoría de trazabilidad, sintaxis Bash, YAML, enlaces Markdown,
+  pruebas, Ruff y estructura/hashes de artefactos.
+- Ejecutado en CEDIA el job `22956` sobre el commit `d2cc9bf`: 14 pruebas pasaron sin
+  skips, CUDA detectó una A100 y Ruff no reportó errores.
+
+**Decisiones:**
+- Los artefactos de build permanecen fuera de Git mediante `dist/` en `.gitignore`.
+- Las advertencias observadas provienen de APIs deprecadas en MLflow/Pydantic y Pillow,
+  y de un caso sintético top-3 con tres clases; no bloquean este release, pero deben
+  revisarse antes de futuras actualizaciones mayores de dependencias.
+
+**Pendiente / carry-over:**
+- Preparar la versión estable, cerrar la Fase 6 e integrar según el flujo Git.
+
+---
+
 ## 2026-08-12 16:37 -0500 — Fase 6: resultados reproducibles en README
 
 **Hecho:**

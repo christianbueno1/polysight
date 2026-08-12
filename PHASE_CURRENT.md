@@ -12,11 +12,11 @@ entrenamiento o test y sin modificar los artefactos auditados del release `v0.1.
 
 ### Tareas
 
-- [~] Ajustar tamaño, anotaciones, contraste y separación visual del heatmap normalizado
-- [ ] Crear un comando reproducible para renderizar desde `confusion-matrix.csv`
-- [ ] Agregar pruebas de formato, umbral y validación del CSV
-- [ ] Generar e inspeccionar versiones legibles de `main16` y `full23`
-- [ ] Actualizar documentación y validar pruebas, lint y trazabilidad
+- [x] Ajustar tamaño, anotaciones, contraste y separación visual del heatmap normalizado
+- [x] Crear un comando reproducible para renderizar desde `confusion-matrix.csv`
+- [x] Agregar pruebas de formato, umbral y validación del CSV
+- [x] Generar e inspeccionar versiones legibles de `main16` y `full23`
+- [~] Actualizar documentación y validar pruebas, lint y trazabilidad
 
 ---
 
@@ -30,3 +30,5 @@ entrenamiento o test y sin modificar los artefactos auditados del release `v0.1.
   debajo de 2% conservan el color pero omiten texto para reducir ruido.
 - Los porcentajes usan formato compacto y el color de fuente se elige explícitamente
   según la intensidad de cada celda.
+- Las versiones legibles se sincronizaron con CEDIA y sus hashes SHA-256 coinciden con
+  las copias locales.

@@ -130,7 +130,7 @@ normalizada por fila, donde cada celda se interpreta como porcentaje. Las métri
 recalculadas coincidieron byte por byte con las oficiales y los resultados originales
 no fueron reemplazados.
 
-- [Matriz normalizada](../artifacts/cedia/final-evaluation-derived/main16-baseline-seed42/confusion-matrix-normalized.png)
+- [Matriz normalizada legible](../artifacts/cedia/final-evaluation-derived/main16-baseline-seed42/confusion-matrix-normalized-readable.png)
 - [Conteos crudos](../artifacts/cedia/final-evaluation-derived/main16-baseline-seed42/confusion-matrix.csv)
 - [Métricas por clase](../artifacts/cedia/final-evaluation-derived/main16-baseline-seed42/per-class-metrics.csv)
 
@@ -145,7 +145,7 @@ Seis clases escasas obtuvieron F1 igual a cero. En consecuencia, `full23` todav�
 no proporciona una clasificación equilibrada de sus 23 clases, aunque su accuracy
 global sea alta.
 
-- [Matriz normalizada](../artifacts/cedia/final-evaluation-derived/full23-baseline-seed2026/confusion-matrix-normalized.png)
+- [Matriz normalizada legible](../artifacts/cedia/final-evaluation-derived/full23-baseline-seed2026/confusion-matrix-normalized-readable.png)
 - [Conteos crudos](../artifacts/cedia/final-evaluation-derived/full23-baseline-seed2026/confusion-matrix.csv)
 - [Métricas por clase](../artifacts/cedia/final-evaluation-derived/full23-baseline-seed2026/per-class-metrics.csv)
 

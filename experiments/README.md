@@ -15,6 +15,10 @@ conteos en `confusion-matrix.csv`, su heatmap absoluto y
 `22953` y `22954` generaron esos artefactos para los modelos finales con inputs
 congelados y métricas idénticas, sin reemplazar las evaluaciones oficiales.
 
+`confusion-matrix-normalized-readable.png` es un derivado de presentación regenerable
+desde `confusion-matrix.csv` con `polysight-render-matrix`. No reemplaza ni modifica los
+artefactos auditados en `final-evaluation.yaml`.
+
 Las fichas separan tres conceptos:
 
 1. `requested_resources`: recursos reservados por Slurm.

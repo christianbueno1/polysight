@@ -33,6 +33,11 @@ Los jobs posteriores `22953` y `22954` usaron los mismos checkpoints y manifests
 generar conteos crudos y matrices normalizadas faltantes. Sus métricas coincidieron
 exactamente y no reemplazaron la evaluación oficial.
 
+Las versiones legibles de las matrices se generan desde los CSV auditados, sin cargar
+el dataset o los checkpoints. La diagonal siempre se anota; fuera de ella se omite el
+texto de valores menores al 2% para evitar superposiciones, aunque los conteos exactos
+permanecen disponibles en el CSV.
+
 Documentación del resultado:
 
 - [Resultados y limitaciones](docs/results.md).
@@ -72,6 +77,7 @@ polysight-split --data-dir data/hyper-kvasir --output-dir manifests --profile ma
 polysight-train --config configs/main16-baseline.yaml
 polysight-evaluate --config configs/main16-baseline.yaml --checkpoint /ruta/best.pt --split test
 polysight-predict --checkpoint /ruta/best.pt --image /ruta/imagen.jpg
+polysight-render-matrix --input /ruta/confusion-matrix.csv
 ```
 
 Consulta [la guía de CEDIA](docs/cluster.md) para el entorno remoto y

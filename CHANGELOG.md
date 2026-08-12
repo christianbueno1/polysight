@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-08-12 12:54 -0500 — Fase 6: resumen didáctico de testing
+
+**Hecho:**
+- Creado `docs/testing-summary.md` con las métricas finales de `main16` y `full23`.
+- Explicada la lectura de la matriz de confusión de `main16`, incluidas sus clases
+  fuertes, confusiones relevantes y limitaciones visuales.
+
+**Decisiones:**
+- El resumen didáctico se mantiene separado de `docs/results.md`, que funciona como
+  reporte formal del experimento.
+- Las conclusiones cuantitativas se apoyan en `per-class-metrics.csv`; el heatmap se
+  interpreta cualitativamente porque muestra conteos absolutos sin anotaciones.
+
+**Pendiente / carry-over:**
+- Continuar con la verificación de trazabilidad y la documentación del release.
+
+---
+
 ## 2026-08-11 17:48 -0500 — Fase 6: guía de reproducción de main16 en CEDIA
 
 **Hecho:**

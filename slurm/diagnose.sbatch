@@ -32,4 +32,5 @@ if not report["cuda_available"]:
     raise SystemExit("CUDA no está disponible")
 PY
 
-python -m pytest -q tests/test_model_and_metrics.py
+python -m pytest -q
+python -m ruff check .

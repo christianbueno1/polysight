@@ -23,7 +23,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   sin reemplazar la evaluación oficial original
 - [x] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
 - [x] Actualizar la documentación principal con resultados reproducibles
-- [ ] Ejecutar validación final de pruebas, lint y estructura de artefactos
+- [~] Ejecutar validación final de pruebas, lint y estructura de artefactos
 - [ ] Preparar y etiquetar el release estable
 
 ---

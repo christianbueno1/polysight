@@ -33,6 +33,7 @@ polysight-split = "polysight.data.split:main"
 polysight-train = "polysight.train:main"
 polysight-evaluate = "polysight.evaluate:main"
 polysight-predict = "polysight.predict:main"
+polysight-render-matrix = "polysight.render_matrix:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

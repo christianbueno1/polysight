@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-12 16:37 -0500 — Fase 6: resultados reproducibles en README
+
+**Hecho:**
+- Añadido al README el resumen de resultados test de `main16` y `full23`.
+- Enlazados resultados, resumen de testing, protocolo de entrenamiento, trazabilidad y
+  operación en CEDIA desde la documentación principal.
+- Documentado el comando para repetir la auditoría después de sincronizar artefactos.
+
+**Decisiones:**
+- El README conserva un resumen breve; el análisis por clase, limitaciones y hashes se
+  mantienen en documentos especializados para evitar duplicación.
+- Se distingue explícitamente la evaluación oficial de la regeneración posterior de
+  matrices.
+
+**Pendiente / carry-over:**
+- Ejecutar la validación final completa y revisar la estructura del release.
+
+---
+
 ## 2026-08-12 16:35 -0500 — Fase 6: auditoría de trazabilidad completa
 
 **Hecho:**

@@ -22,7 +22,7 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   verificar que las métricas coincidan y sincronizar las matrices crudas y normalizadas
   sin reemplazar la evaluación oficial original
 - [x] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
-- [ ] Actualizar la documentación principal con resultados reproducibles
+- [x] Actualizar la documentación principal con resultados reproducibles
 - [ ] Ejecutar validación final de pruebas, lint y estructura de artefactos
 - [ ] Preparar y etiquetar el release estable
 
@@ -59,3 +59,5 @@ modelos, documentar conclusiones y limitaciones, y preparar un release reproduci
   configuraciones, manifests constantes por perfil, catorce URI portables, checkpoints
   finales y diez artefactos derivados; el resultado está documentado en
   `docs/traceability.md`.
+- El README presenta los resultados finales, delimita su alcance y enlaza el reporte,
+  el resumen didáctico, el protocolo de entrenamiento y la auditoría reproducible.

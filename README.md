@@ -13,6 +13,34 @@ con transfer learning sobre EfficientNet-B0 y PyTorch.
 
 SUN-SEG no forma parte de este proyecto de clasificación.
 
+## Resultados finales
+
+Los checkpoints se eligieron exclusivamente por macro-F1 de validation. Test no se
+utilizó para seleccionar estrategia, semilla o hiperparámetros.
+
+| Perfil | Modelo seleccionado | Accuracy test | Balanced accuracy | Macro-F1 | Top-3 accuracy |
+|---|---|---:|---:|---:|---:|
+| `main16` | baseline, semilla 42 | 0.919160 | 0.842413 | **0.852100** | 0.996817 |
+| `full23` | baseline, semilla 2026 | 0.900501 | 0.615032 | **0.612138** | 0.984355 |
+
+`main16` fue el resultado más equilibrado. En `full23`, la diferencia entre accuracy
+y macro-F1 revela bajo desempeño en clases minoritarias; seis clases escasas obtuvieron
+F1 cero. Estos resultados corresponden a HyperKvasir y al split documentado, y no
+constituyen validación clínica.
+
+Los resultados oficiales de test permanecen asociados a los jobs `20769` y `20770`.
+Los jobs posteriores `22953` y `22954` usaron los mismos checkpoints y manifests para
+generar conteos crudos y matrices normalizadas faltantes. Sus métricas coincidieron
+exactamente y no reemplazaron la evaluación oficial.
+
+Documentación del resultado:
+
+- [Resultados y limitaciones](docs/results.md).
+- [Explicación didáctica del testing](docs/testing-summary.md).
+- [Semillas, pesos iniciales y épocas](docs/training-protocol.md).
+- [Auditoría de trazabilidad](docs/traceability.md).
+- [Ejecución en CEDIA](docs/cluster.md).
+
 ## Inicio rápido
 
 ```bash
@@ -175,6 +203,13 @@ Los conteos crudos y heatmaps normalizados de los modelos finales se regeneraron
 los mismos checkpoints y manifests en jobs separados. Las métricas coincidieron
 exactamente y los artefactos originales no fueron reemplazados; la procedencia y los
 hashes están en `experiments/final-evaluation.yaml`.
+
+Después de sincronizar MLflow y las evaluaciones finales, la cadena de procedencia se
+puede volver a comprobar con:
+
+```bash
+uv run python scripts/audit-traceability.py
+```
 
 MLflow usa SQLite y artefactos portables: se sincronizan `mlflow.db` y `artifacts/`,
 sin reescribir URI ni copiar logs del servidor.

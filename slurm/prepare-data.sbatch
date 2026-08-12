@@ -15,6 +15,9 @@ DATASET_PARENT="${POLYSIGHT_STORAGE_ROOT}/datasets/hyper-kvasir"
 mkdir -p "${DATASET_PARENT}" "${POLYSIGHT_MANIFEST_DIR}"
 
 polysight-prepare --archive "${POLYSIGHT_DATA_ARCHIVE}" --output-dir "${DATASET_PARENT}"
+
+# Split the dataset into train/val/test sets for each profile
+# 16 classes for main16 profile, 23 classes for full23 profile
 polysight-split \
   --data-dir "${DATASET_PARENT}" \
   --output-dir "${POLYSIGHT_MANIFEST_DIR}" \

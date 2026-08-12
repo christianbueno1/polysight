@@ -17,6 +17,17 @@ fi
 module purge
 module load pytorch/2.2
 module load cuda/12.4
+
+REQUIRED_PYTHON="3.11"
+FOUND_PYTHON="$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+if [[ "${FOUND_PYTHON}" != "${REQUIRED_PYTHON}" ]]; then
+  echo "ERROR: se requiere Python ${REQUIRED_PYTHON} (pyproject.toml: requires-python==3.11.*)." >&2
+  echo "       el modulo pytorch/2.2 expuso Python ${FOUND_PYTHON} en su lugar." >&2
+  echo "       binario resuelto: $(command -v python)" >&2
+  exit 3
+fi
+echo "Python ${FOUND_PYTHON} verificado ($(command -v python))."
+
 cd "${POLYSIGHT_CLUSTER_ROOT:-${SLURM_SUBMIT_DIR}}"
 
 python -m venv --system-site-packages .venv-cluster

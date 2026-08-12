@@ -9,6 +9,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
+from matplotlib.ticker import PercentFormatter
 from sklearn.metrics import (
     accuracy_score,
     balanced_accuracy_score,
@@ -49,6 +50,17 @@ def calculate_metrics(
     return summary, per_class, matrix
 
 
+def normalize_confusion_matrix(matrix: np.ndarray) -> np.ndarray:
+    """Normaliza cada fila por su soporte y conserva en cero las filas vacías."""
+    row_totals = matrix.sum(axis=1, keepdims=True)
+    return np.divide(
+        matrix,
+        row_totals,
+        out=np.zeros_like(matrix, dtype=float),
+        where=row_totals != 0,
+    )
+
+
 def save_evaluation_artifacts(
     output_dir: Path,
     summary: dict[str, float],
@@ -56,6 +68,9 @@ def save_evaluation_artifacts(
     matrix: np.ndarray,
     class_names: list[str],
 ) -> list[Path]:
+    if matrix.shape != (len(class_names), len(class_names)):
+        raise ValueError("La matriz de confusión no coincide con el número de clases")
+
     output_dir.mkdir(parents=True, exist_ok=True)
     metrics_path = output_dir / "metrics.json"
     metrics_path.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
@@ -68,8 +83,15 @@ def save_evaluation_artifacts(
         for name in class_names:
             writer.writerow({"class": name, **per_class[name]})
 
-    matrix_path = output_dir / "confusion-matrix.png"
+    matrix_csv_path = output_dir / "confusion-matrix.csv"
+    with matrix_csv_path.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.writer(stream)
+        writer.writerow(["actual\\predicted", *class_names])
+        for name, row in zip(class_names, matrix, strict=True):
+            writer.writerow([name, *(int(value) for value in row)])
+
     figure_size = max(8, len(class_names) * 0.55)
+    matrix_path = output_dir / "confusion-matrix.png"
     plt.figure(figsize=(figure_size, figure_size))
     sns.heatmap(matrix, cmap="Blues", xticklabels=class_names, yticklabels=class_names)
     plt.xlabel("Predicción")
@@ -77,4 +99,26 @@ def save_evaluation_artifacts(
     plt.tight_layout()
     plt.savefig(matrix_path, dpi=180)
     plt.close()
-    return [metrics_path, report_path, matrix_path]
+
+    normalized_matrix = normalize_confusion_matrix(matrix)
+    formatted_percentages = np.vectorize("{:.1%}".format)(normalized_matrix)
+    annotations = np.where(normalized_matrix > 0, formatted_percentages, "")
+    normalized_path = output_dir / "confusion-matrix-normalized.png"
+    plt.figure(figsize=(figure_size, figure_size))
+    sns.heatmap(
+        normalized_matrix,
+        annot=annotations,
+        fmt="",
+        cmap="Blues",
+        vmin=0,
+        vmax=1,
+        xticklabels=class_names,
+        yticklabels=class_names,
+        cbar_kws={"format": PercentFormatter(xmax=1)},
+    )
+    plt.xlabel("Predicción")
+    plt.ylabel("Clase real")
+    plt.tight_layout()
+    plt.savefig(normalized_path, dpi=180)
+    plt.close()
+    return [metrics_path, report_path, matrix_csv_path, matrix_path, normalized_path]

@@ -2,6 +2,260 @@
 
 ---
 
+## 2026-08-12 16:43 -0500 — Fase 6: cierre y preparación de v0.1.0
+
+**Hecho:**
+- Completadas todas las tareas de análisis, documentación, trazabilidad y validación.
+- Marcada la Fase 6 como completada y preparado el release estable `v0.1.0`.
+- Confirmada la versión `0.1.0` en el paquete y la disponibilidad del tag.
+
+**Decisiones:**
+- El release se integra primero en `dev` y después en `main`, reservada para versiones
+  estables conforme al flujo Git del proyecto.
+- No se abre una fase nueva: el backlog vigente queda completamente cerrado.
+
+**Pendiente / carry-over:**
+- Ninguno para `v0.1.0`.
+
+---
+
+## 2026-08-12 16:42 -0500 — Fase 6: validación final del release
+
+**Hecho:**
+- Construidos localmente wheel y sdist de `polysight 0.1.0`.
+- Verificados auditoría de trazabilidad, sintaxis Bash, YAML, enlaces Markdown,
+  pruebas, Ruff y estructura/hashes de artefactos.
+- Ejecutado en CEDIA el job `22956` sobre el commit `d2cc9bf`: 14 pruebas pasaron sin
+  skips, CUDA detectó una A100 y Ruff no reportó errores.
+
+**Decisiones:**
+- Los artefactos de build permanecen fuera de Git mediante `dist/` en `.gitignore`.
+- Las advertencias observadas provienen de APIs deprecadas en MLflow/Pydantic y Pillow,
+  y de un caso sintético top-3 con tres clases; no bloquean este release, pero deben
+  revisarse antes de futuras actualizaciones mayores de dependencias.
+
+**Pendiente / carry-over:**
+- Preparar la versión estable, cerrar la Fase 6 e integrar según el flujo Git.
+
+---
+
+## 2026-08-12 16:37 -0500 — Fase 6: resultados reproducibles en README
+
+**Hecho:**
+- Añadido al README el resumen de resultados test de `main16` y `full23`.
+- Enlazados resultados, resumen de testing, protocolo de entrenamiento, trazabilidad y
+  operación en CEDIA desde la documentación principal.
+- Documentado el comando para repetir la auditoría después de sincronizar artefactos.
+
+**Decisiones:**
+- El README conserva un resumen breve; el análisis por clase, limitaciones y hashes se
+  mantienen en documentos especializados para evitar duplicación.
+- Se distingue explícitamente la evaluación oficial de la regeneración posterior de
+  matrices.
+
+**Pendiente / carry-over:**
+- Ejecutar la validación final completa y revisar la estructura del release.
+
+---
+
+## 2026-08-12 16:35 -0500 — Fase 6: auditoría de trazabilidad completa
+
+**Hecho:**
+- Verificados nueve runs contra fichas YAML, summary, SQLite de MLflow, configuraciones
+  archivadas, métricas de validation, checkpoints y commits.
+- Contrastados en CEDIA accounting, commits de evaluación y hashes reales de manifests
+  y checkpoints finales.
+- Creado `scripts/audit-traceability.py` y documentada la cadena de procedencia en
+  `docs/traceability.md`.
+
+**Decisiones:**
+- Los artefactos binarios permanecen fuera de Git; su identidad se conserva mediante
+  SHA-256 y registros versionados.
+- La semilla efectiva se toma de los parámetros MLflow y fichas de job, no solamente del
+  valor base contenido en la configuración archivada.
+
+**Pendiente / carry-over:**
+- Completar la documentación principal con el resumen reproducible del release.
+
+---
+
+## 2026-08-12 16:21 -0500 — Fase 6: matrices finales crudas y normalizadas
+
+**Hecho:**
+- Ejecutados en CEDIA los jobs `22953` (`main16`) y `22954` (`full23`) con los
+  checkpoints y manifests finales congelados.
+- Verificada la coincidencia byte por byte de métricas agregadas y por clase respecto
+  de los artefactos oficiales.
+- Sincronizados los conteos crudos y heatmaps normalizados bajo
+  `artifacts/cedia/final-evaluation-derived/` y registrada su procedencia y hashes.
+
+**Decisiones:**
+- La regeneración se almacena separada y no reemplaza los jobs oficiales `20769` y
+  `20770` ni habilita ajustes de modelos o hiperparámetros.
+- Los artefactos derivados se aceptan porque cada fila del CSV suma su support, la
+  diagonal reproduce el recall y las métricas son idénticas a las originales.
+
+**Pendiente / carry-over:**
+- Continuar con la verificación completa de trazabilidad del release.
+
+---
+
+## 2026-08-12 16:00 -0500 — Fase 6: documentación del protocolo de entrenamiento
+
+**Hecho:**
+- Creado `docs/training-protocol.md` con la explicación de las semillas, pesos
+  iniciales, entrenamiento en dos etapas, early stopping y épocas ejecutadas.
+- Aclarado que la mejora de matrices no requiere repetir entrenamientos ni reabrir
+  test.
+
+**Decisiones:**
+- Los valores de semilla se presentan como estados pseudoaleatorios arbitrarios, no
+  como números con una ventaja científica intrínseca.
+- Los límites de épocas y paciencia se documentan como heurísticas fijas porque no se
+  realizó una búsqueda sistemática que demostrara su optimalidad.
+
+**Pendiente / carry-over:**
+- Completar la trazabilidad, validación final y preparación del release.
+
+---
+
+## 2026-08-12 13:23 -0500 — Fase 6: matrices de confusión auditables
+
+**Hecho:**
+- Extendido `save_evaluation_artifacts` para guardar conteos en
+  `confusion-matrix.csv` y un heatmap normalizado por clase real.
+- Añadidas pruebas de normalización, filas sin soporte, contenido del CSV y archivos
+  generados.
+- Actualizada la documentación para distinguir el formato nuevo de los artefactos
+  finales históricos.
+
+**Decisiones:**
+- La visualización normalizada usa escala fija de 0% a 100% y omite anotaciones en
+  celdas con valor cero.
+- No se repiten las evaluaciones finales de test ni se reconstruyen matrices desde los
+  PNG; la mejora aplica a validation y evaluaciones futuras.
+
+**Pendiente / carry-over:**
+- Verificar trazabilidad de configuraciones, commits, manifests y artefactos.
+
+---
+
+## 2026-08-12 12:54 -0500 — Fase 6: resumen didáctico de testing
+
+**Hecho:**
+- Creado `docs/testing-summary.md` con las métricas finales de `main16` y `full23`.
+- Explicada la lectura de la matriz de confusión de `main16`, incluidas sus clases
+  fuertes, confusiones relevantes y limitaciones visuales.
+
+**Decisiones:**
+- El resumen didáctico se mantiene separado de `docs/results.md`, que funciona como
+  reporte formal del experimento.
+- Las conclusiones cuantitativas se apoyan en `per-class-metrics.csv`; el heatmap se
+  interpreta cualitativamente porque muestra conteos absolutos sin anotaciones.
+
+**Pendiente / carry-over:**
+- Continuar con la verificación de trazabilidad y la documentación del release.
+
+---
+
+## 2026-08-11 17:48 -0500 — Fase 6: guía de reproducción de main16 en CEDIA
+
+**Hecho:**
+- Documentado en el README el clonado del repositorio dentro de una cuenta de CEDIA.
+- Añadidos los pasos de bootstrap, diagnóstico, preparación de datos y smoke test.
+- Documentados los seis entrenamientos de main16 y su encadenamiento con `afterok`.
+- Registrado el criterio de selección por macro-F1 promedio de validation y la política
+  de una única evaluación final sobre test.
+
+**Decisiones:**
+- Cada integrante usa rutas bajo su propia cuenta mediante variables de entorno, sin
+  depender de las rutas predeterminadas de la ejecución original.
+- Los entrenamientos se ejecutan secuencialmente para evitar escrituras concurrentes
+  sobre la base SQLite de MLflow.
+- El commit se mantiene fijo durante los seis runs para conservar trazabilidad.
+
+**Pendiente / carry-over:**
+- Completar la documentación principal con el resumen final de resultados y verificar
+  toda la trazabilidad del release.
+
+---
+
+## 2026-08-05 18:23 -0500 — Fase 6: conclusiones y amenazas a la validez
+
+**Hecho:**
+- Documentadas conclusiones de main16, weighted y full23 sin modificar modelos.
+- Registradas amenazas internas, estadísticas, de constructo, medición y validez externa.
+- Delimitadas explícitamente las afirmaciones permitidas por el experimento.
+
+**Decisiones:**
+- Main16 se describe como baseline reproducible en HyperKvasir, no como modelo validado
+  clínicamente.
+- Full23 se considera insuficiente para clasificación equilibrada de 23 clases bajo el
+  protocolo actual, pese a su accuracy global.
+- No se realizan nuevos ajustes derivados de resultados test.
+
+**Pendiente / carry-over:**
+- Verificar trazabilidad completa de configuraciones, commits, manifests y artefactos.
+
+---
+
+## 2026-08-05 18:15 -0500 — Fase 6: consumo y estabilidad
+
+**Hecho:**
+- Agregados tiempo A100, CPU efectiva, MaxRSS y épocas ejecutadas para nueve runs.
+- Documentadas 2:01:11 de asignación A100, ~11.86 CPU-h y ~4.13 GiB de MaxRSS.
+- Relacionadas las diferencias de duración con las épocas registradas en MLflow.
+
+**Decisiones:**
+- Las tres lecturas de memoria GPU se mantienen como muestras puntuales, no máximos.
+- No se recomienda reducir recursos GPU sin telemetría de utilización y pico de memoria.
+- Estabilidad se describe mediante desviación entre tres semillas, sin inferencia de
+  significancia estadística.
+
+**Pendiente / carry-over:**
+- Documentar conclusiones, limitaciones y amenazas a la validez.
+
+---
+
+## 2026-08-05 18:14 -0500 — Fase 6: análisis por clase y matrices
+
+**Hecho:**
+- Analizadas métricas por clase y matrices finales de main16 y full23.
+- Identificadas seis clases full23 con F1 cero y soportes entre 1 y 8 ejemplos.
+- Documentadas las clases débiles y fuertes de main16 y los grupos de confusión visibles.
+
+**Decisiones:**
+- Las métricas por clase son la fuente cuantitativa; el heatmap solo permite lectura
+  cualitativa de errores fuera de la diagonal.
+- No se repite test para reconstruir conteos. Para futuras rondas se recomienda guardar
+  matriz cruda CSV y visualización normalizada por fila desde la primera evaluación.
+
+**Pendiente / carry-over:**
+- Documentar rendimiento, estabilidad y consumo computacional.
+
+---
+
+## 2026-08-05 16:47 -0500 — Fase 6: comparación agregada de resultados
+
+**Hecho:**
+- Calculadas medias y desviaciones de cinco métricas sobre tres semillas para main16
+  baseline, main16 weighted y full23 baseline.
+- Documentados por separado validation y la única evaluación final sobre test.
+- Cuantificadas las brechas validation–test y accuracy–macro-F1.
+
+**Decisiones:**
+- No se atribuye significancia estadística con solo tres semillas; se reporta variación
+  descriptiva.
+- Accuracy main16 y full23 no se interpreta como comparación directa porque los espacios
+  de etiquetas son distintos.
+- La brecha de full23 se investigará mediante métricas por clase y matriz de confusión,
+  sin modificar modelos a partir de test.
+
+**Pendiente / carry-over:**
+- Analizar métricas por clase y matrices de confusión finales.
+
+---
+
 ## 2026-08-05 16:27 -0500 — Fase 5: sincronización y cierre
 
 **Hecho:**

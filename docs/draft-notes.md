@@ -347,3 +347,35 @@ uvx mlflow server \
 --host 127.0.0.1 \
 --port 5000
 ```
+
+# Resumen de resultados, directorios, artefactos, matrices de confusión y métricas
+Los resultados están organizados así:
+
+- Informe principal y conclusiones: docs/results.md
+- Explicación didáctica: docs/testing-summary.md
+- Comparación de los nueve entrenamientos: experiments/summary.csv
+- Evaluaciones finales seleccionadas: experiments/final-evaluation.yaml
+- Detalles de cada ejecución: experiments/runs
+
+Resultados finales de cada modelo:
+
+- artifacts/cedia/final-evaluation-derived/main16-baseline-seed42
+- artifacts/cedia/final-evaluation-derived/full23-baseline-seed2026
+
+Dentro de esas dos carpetas encontrarás:
+
+- metrics.json: métricas generales.
+- per-class-metrics.csv: precisión, recall y F1 por clase.
+- confusion-matrix.csv: conteos exactos.
+- confusion-matrix-normalized-readable.png: matriz visual más legible.
+- confusion-matrix.png: matriz original.
+
+Para empezar a leerlos, recomiendo abrir primero docs/results.md y después las matrices normalized-readable.png.
+
+La copia local completa de MLflow está en artifacts/cedia/mlflow. Su interfaz se inicia desde esa carpeta con:
+```bash
+uvx mlflow ui \
+--backend-store-uri sqlite:///mlflow.db \
+--default-artifact-root ./artifacts \
+--port 5000
+```

@@ -379,3 +379,47 @@ uvx mlflow ui \
 --default-artifact-root ./artifacts \
 --port 5000
 ```
+
+
+## Imágenes por clase en split training
+```bash
+# en el cluster de CEDIA
+[christian.bueno__espol.edu.ec@login1 ~]$ ll projects/polysight-storage/manifests/
+total 0
+drwxrwxr-x 2 christian.bueno__espol.edu.ec christian.bueno__espol.edu.ec 120 Aug  5 01:10 full23
+drwxrwxr-x 2 christian.bueno__espol.edu.ec christian.bueno__espol.edu.ec 120 Aug  5 01:08 main16
+[christian.bueno__espol.edu.ec@login1 ~]$ 
+
+# revisar este archivo para ver cuántas imágenes hay por clase en el split de entrenamiento
+cat projects/polysight-storage/manifests/main16/summary.json
+```
+
+Del `summary.json` que compartiste, el desglose por clase en el perfil **main16** (10.479 imágenes totales, 16 clases) es:
+
+| Clase | Imágenes |
+|---|---|
+| bbps-2-3 | 1148 |
+| polyps | 1028 |
+| cecum | 1009 |
+| dyed-lifted-polyps | 1002 |
+| pylorus | 999 |
+| dyed-resection-margins | 989 |
+| z-line | 932 |
+| retroflex-stomach | 764 |
+| bbps-0-1 | 646 |
+| retroflex-rectum | 391 |
+| esophagitis-a | 403 |
+| ulcerative-colitis-grade-2 | 443 |
+| esophagitis-b-d | 260 |
+| ulcerative-colitis-grade-1 | 201 |
+| ulcerative-colitis-grade-3 | 133 |
+| impacted-stool | 131 |
+
+Ordenado de mayor a menor, se ve claramente el desbalance que mencionaste antes como justificación para usar macro-F1 y weighted cross-entropy: la clase más grande (`bbps-2-3`, 1148) tiene casi **9x** más imágenes que la más pequeña (`impacted-stool`, 131).
+
+Si quieres, puedo calcular la proporción exacta de cada clase dentro del split de test (1571 imágenes) para ver si el desbalance se mantiene proporcional ahí también:
+
+```bash
+tail -n +2 projects/polysight-storage/manifests/main16/manifest.csv | \
+  awk -F',' '$4=="test"{print $2}' | sort | uniq -c | sort -rn
+```

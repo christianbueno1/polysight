@@ -423,3 +423,33 @@ Si quieres, puedo calcular la proporción exacta de cada clase dentro del split 
 tail -n +2 projects/polysight-storage/manifests/main16/manifest.csv | \
   awk -F',' '$4=="test"{print $2}' | sort | uniq -c | sort -rn
 ```
+
+## El desbalance mantiene proporcionaloidad entre split Training y Testing
+Sí, se mantiene casi perfectamente proporcional — lo cual es exactamente el comportamiento esperado, dado que `assign_splits()` en `split.py` hace el split **estratificado por clase** (calcula `_targets()` de forma independiente para cada label, no de forma global).
+
+| Clase | % del dataset (10.479) | % del test (1.571) | Diferencia |
+|---|---|---|---|
+| bbps-0-1 | 6.17% | 6.18% | +0.01 pp |
+| bbps-2-3 | 10.96% | 10.95% | −0.01 pp |
+| cecum | 9.63% | 9.61% | −0.02 pp |
+| dyed-lifted-polyps | 9.56% | 9.55% | −0.01 pp |
+| dyed-resection-margins | 9.44% | 9.42% | −0.02 pp |
+| esophagitis-a | 3.85% | 3.82% | −0.03 pp |
+| esophagitis-b-d | 2.48% | 2.48% | 0.00 pp |
+| impacted-stool | 1.25% | 1.27% | +0.02 pp |
+| polyps | 9.81% | 9.80% | −0.01 pp |
+| pylorus | 9.53% | 9.55% | +0.02 pp |
+| retroflex-rectum | 3.73% | 3.76% | +0.03 pp |
+| retroflex-stomach | 7.29% | 7.32% | +0.03 pp |
+| ulcerative-colitis-grade-1 | 1.92% | 1.91% | −0.01 pp |
+| ulcerative-colitis-grade-2 | 4.23% | 4.20% | −0.03 pp |
+| ulcerative-colitis-grade-3 | 1.27% | 1.27% | 0.00 pp |
+| z-line | 8.90% | 8.91% | +0.01 pp |
+
+**Máxima desviación: ±0.03 puntos porcentuales** — prácticamente ruido de redondeo (`_targets()` usa `round()`, que introduce el único error posible por clase, ±1 imagen).
+
+**Conclusión:** el desbalance original de clases (9x entre `bbps-2-3`/`polyps` y `impacted-stool`) **se preserva íntegramente** en el split de test. Esto confirma que:
+
+1. La estratificación funciona correctamente — ninguna clase quedó sub- o sobre-representada en test respecto al dataset completo.
+2. La métrica de test que reportas (macro-F1) evalúa sobre una distribución fiel a la realidad del dataset, no sesgada por el split.
+3. El bajo desempeño que ves en clases minoritarias como `impacted-stool` (recall 0.6, F1 0.706 en tu captura) o `ulcerative-colitis-grade-1` (recall 0.43, F1 0.52) **no es un artefacto del split** — es un problema genuino de pocos ejemplos de entrenamiento (131 y 201 imágenes totales respectivamente), justo el tipo de caso que la weighted cross-entropy busca mitigar.

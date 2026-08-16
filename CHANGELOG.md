@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-16 18:30 -0500 — Documentación didáctica de validation y early stopping
+
+**Hecho:**
+- Añadida al final de `docs/draft-notes.md` una explicación del uso de `validation`
+  después de cada época y de su diferencia respecto de `train` y `test`.
+- Documentado el punto del entrenamiento donde actúa early stopping, su contador de
+  paciencia y su relación con la selección de `best.pt`.
+
+**Decisiones:**
+- Se utilizaron ejemplos tabulares y diagramas textuales para separar la selección del
+  mejor checkpoint de la decisión de detener el entrenamiento.
+- Se mantuvo explícito que validation influye indirectamente en la elección del modelo,
+  aunque no participe en backpropagation.
+
+**Pendiente / carry-over:**
+- Ninguno.
+
+---
+
 ## 2026-08-12 17:12 -0500 — Fase 7: matrices normalizadas legibles
 
 **Hecho:**

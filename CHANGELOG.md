@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-08-17 09:29 -0500 — Entorno Python para segmentación en CEDIA
+
+**Hecho:**
+- Añadida a la guía de segmentación una recomendación breve sobre la versión de Python
+  para el piloto en CEDIA.
+
+**Decisiones:**
+- Mantener Python 3.11 con `pytorch/2.2` y `cuda/12.4`, combinación ya validada en el
+  clúster; una actualización requerirá verificar dependencias y entrenamiento en GPU.
+
+**Pendiente / carry-over:**
+- Confirmar los módulos disponibles al crear y validar el nuevo repositorio.
+
+---
+
 ## 2026-08-17 01:47 -0500 — Guía de aplicación para clasificación y segmentación
 
 **Hecho:**

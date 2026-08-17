@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-17 00:55 -0500 — Guía para proyecto independiente de segmentación
+
+**Hecho:**
+- Creada `docs/segmentation-project-guide.md` con el alcance, dataset, preparación,
+  splits, arquitectura baseline, métricas y fases sugeridas para segmentación.
+- Documentadas las diferencias entre checkpoints `.pt` y `.pth`, el contenido
+  recomendado de `best.pt` y posibles formatos derivados de despliegue.
+
+**Decisiones:**
+- La segmentación puede desarrollarse en un repositorio independiente para separar
+  datos, modelos, métricas, releases y servicios respecto de clasificación.
+- U-Net con encoder preentrenado se propone solo como baseline; Dice de validation se
+  usaría para selección y early stopping sin consultar test.
+
+**Pendiente / carry-over:**
+- Crear y gobernar el nuevo repositorio antes de descargar o entrenar con Kvasir-SEG.
+
+---
+
 ## 2026-08-16 23:34 -0500 — Guía de prueba local para la API FastAPI
 
 **Hecho:**

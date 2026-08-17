@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-08-16 22:37 -0500 — Guía de traspaso para API FastAPI
+
+**Hecho:**
+- Creada `docs/fastapi-api-handoff.md` como guía para implementar la API en un
+  repositorio independiente.
+- Documentados modelo recomendado, procedencia y hash del checkpoint, contrato HTTP,
+  carga única, configuración, seguridad, pruebas, observabilidad y orden de trabajo.
+
+**Decisiones:**
+- PolySight conserva entrenamiento, evaluación y trazabilidad; el nuevo proyecto se
+  limita a inferencia y operación HTTP para mantener responsabilidades separadas.
+- La primera versión debe servir exclusivamente `main16-baseline-seed42`, verificar el
+  SHA-256 del checkpoint y demostrar paridad con `polysight-predict`.
+
+**Pendiente / carry-over:**
+- Crear el repositorio independiente y confirmar su entorno de despliegue, recursos,
+  autenticación y mecanismo de entrega del checkpoint.
+
+---
+
 ## 2026-08-16 18:30 -0500 — Documentación didáctica de validation y early stopping
 
 **Hecho:**

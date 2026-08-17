@@ -2,6 +2,44 @@
 
 ---
 
+## 2026-08-16 23:34 -0500 — Guía de prueba local para la API FastAPI
+
+**Hecho:**
+- Creada `docs/fastapi-local-poc.md` con el entorno mínimo para probar inferencia en
+  una laptop usando CPU, un checkpoint local y un solo worker de FastAPI.
+- Documentados configuración, arranque, paridad con `polysight-predict`, pruebas de
+  aceptación, mediciones y componentes de infraestructura que pueden omitirse.
+
+**Decisiones:**
+- MLflow Registry se mantiene opcional y posterior a la prueba de inferencia directa.
+- La prueba local se considera suficiente cuando verifica el hash del checkpoint,
+  funciona sin Internet y reproduce las predicciones de la CLI de PolySight.
+
+**Pendiente / carry-over:**
+- Ejecutar la prueba de concepto en el repositorio independiente de la API.
+
+---
+
+## 2026-08-16 22:37 -0500 — Guía de traspaso para API FastAPI
+
+**Hecho:**
+- Creada `docs/fastapi-api-handoff.md` como guía para implementar la API en un
+  repositorio independiente.
+- Documentados modelo recomendado, procedencia y hash del checkpoint, contrato HTTP,
+  carga única, configuración, seguridad, pruebas, observabilidad y orden de trabajo.
+
+**Decisiones:**
+- PolySight conserva entrenamiento, evaluación y trazabilidad; el nuevo proyecto se
+  limita a inferencia y operación HTTP para mantener responsabilidades separadas.
+- La primera versión debe servir exclusivamente `main16-baseline-seed42`, verificar el
+  SHA-256 del checkpoint y demostrar paridad con `polysight-predict`.
+
+**Pendiente / carry-over:**
+- Crear el repositorio independiente y confirmar su entorno de despliegue, recursos,
+  autenticación y mecanismo de entrega del checkpoint.
+
+---
+
 ## 2026-08-16 18:30 -0500 — Documentación didáctica de validation y early stopping
 
 **Hecho:**

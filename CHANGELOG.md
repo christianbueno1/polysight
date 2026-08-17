@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-17 09:42 -0500 — Guía general del clúster HPC de CEDIA
+
+**Hecho:**
+- Creada `docs/cedia-cluster-guide.md` como referencia independiente de cualquier
+  proyecto para acceso, transferencia, almacenamiento, módulos, Slurm y diagnóstico.
+- Incluidos ejemplos genéricos de trabajos CPU y GPU, monitoreo y flujo operativo.
+
+**Decisiones:**
+- Se reemplazaron usuario, rutas y comandos específicos de PolySight por marcadores y
+  ejemplos reutilizables.
+- Los módulos y recursos observados se documentan con fecha y obligación de verificarlos
+  dinámicamente porque la configuración del clúster puede cambiar.
+
+**Pendiente / carry-over:**
+- Confirmar con CEDIA las cuotas, políticas de respaldo y cualquier cambio futuro en
+  módulos o particiones.
+
+---
+
 ## 2026-08-17 09:29 -0500 — Entorno Python para segmentación en CEDIA
 
 **Hecho:**

@@ -56,6 +56,18 @@ No se debe hacer que el nuevo proyecto importe directamente módulos internos de
 repositorio. Si posteriormente aparece código verdaderamente compartido, debe extraerse
 a una librería pequeña y versionada, no copiarse informalmente entre repositorios.
 
+## Entorno Python recomendado para CEDIA
+
+Para el piloto de segmentación se recomienda mantener **Python 3.11**. Es la versión ya
+validada en CEDIA con los módulos `pytorch/2.2` y `cuda/12.4`, reduce incompatibilidades
+y facilita la integración posterior con la API de clasificación.
+
+El nuevo proyecto puede tener un entorno y repositorio independientes, pero conviene
+fijar inicialmente `requires-python = ">=3.11,<3.12"`. Solo se debe actualizar Python
+después de comprobar en CEDIA la compatibilidad de PyTorch, CUDA y todas las dependencias,
+incluido un smoke test de entrenamiento sobre GPU. No se recomienda usar automáticamente
+la versión más reciente de Python solo por ser nueva.
+
 ## Dataset
 
 La parte necesaria es el conjunto de segmentación de HyperKvasir, conocido como

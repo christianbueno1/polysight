@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-08-17 01:47 -0500 — Guía de aplicación para clasificación y segmentación
+
+**Hecho:**
+- Creada `docs/classification-segmentation-video-app.md` con el funcionamiento de los
+  dos modelos y la generación de máscaras y overlays sobre imágenes y videos.
+- Documentados procesamiento frame por frame, estrategias de combinación, trabajos
+  offline, consistencia temporal, tiempo real, resultados y evolución incremental.
+
+**Decisiones:**
+- Durante desarrollo se recomienda ejecutar y evaluar ambos modelos de forma
+  independiente antes de condicionar segmentación a la salida del clasificador.
+- El video se incorporará después de validar paridad y composición sobre imágenes; la
+  primera versión de video debe ser offline, no presumirse en tiempo real.
+
+**Pendiente / carry-over:**
+- Entrenar el segmentador y construir el sistema integrado en sus repositorios
+  correspondientes.
+
+---
+
 ## 2026-08-17 00:55 -0500 — Guía para proyecto independiente de segmentación
 
 **Hecho:**

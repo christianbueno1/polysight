@@ -1,36 +1,38 @@
 # PHASE_CURRENT
 
-## Fase 7 — Legibilidad de matrices de confusión normalizadas
+## Fase 8 — Reproducción verificable del experimento en Google Colab
 
-**Objetivo:** Mejorar la legibilidad de los heatmaps normalizados sin ejecutar de nuevo
-entrenamiento o test y sin modificar los artefactos auditados del release `v0.1.0`.
+**Objetivo:** Proporcionar notebooks que permitan verificar el modelo final y repetir
+el entrenamiento `main16-baseline` con semilla 42 en Google Colab reutilizando el
+pipeline versionado de PolySight.
 
-**Contexto:** Ver `src/polysight/metrics.py`, `tests/test_metrics_artifacts.py`,
-`artifacts/cedia/final-evaluation-derived/` y `docs/testing-summary.md`.
+**Contexto:** Ver `docs/training-protocol.md`, `docs/traceability.md`,
+`configs/main16-baseline.yaml` y `experiments/final-evaluation.yaml`.
 
 ---
 
 ### Tareas
 
-- [x] Ajustar tamaño, anotaciones, contraste y separación visual del heatmap normalizado
-- [x] Crear un comando reproducible para renderizar desde `confusion-matrix.csv`
-- [x] Agregar pruebas de formato, umbral y validación del CSV
-- [x] Generar e inspeccionar versiones legibles de `main16` y `full23`
-- [x] Actualizar documentación y validar pruebas, lint y trazabilidad
+- [x] Crear notebook de verificación por inferencia con checkpoint auditado
+- [x] Crear notebook de reproducción de entrenamiento `main16-baseline`, semilla 42
+- [x] Verificar entorno, dataset, manifest, pesos iniciales y trazabilidad de versiones
+- [x] Agregar validaciones automáticas de estructura y sintaxis de los notebooks
+- [x] Documentar uso, limitaciones y diferencia entre reproducción metodológica y binaria
+- [x] Ejecutar pruebas y Ruff, cerrar la fase e integrar en `dev`
 
 ---
 
 ### Notas y decisiones
 
-- Las matrices nuevas se derivan de los CSV de conteos ya verificados; no cargan
-  checkpoints, datasets ni PyTorch.
-- Los PNG auditados conservan sus nombres y hashes. Las versiones históricas mejoradas
-  usarán el sufijo `confusion-matrix-normalized-readable.png`.
-- La diagonal se anota siempre, incluidos valores 0%; errores fuera de la diagonal por
-  debajo de 2% conservan el color pero omiten texto para reducir ruido.
-- Los porcentajes usan formato compacto y el color de fuente se elige explícitamente
-  según la intensidad de cada celda.
-- Las versiones legibles se sincronizaron con CEDIA y sus hashes SHA-256 coinciden con
-  las copias locales.
-- El job CEDIA `22957` validó el commit `19a5d5e` con una A100: 23 pruebas pasaron y
-  Ruff no reportó errores.
+- Los notebooks orquestan el paquete y sus comandos; no duplican las implementaciones
+  de `src/polysight/` en celdas.
+- La reproducción principal se limita a `main16-baseline` con semilla 42. Repetir los
+  nueve runs históricos queda fuera del alcance inicial.
+- La evaluación sobre test permanecerá desactivada por defecto en el notebook de
+  entrenamiento y solo debe habilitarse una vez, sin ajustar el modelo después.
+- El resultado esperado es paridad de protocolo y métricas comparables; no identidad
+  binaria entre checkpoints producidos por CEDIA y Colab.
+- La validación local terminó con 23 pruebas pasadas, una prueba de PyTorch omitida por
+  no estar instalado localmente, Ruff sin errores y ambos notebooks como JSON válido.
+- La ejecución completa en Colab requiere acceso al repositorio, GPU y los tres archivos
+  externos documentados; no se simuló localmente una ejecución con esos recursos.

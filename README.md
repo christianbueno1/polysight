@@ -45,6 +45,7 @@ Documentación del resultado:
 - [Semillas, pesos iniciales y épocas](docs/training-protocol.md).
 - [Auditoría de trazabilidad](docs/traceability.md).
 - [Ejecución en CEDIA](docs/cluster.md).
+- [Reproducción en Google Colab](docs/colab-reproduction.md).
 
 ## Inicio rápido
 

@@ -1,38 +1,30 @@
 # PHASE_CURRENT
 
-## Fase 8 — Reproducción verificable del experimento en Google Colab
+## Fase 9 — Release estable v0.1.1
 
-**Objetivo:** Proporcionar notebooks que permitan verificar el modelo final y repetir
-el entrenamiento `main16-baseline` con semilla 42 en Google Colab reutilizando el
-pipeline versionado de PolySight.
+**Objetivo:** Publicar en `main` las mejoras documentales y de reproducibilidad
+acumuladas en `dev` después de `v0.1.0`, sin modificar los modelos auditados.
 
-**Contexto:** Ver `docs/training-protocol.md`, `docs/traceability.md`,
-`configs/main16-baseline.yaml` y `experiments/final-evaluation.yaml`.
+**Contexto:** Incluye las guías de API, segmentación y CEDIA, además de los notebooks
+de verificación y reproducción en Google Colab.
 
 ---
 
 ### Tareas
 
-- [x] Crear notebook de verificación por inferencia con checkpoint auditado
-- [x] Crear notebook de reproducción de entrenamiento `main16-baseline`, semilla 42
-- [x] Verificar entorno, dataset, manifest, pesos iniciales y trazabilidad de versiones
-- [x] Agregar validaciones automáticas de estructura y sintaxis de los notebooks
-- [x] Documentar uso, limitaciones y diferencia entre reproducción metodológica y binaria
-- [x] Ejecutar pruebas y Ruff, cerrar la fase e integrar en `dev`
+- [~] Actualizar la versión del paquete a `0.1.1`
+- [ ] Ejecutar pruebas, Ruff, build y verificaciones de notebooks
+- [ ] Registrar el release en `CHANGELOG.md`
+- [ ] Integrar el branch de release en `dev`
+- [ ] Mergear `dev` en `main` con `--no-ff`
+- [ ] Crear y publicar el tag anotado `v0.1.1`
+- [ ] Confirmar sincronización de `dev`, `main` y el tag con `origin`
 
 ---
 
 ### Notas y decisiones
 
-- Los notebooks orquestan el paquete y sus comandos; no duplican las implementaciones
-  de `src/polysight/` en celdas.
-- La reproducción principal se limita a `main16-baseline` con semilla 42. Repetir los
-  nueve runs históricos queda fuera del alcance inicial.
-- La evaluación sobre test permanecerá desactivada por defecto en el notebook de
-  entrenamiento y solo debe habilitarse una vez, sin ajustar el modelo después.
-- El resultado esperado es paridad de protocolo y métricas comparables; no identidad
-  binaria entre checkpoints producidos por CEDIA y Colab.
-- La validación local terminó con 23 pruebas pasadas, una prueba de PyTorch omitida por
-  no estar instalado localmente, Ruff sin errores y ambos notebooks como JSON válido.
-- La ejecución completa en Colab requiere acceso al repositorio, GPU y los tres archivos
-  externos documentados; no se simuló localmente una ejecución con esos recursos.
+- `v0.1.1` es un release de documentación y reproducibilidad; no cambia checkpoints,
+  entrenamiento, métricas oficiales ni artefactos auditados de `v0.1.0`.
+- La ejecución completa de los notebooks en Colab permanece como validación externa,
+  porque requiere GPU y archivos grandes que no forman parte del repositorio.

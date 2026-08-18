@@ -10,3 +10,4 @@
 - [x] Fase 6 — Análisis final, documentación de resultados y release
 - [x] Fase 7 — Legibilidad de matrices de confusión normalizadas
 - [x] Fase 8 — Reproducción verificable del experimento en Google Colab
+- [~] Fase 9 — Release estable v0.1.1

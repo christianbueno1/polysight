@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "polysight"
-version = "0.1.0"
+version = "0.1.1"
 description = "Clasificación reproducible de hallazgos HyperKvasir con EfficientNet-B0"
 readme = "README.md"
 requires-python = ">=3.11,<3.12"
@@ -33,6 +33,7 @@ polysight-split = "polysight.data.split:main"
 polysight-train = "polysight.train:main"
 polysight-evaluate = "polysight.evaluate:main"
 polysight-predict = "polysight.predict:main"
+polysight-render-matrix = "polysight.render_matrix:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

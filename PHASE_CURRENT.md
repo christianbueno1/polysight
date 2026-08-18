@@ -1,68 +1,34 @@
 # PHASE_CURRENT
 
-## Fase 6 — Análisis final, documentación de resultados y release
+## Fase 9 — Release estable v0.1.1
 
-**Objetivo:** Analizar los resultados cerrados sin volver a consultar test para ajustar
-modelos, documentar conclusiones y limitaciones, y preparar un release reproducible.
+**Objetivo:** Publicar en `main` las mejoras documentales y de reproducibilidad
+acumuladas en `dev` después de `v0.1.0`, sin modificar los modelos auditados.
 
-**Contexto:** Ver `experiments/`, `artifacts/cedia/final-evaluation/`, `NOTES.md` y
-`docs/cluster.md`.
+**Contexto:** Incluye las guías de API, segmentación y CEDIA, además de los notebooks
+de verificación y reproducción en Google Colab.
 
 ---
 
 ### Tareas
 
-- [x] Comparar métricas agregadas de main16 y full23
-- [x] Analizar métricas por clase y matrices de confusión finales
-- [x] Documentar rendimiento, estabilidad y consumo computacional
-- [x] Documentar conclusiones, limitaciones y amenazas a la validez
-- [x] Extender los artefactos de evaluación con matriz cruda CSV y matriz normalizada
-  por fila, incluidas pruebas automatizadas
-- [x] Regenerar en CEDIA los artefactos de test con los checkpoints finales congelados,
-  verificar que las métricas coincidan y sincronizar las matrices crudas y normalizadas
-  sin reemplazar la evaluación oficial original
-- [x] Verificar trazabilidad de configuraciones, commits, manifests y artefactos
-- [x] Actualizar la documentación principal con resultados reproducibles
-- [x] Ejecutar validación final de pruebas, lint y estructura de artefactos
-- [x] Preparar y etiquetar el release estable
+- [x] Actualizar la versión del paquete a `0.1.1`
+- [x] Ejecutar pruebas, Ruff, build y verificaciones de notebooks
+- [x] Registrar el release en `CHANGELOG.md`
+- [x] Integrar el branch de release en `dev`
+- [x] Mergear `dev` en `main` con `--no-ff`
+- [x] Crear y publicar el tag anotado `v0.1.1`
+- [x] Confirmar sincronización de `dev`, `main` y el tag con `origin`
 
 ---
 
 ### Notas y decisiones
 
-- Test quedó cerrado para selección y ajuste después de una única evaluación por
-  perfil. La regeneración autorizada usa los mismos checkpoints y manifests solo para
-  producir artefactos faltantes; no permite ajustar modelos ni hiperparámetros.
-- Modelos finales: main16 baseline semilla 42 y full23 baseline semilla 2026.
-- Resultados consolidados en `experiments/summary.csv` y
-  `experiments/final-evaluation.yaml`.
-- Matrices y métricas por clase finales están sincronizadas bajo
-  `artifacts/cedia/final-evaluation/` y permanecen fuera de Git.
-- La comparación agregada está documentada en `docs/results.md`; separa promedios de
-  validation (tres semillas) de la evaluación test única de cada perfil.
-- El análisis por clase confirma que seis clases escasas de full23 obtuvieron F1 cero;
-  los artefactos derivados incluyen conteos crudos y matrices normalizadas por fila.
-- Los nueve entrenamientos sumaron 2:01:11 de A100 y ~11.86 CPU-h; consumo y estabilidad
-  están documentados en `docs/results.md` con las limitaciones de muestreo GPU.
-- Las conclusiones limitan explícitamente el alcance al dataset/split y documentan
-  amenazas internas, estadísticas, de medición, externas y clínicas.
-- El README explica al equipo cómo clonar el repositorio en CEDIA y reproducir el
-  protocolo `main16`: preparación, smoke, seis entrenamientos secuenciales, selección
-  por validation y una única evaluación final sobre test.
-- Las evaluaciones futuras guardarán la matriz cruda en CSV y un heatmap normalizado
-  por clase real. La regeneración final se almacena separada y debe reproducir
-  exactamente las métricas oficiales antes de aceptarse.
-- Los jobs derivados `22953` y `22954` reprodujeron byte por byte las métricas
-  agregadas y por clase. Sus salidas se sincronizaron bajo
-  `artifacts/cedia/final-evaluation-derived/` sin modificar los artefactos oficiales.
-- La auditoría reproducible `scripts/audit-traceability.py` verifica nueve runs, tres
-  configuraciones, manifests constantes por perfil, catorce URI portables, checkpoints
-  finales y diez artefactos derivados; el resultado está documentado en
-  `docs/traceability.md`.
-- El README presenta los resultados finales, delimita su alcance y enlaza el reporte,
-  el resumen didáctico, el protocolo de entrenamiento y la auditoría reproducible.
-- La validación final local construyó wheel y sdist y verificó auditoría, Bash, YAML,
-  enlaces, pruebas y Ruff. El job CEDIA `22956` ejecutó la suite con PyTorch/CUDA:
-  14 pruebas pasaron sin skips y Ruff quedó limpio.
-- La versión estable preparada es `v0.1.0`, coherente con `pyproject.toml` y
-  `src/polysight/__init__.py`; todas las tareas de la Fase 6 quedaron completadas.
+- `v0.1.1` es un release de documentación y reproducibilidad; no cambia checkpoints,
+  entrenamiento, métricas oficiales ni artefactos auditados de `v0.1.0`.
+- La ejecución completa de los notebooks en Colab permanece como validación externa,
+  porque requiere GPU y archivos grandes que no forman parte del repositorio.
+- La validación local pasó 23 pruebas, con una prueba omitida por ausencia local de
+  PyTorch; Ruff y la auditoría de trazabilidad terminaron sin errores.
+- Se construyeron correctamente `polysight-0.1.1.tar.gz` y
+  `polysight-0.1.1-py3-none-any.whl`; los artefactos de build permanecen fuera de Git.

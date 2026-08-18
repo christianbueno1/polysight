@@ -2,6 +2,206 @@
 
 ---
 
+## 2026-08-18 04:49 -0500 — Fase 9: release estable v0.1.1
+
+**Hecho:**
+- Actualizada la versión del paquete, metadatos y lockfile de `0.1.0` a `0.1.1`.
+- Validadas 23 pruebas, Ruff, la auditoría de nueve runs y la portabilidad de MLflow.
+- Construidos correctamente wheel y sdist de `polysight 0.1.1` y verificados sus
+  metadatos de versión y compatibilidad con Python 3.11.
+- Preparada la integración de `dev` en `main` y la publicación del tag `v0.1.1`.
+
+**Decisiones:**
+- Se usa un incremento patch porque el release agrega documentación, notebooks y
+  reproducibilidad sin cambiar modelos, entrenamiento ni métricas auditadas.
+- La prueba dependiente de PyTorch quedó omitida en local porque PyTorch no está
+  instalado; las validaciones GPU históricas de CEDIA permanecen documentadas.
+
+**Pendiente / carry-over:**
+- Ejecutar en Google Colab la validación externa con GPU y archivos autorizados.
+
+---
+
+## 2026-08-18 04:22 -0500 — Fase 8: reproducción verificable en Google Colab
+
+**Hecho:**
+- Creados notebooks para verificar por inferencia el checkpoint auditado y repetir
+  `main16-baseline` con semilla 42 en Colab.
+- El notebook principal clona el commit original, instala el paquete, ejecuta Pytest y
+  Ruff, muestra el código importado, verifica hashes, hace inferencia, smoke test y
+  permite ejecutar el entrenamiento completo y comparar validation.
+- Añadidas documentación y pruebas automáticas de estructura, sintaxis, outputs y
+  contrato de reproducción; 23 pruebas pasaron y Ruff no reportó errores.
+
+**Decisiones:**
+- `src/polysight/` permanece como fuente canónica; los notebooks orquestan e inspeccionan
+  el paquete en lugar de mantener una copia divergente del entrenamiento.
+- La reproducción se limita al modelo final `main16-baseline`, semilla 42; test permanece
+  cerrado por defecto y no se exige identidad binaria entre hardware distinto.
+- Dataset, pesos iniciales y checkpoint se proporcionan fuera de Git mediante Drive y
+  se verifican antes de la ejecución.
+
+**Pendiente / carry-over:**
+- Ejecutar el notebook en Google Colab con GPU y los archivos externos autorizados para
+  obtener evidencia runtime del smoke test y del entrenamiento completo.
+
+---
+
+## 2026-08-17 09:42 -0500 — Guía general del clúster HPC de CEDIA
+
+**Hecho:**
+- Creada `docs/cedia-cluster-guide.md` como referencia independiente de cualquier
+  proyecto para acceso, transferencia, almacenamiento, módulos, Slurm y diagnóstico.
+- Incluidos ejemplos genéricos de trabajos CPU y GPU, monitoreo y flujo operativo.
+
+**Decisiones:**
+- Se reemplazaron usuario, rutas y comandos específicos de PolySight por marcadores y
+  ejemplos reutilizables.
+- Los módulos y recursos observados se documentan con fecha y obligación de verificarlos
+  dinámicamente porque la configuración del clúster puede cambiar.
+
+**Pendiente / carry-over:**
+- Confirmar con CEDIA las cuotas, políticas de respaldo y cualquier cambio futuro en
+  módulos o particiones.
+
+---
+
+## 2026-08-17 09:29 -0500 — Entorno Python para segmentación en CEDIA
+
+**Hecho:**
+- Añadida a la guía de segmentación una recomendación breve sobre la versión de Python
+  para el piloto en CEDIA.
+
+**Decisiones:**
+- Mantener Python 3.11 con `pytorch/2.2` y `cuda/12.4`, combinación ya validada en el
+  clúster; una actualización requerirá verificar dependencias y entrenamiento en GPU.
+
+**Pendiente / carry-over:**
+- Confirmar los módulos disponibles al crear y validar el nuevo repositorio.
+
+---
+
+## 2026-08-17 01:47 -0500 — Guía de aplicación para clasificación y segmentación
+
+**Hecho:**
+- Creada `docs/classification-segmentation-video-app.md` con el funcionamiento de los
+  dos modelos y la generación de máscaras y overlays sobre imágenes y videos.
+- Documentados procesamiento frame por frame, estrategias de combinación, trabajos
+  offline, consistencia temporal, tiempo real, resultados y evolución incremental.
+
+**Decisiones:**
+- Durante desarrollo se recomienda ejecutar y evaluar ambos modelos de forma
+  independiente antes de condicionar segmentación a la salida del clasificador.
+- El video se incorporará después de validar paridad y composición sobre imágenes; la
+  primera versión de video debe ser offline, no presumirse en tiempo real.
+
+**Pendiente / carry-over:**
+- Entrenar el segmentador y construir el sistema integrado en sus repositorios
+  correspondientes.
+
+---
+
+## 2026-08-17 00:55 -0500 — Guía para proyecto independiente de segmentación
+
+**Hecho:**
+- Creada `docs/segmentation-project-guide.md` con el alcance, dataset, preparación,
+  splits, arquitectura baseline, métricas y fases sugeridas para segmentación.
+- Documentadas las diferencias entre checkpoints `.pt` y `.pth`, el contenido
+  recomendado de `best.pt` y posibles formatos derivados de despliegue.
+
+**Decisiones:**
+- La segmentación puede desarrollarse en un repositorio independiente para separar
+  datos, modelos, métricas, releases y servicios respecto de clasificación.
+- U-Net con encoder preentrenado se propone solo como baseline; Dice de validation se
+  usaría para selección y early stopping sin consultar test.
+
+**Pendiente / carry-over:**
+- Crear y gobernar el nuevo repositorio antes de descargar o entrenar con Kvasir-SEG.
+
+---
+
+## 2026-08-16 23:34 -0500 — Guía de prueba local para la API FastAPI
+
+**Hecho:**
+- Creada `docs/fastapi-local-poc.md` con el entorno mínimo para probar inferencia en
+  una laptop usando CPU, un checkpoint local y un solo worker de FastAPI.
+- Documentados configuración, arranque, paridad con `polysight-predict`, pruebas de
+  aceptación, mediciones y componentes de infraestructura que pueden omitirse.
+
+**Decisiones:**
+- MLflow Registry se mantiene opcional y posterior a la prueba de inferencia directa.
+- La prueba local se considera suficiente cuando verifica el hash del checkpoint,
+  funciona sin Internet y reproduce las predicciones de la CLI de PolySight.
+
+**Pendiente / carry-over:**
+- Ejecutar la prueba de concepto en el repositorio independiente de la API.
+
+---
+
+## 2026-08-16 22:37 -0500 — Guía de traspaso para API FastAPI
+
+**Hecho:**
+- Creada `docs/fastapi-api-handoff.md` como guía para implementar la API en un
+  repositorio independiente.
+- Documentados modelo recomendado, procedencia y hash del checkpoint, contrato HTTP,
+  carga única, configuración, seguridad, pruebas, observabilidad y orden de trabajo.
+
+**Decisiones:**
+- PolySight conserva entrenamiento, evaluación y trazabilidad; el nuevo proyecto se
+  limita a inferencia y operación HTTP para mantener responsabilidades separadas.
+- La primera versión debe servir exclusivamente `main16-baseline-seed42`, verificar el
+  SHA-256 del checkpoint y demostrar paridad con `polysight-predict`.
+
+**Pendiente / carry-over:**
+- Crear el repositorio independiente y confirmar su entorno de despliegue, recursos,
+  autenticación y mecanismo de entrega del checkpoint.
+
+---
+
+## 2026-08-16 18:30 -0500 — Documentación didáctica de validation y early stopping
+
+**Hecho:**
+- Añadida al final de `docs/draft-notes.md` una explicación del uso de `validation`
+  después de cada época y de su diferencia respecto de `train` y `test`.
+- Documentado el punto del entrenamiento donde actúa early stopping, su contador de
+  paciencia y su relación con la selección de `best.pt`.
+
+**Decisiones:**
+- Se utilizaron ejemplos tabulares y diagramas textuales para separar la selección del
+  mejor checkpoint de la decisión de detener el entrenamiento.
+- Se mantuvo explícito que validation influye indirectamente en la elección del modelo,
+  aunque no participe en backpropagation.
+
+**Pendiente / carry-over:**
+- Ninguno.
+
+---
+
+## 2026-08-12 17:12 -0500 — Fase 7: matrices normalizadas legibles
+
+**Hecho:**
+- Mejorado el renderizado normalizado con celdas cuadradas, rejilla, porcentajes
+  compactos y contraste explícito por celda.
+- Creado `polysight-render-matrix` para regenerar la visualización desde el CSV de
+  conteos, sin cargar el dataset, los checkpoints ni PyTorch.
+- Generadas, inspeccionadas y sincronizadas con CEDIA las versiones legibles de
+  `main16` y `full23`; sus hashes remotos coinciden con las copias locales.
+- Validado el commit `19a5d5e` en CEDIA mediante el job `22957`: 23 pruebas pasaron
+  con una A100 disponible y Ruff no reportó errores.
+
+**Decisiones:**
+- La diagonal se anota siempre, incluso en 0%; fuera de ella se oculta el texto menor
+  al 2% para evitar ruido, sin eliminar el color ni los conteos del CSV.
+- Las nuevas imágenes usan el sufijo `-readable` y son derivados de presentación; no
+  reemplazan ni cambian los hashes de los artefactos auditados de `v0.1.0`.
+- El entorno local se usa directamente desde `.venv`; `/tmp/polysight-uv-cache` es
+  solo la caché temporal de `uv`, no un entorno virtual adicional.
+
+**Pendiente / carry-over:**
+- Ninguno.
+
+---
+
 ## 2026-08-12 16:43 -0500 — Fase 6: cierre y preparación de v0.1.0
 
 **Hecho:**

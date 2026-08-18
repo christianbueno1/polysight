@@ -131,6 +131,23 @@ congelados, sin entrenamiento ni selección posterior. `metrics.json` y
 se guardaron en `final-evaluation-derived/`, sin sobrescribir la evaluación original, y
 su procedencia y hashes están registrados en `experiments/final-evaluation.yaml`.
 
+### Visualización legible
+
+El heatmap de presentación puede regenerarse directamente desde la tabla de conteos:
+
+```bash
+polysight-render-matrix \
+  --input artifacts/cedia/final-evaluation-derived/main16-baseline-seed42/confusion-matrix.csv
+```
+
+El comando crea `confusion-matrix-normalized-readable.png`. Usa celdas cuadradas,
+bordes finos, porcentajes compactos y color de texto explícito. La diagonal se muestra
+siempre, incluidos los valores 0%; fuera de ella, las anotaciones menores al 2% se
+omiten para reducir ruido. El color de la celda y el CSV conservan toda la información.
+
+Este PNG es un derivado de presentación y no reemplaza los artefactos cuyos hashes
+están registrados en `experiments/final-evaluation.yaml`.
+
 ## Rendimiento y consumo computacional
 
 Los nueve entrenamientos se ejecutaron sobre una A100 SXM4 de 40 GB, con 8 CPU y 32 GiB

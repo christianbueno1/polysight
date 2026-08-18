@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "polysight"
-version = "0.1.0"
+version = "0.1.1"
 description = "Clasificación reproducible de hallazgos HyperKvasir con EfficientNet-B0"
 readme = "README.md"
 requires-python = ">=3.11,<3.12"

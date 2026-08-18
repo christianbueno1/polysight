@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-08-18 04:49 -0500 — Fase 9: release estable v0.1.1
+
+**Hecho:**
+- Actualizada la versión del paquete, metadatos y lockfile de `0.1.0` a `0.1.1`.
+- Validadas 23 pruebas, Ruff, la auditoría de nueve runs y la portabilidad de MLflow.
+- Construidos correctamente wheel y sdist de `polysight 0.1.1` y verificados sus
+  metadatos de versión y compatibilidad con Python 3.11.
+- Preparada la integración de `dev` en `main` y la publicación del tag `v0.1.1`.
+
+**Decisiones:**
+- Se usa un incremento patch porque el release agrega documentación, notebooks y
+  reproducibilidad sin cambiar modelos, entrenamiento ni métricas auditadas.
+- La prueba dependiente de PyTorch quedó omitida en local porque PyTorch no está
+  instalado; las validaciones GPU históricas de CEDIA permanecen documentadas.
+
+**Pendiente / carry-over:**
+- Ejecutar en Google Colab la validación externa con GPU y archivos autorizados.
+
+---
+
 ## 2026-08-18 04:22 -0500 — Fase 8: reproducción verificable en Google Colab
 
 **Hecho:**

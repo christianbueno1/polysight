@@ -2,6 +2,31 @@
 
 ---
 
+## 2026-08-18 04:22 -0500 — Fase 8: reproducción verificable en Google Colab
+
+**Hecho:**
+- Creados notebooks para verificar por inferencia el checkpoint auditado y repetir
+  `main16-baseline` con semilla 42 en Colab.
+- El notebook principal clona el commit original, instala el paquete, ejecuta Pytest y
+  Ruff, muestra el código importado, verifica hashes, hace inferencia, smoke test y
+  permite ejecutar el entrenamiento completo y comparar validation.
+- Añadidas documentación y pruebas automáticas de estructura, sintaxis, outputs y
+  contrato de reproducción; 23 pruebas pasaron y Ruff no reportó errores.
+
+**Decisiones:**
+- `src/polysight/` permanece como fuente canónica; los notebooks orquestan e inspeccionan
+  el paquete en lugar de mantener una copia divergente del entrenamiento.
+- La reproducción se limita al modelo final `main16-baseline`, semilla 42; test permanece
+  cerrado por defecto y no se exige identidad binaria entre hardware distinto.
+- Dataset, pesos iniciales y checkpoint se proporcionan fuera de Git mediante Drive y
+  se verifican antes de la ejecución.
+
+**Pendiente / carry-over:**
+- Ejecutar el notebook en Google Colab con GPU y los archivos externos autorizados para
+  obtener evidencia runtime del smoke test y del entrenamiento completo.
+
+---
+
 ## 2026-08-17 09:42 -0500 — Guía general del clúster HPC de CEDIA
 
 **Hecho:**

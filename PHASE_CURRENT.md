@@ -18,7 +18,7 @@ pipeline versionado de PolySight.
 - [x] Verificar entorno, dataset, manifest, pesos iniciales y trazabilidad de versiones
 - [x] Agregar validaciones automáticas de estructura y sintaxis de los notebooks
 - [x] Documentar uso, limitaciones y diferencia entre reproducción metodológica y binaria
-- [~] Ejecutar pruebas y Ruff, cerrar la fase e integrar en `dev`
+- [x] Ejecutar pruebas y Ruff, cerrar la fase e integrar en `dev`
 
 ---
 
@@ -32,3 +32,7 @@ pipeline versionado de PolySight.
   entrenamiento y solo debe habilitarse una vez, sin ajustar el modelo después.
 - El resultado esperado es paridad de protocolo y métricas comparables; no identidad
   binaria entre checkpoints producidos por CEDIA y Colab.
+- La validación local terminó con 23 pruebas pasadas, una prueba de PyTorch omitida por
+  no estar instalado localmente, Ruff sin errores y ambos notebooks como JSON válido.
+- La ejecución completa en Colab requiere acceso al repositorio, GPU y los tres archivos
+  externos documentados; no se simuló localmente una ejecución con esos recursos.

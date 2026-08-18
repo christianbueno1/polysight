@@ -13,8 +13,8 @@ pipeline versionado de PolySight.
 
 ### Tareas
 
-- [~] Crear notebook de verificación por inferencia con checkpoint auditado
-- [ ] Crear notebook de reproducción de entrenamiento `main16-baseline`, semilla 42
+- [x] Crear notebook de verificación por inferencia con checkpoint auditado
+- [~] Crear notebook de reproducción de entrenamiento `main16-baseline`, semilla 42
 - [ ] Verificar entorno, dataset, manifest, pesos iniciales y trazabilidad de versiones
 - [ ] Agregar validaciones automáticas de estructura y sintaxis de los notebooks
 - [ ] Documentar uso, limitaciones y diferencia entre reproducción metodológica y binaria

@@ -568,3 +568,26 @@ No se detiene tras una sola época peor porque las métricas pueden fluctuar. La
 paciencia permite que el modelo atraviese descensos temporales y todavía pueda mejorar
 después. El valor siete es una heurística aplicada consistentemente en el proyecto;
 no se realizó una búsqueda sistemática que demuestre que sea el valor óptimo.
+
+## Dataset y splits
+• Sí está definido, aunque la información quedó dispersa. PolySight usa el dataset etiquetado de HyperKvasir y lo divide de forma estratificada y determinista:
+
+| Perfil | Total | Training (70%) | Validation (15%) | Test (15%) |
+|---|---:|---:|---:|---:|
+| `main16` — 16 clases principales | 10.479 | 7.337 | 1.571 | 1.571 |
+| `full23` — todas las clases | 10.662 | 7.466 | 1.598 | 1.598 |
+
+El perfil principal de los experimentos fue main16; por tanto, la respuesta más relevante es:
+
+- Training: 7.337 imágenes
+- Validation: 1.571 imágenes
+- Test: 1.571 imágenes
+- Total: 10.479 imágenes
+
+La partición se realiza por separado dentro de cada clase, conservando aproximadamente 70/15/15 y usando la semilla 42. Por eso el desbalance original entre clases se
+mantiene en los tres conjuntos. Los duplicados exactos se agrupan en el mismo split.
+
+La implementación está en `src/polysight/data/split.py:68`, las proporciones en `src/polysight/data/constants.py:9` y la descripción general en `docs/datasets/hyper-
+kvasir.md:7`.
+
+Importante: estas cifras corresponden a HyperKvasir para clasificación. SUN-SEG es otro dataset y no fue utilizado en estos entrenamientos.
